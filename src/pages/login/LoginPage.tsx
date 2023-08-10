@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
         if (username.trim().length > 0 && password.trim().length > 0) navigate("/employee");
     };
 
-    return <div className="container">
+    return <div className="login-container">
         <div className="split left">
             <div className="circle">
                 <img className="placeholder" src="assets/img/banner.png" alt="Login Placeholder"></img>
@@ -35,7 +35,7 @@ const LoginPage: React.FC = () => {
         </div>
         <div className="split right">
             <div className="form-container">
-                <img className="logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
+                <img className="login-logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
                 <InputField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
                 <InputField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
                 <PrimaryButton type="submit" label='Log in' onClick={onClick} />

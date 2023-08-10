@@ -1,4 +1,4 @@
-.container {
+.login-container {
     height: 100%;
     width: 100%;
     padding: 30px;
@@ -42,7 +42,7 @@
     border-radius: 100%;
 }
 
-.logo {
+.login-logo {
     width: 225px;
     margin-top: 30px;
     margin-bottom: 20px;
@@ -55,11 +55,11 @@
 }
 
 @media only screen and (max-width: 768px) {
-    .container {
+    .login-container {
         flex-direction: column;
     }
 
-    .logo {
+    .login-logo {
         width: 200px;
     }
 
