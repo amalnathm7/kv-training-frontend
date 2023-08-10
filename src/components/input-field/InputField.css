@@ -1,0 +1,36 @@
+.field {
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+    border-radius: 5px;
+    caret-color: #03AEEE;
+    border: 2px solid lightgray;
+    text-indent: 10px;
+    outline: 0;
+}
+
+.floating-label-group {
+    position: relative;
+}
+
+.floating-label {
+    font-size: 14px;
+    color: #555555;
+    font-weight: bold;
+    position: absolute;
+    pointer-events: none;
+    top: 52.5px;
+    left: 12px;
+    transition: all 0.1s ease;
+}
+
+.field:focus~.floating-label,
+.field:not(:focus):valid~.floating-label {
+    top: 15px;
+    bottom: 0px;
+    left: 0px;
+    font-size: 11px;
+    opacity: 1;
+    color: #03AEEE;
+}
