@@ -5,7 +5,8 @@ type InputPropTypes = {
     value: string,
     onChange: (event) => void,
     label: string,
-    type: "text" | "password"
+    type: "text" | "password",
+    showError: boolean
 }
 
 const InputField: React.FC<InputPropTypes> = (props) => {
@@ -13,6 +14,7 @@ const InputField: React.FC<InputPropTypes> = (props) => {
         <div className="floating-label-group">
             <input className="field" onChange={props.onChange} type={props.type} value={props.value} required></input>
             <label className="floating-label">{props.label}</label>
+            {props.showError && <label className="error">Enter {props.label.toLowerCase()}</label>}
         </div>
     );
 };

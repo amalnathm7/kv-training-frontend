@@ -2,21 +2,29 @@ import PrimaryButton from "../../components/button/PrimaryButton";
 import InputField from "../../components/input-field/InputField";
 import React, { useState } from "react";
 import "./LoginPage.css";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
+    const [usernameError, setUsernameError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+    const navigate = useNavigate();
 
     const changeUsername = (event) => {
+        setUsernameError(false);
         setUsername(event.target.value);
     };
 
     const changePassword = (event) => {
+        setPasswordError(false);
         setPassword(event.target.value);
     };
 
-    const click = () => {
-        console.log(username + password);
+    const onClick = () => {
+        if (username.trim().length === 0) setUsernameError(true);
+        if (password.trim().length === 0) setPasswordError(true);
+        if (username.trim().length > 0 && password.trim().length > 0) navigate("/employee");
     };
 
     return <div className="container">
@@ -28,9 +36,9 @@ const LoginPage: React.FC = () => {
         <div className="split right">
             <div className="form-container">
                 <img className="logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
-                <InputField label="Username" onChange={changeUsername} value={username} type="text" ></InputField>
-                <InputField label="Password" onChange={changePassword} value={password} type="password" ></InputField>
-                <PrimaryButton type="submit" label='Log in' onClick={click}></PrimaryButton>
+                <InputField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
+                <InputField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
+                <PrimaryButton type="submit" label='Log in' onClick={onClick} />
             </div>
         </div>
     </div>;
