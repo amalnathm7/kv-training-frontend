@@ -1,4 +1,4 @@
-.field {
+.login-field {
     margin-top: 40px;
     align-items: center;
     justify-content: center;
@@ -11,13 +11,13 @@
     outline: 0;
 }
 
-.floating-label-group {
+.login-floating-label-group {
     display: flex;
     flex-direction: column;
     position: relative;
 }
 
-.floating-label {
+.login-floating-label {
     font-size: 14px;
     color: #555555;
     font-weight: bold;
@@ -28,8 +28,8 @@
     transition: all 0.1s ease;
 }
 
-.field:focus~.floating-label,
-.field:not(:focus):valid~.floating-label {
+.login-field:focus~.login-floating-label,
+.login-field:not(:focus):valid~.login-floating-label {
     top: 20px;
     bottom: 0px;
     left: 0px;
@@ -38,7 +38,7 @@
     color: #03AEEE;
 }
 
-.error {
+.login-error {
     margin-top: 10px;
     text-indent: 10px;
     font-size: 14px;

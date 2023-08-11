@@ -1,0 +1,37 @@
+.form-item {
+    width: 30%;
+    padding: 20px;
+}
+
+.form-field {
+    margin-top: 15px;
+    align-items: center;
+    justify-content: center;
+    height: 55px;
+    width: 100%;
+    border-radius: 5px;
+    caret-color: #03AEEE;
+    border: 2px solid lightgray;
+    padding: 10px;
+    outline: 0;
+    background: #FAFAFA 0% 0% no-repeat padding-box;
+    border: 1px solid #D9D9D9;
+}
+
+.form-label {
+    margin-top: 20px;
+    font-size: 14px;
+    color: #555555;
+    font-weight: bold;
+}
+
+.form-error {
+    margin-top: 10px;
+    text-indent: 10px;
+    font-size: 14px;
+    color: red;
+}
+
+.spacing {
+    height: 16px;
+}

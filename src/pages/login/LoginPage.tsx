@@ -1,8 +1,8 @@
 import PrimaryButton from "../../components/button/PrimaryButton/PrimaryButton";
-import InputField from "../../components/input-field/InputField";
 import React, { useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
+import LoginField from "../../components/input-field/login-field/LoginField";
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState("");
@@ -34,10 +34,10 @@ const LoginPage: React.FC = () => {
             </div>
         </div>
         <div className="split right">
-            <div className="form-container">
+            <div className="login-form-container">
                 <img className="login-logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
-                <InputField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
-                <InputField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
+                <LoginField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
+                <LoginField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
                 <PrimaryButton type="submit" label='Log in' onClick={onClick} />
             </div>
         </div>

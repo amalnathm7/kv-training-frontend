@@ -1,0 +1,15 @@
+.form-container {
+    padding: 20px;
+    padding-right: 50px;
+    background-color: white;
+    border-radius: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    position: fixed;
+    flex-direction: row;
+    justify-content: start;
+    top: 210px;
+    left: 320px;
+    right: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
