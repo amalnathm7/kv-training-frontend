@@ -24,7 +24,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     };
 
     const onClick = () => {
-        navigate(`/employees/${props.employee.id}`);
+        navigate(`/employee/${props.employee.id}`);
     };
 
     return <tr className="list-item" onClick={onClick}>
