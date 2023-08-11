@@ -52,7 +52,10 @@ const EmployeeDetailsPage: React.FC = () => {
         }
     ];
 
-    return <HomeLayout subHeaderLabel="Employee Details" subHeaderActionLabel="Edit" subHeaderActionIcon="edit.svg">
+    const onEditClicked = () => {
+    };
+
+    return <HomeLayout subHeaderAction={onEditClicked} subHeaderLabel="Employee Details" subHeaderActionLabel="Edit" subHeaderActionIcon="edit.svg">
         <Card items={items}></Card>
     </HomeLayout>;
 };

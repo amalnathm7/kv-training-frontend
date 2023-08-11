@@ -8,13 +8,15 @@ type HomeLayoutPropsType = {
     subHeaderLabel: string,
     subHeaderActionLabel: string,
     subHeaderActionIcon: string,
+    subHeaderAction: () => void
 }
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     return <div className="home">
         <Sidebar />
         <Header />
-        <SubHeader label={props.subHeaderLabel} actionLabel={props.subHeaderActionLabel} actionIcon={props.subHeaderActionIcon} />
+        <SubHeader action={props.subHeaderAction} label={props.subHeaderLabel} actionLabel={
+            props.subHeaderActionLabel} actionIcon={props.subHeaderActionIcon} />
         {props.children}
     </div>;
 };
