@@ -15,6 +15,7 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
         <Sidebar />
         <Header />
         <SubHeader label={props.subHeaderLabel} actionLabel={props.subHeaderActionLabel} actionIcon={props.subHeaderActionIcon} />
+        {props.children}
     </div>;
 };
 
