@@ -12,7 +12,7 @@ const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
         <label className="sub-header-label">{props.label}</label>
         <div className="action-button">
             <div className="sub-header-action-icon-container">
-                <img className="sub-header-action-icon" src={props.actionIcon}></img>
+                <img className="sub-header-action-icon" src={"assets/icons/" + props.actionIcon}></img>
             </div>
             <label className="sub-header-action-label">{props.actionLabel}</label>
         </div>
