@@ -1,4 +1,5 @@
 import { Address } from "./Address";
+import { Department } from "./Department";
 import { Role } from "./Role";
 
 export type Employee = {
@@ -9,4 +10,5 @@ export type Employee = {
     status: "Active" | "Inactive" | "Probation",
     experience: number,
     address: Address,
+    department: Department
 };
