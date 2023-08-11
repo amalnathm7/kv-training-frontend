@@ -14,7 +14,8 @@ const StatusIcon: React.FC<StatusProps> = (props) => {
         borderRadius: "20px",
         width: "100px",
         display: "flex",
-        justifyContent: "center"
+        justifyContent: "center",
+        fontSize: "12px"
     };
 
     return <div style={style} className="status-container">

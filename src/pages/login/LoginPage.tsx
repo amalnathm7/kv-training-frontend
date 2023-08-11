@@ -38,7 +38,7 @@ const LoginPage: React.FC = () => {
                 <img className="login-logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
                 <LoginField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
                 <LoginField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
-                <PrimaryButton type="submit" label='Log in' onClick={onClick} />
+                <PrimaryButton height="50px" type="submit" label='Log in' onClick={onClick} />
             </div>
         </div>
     </div>;

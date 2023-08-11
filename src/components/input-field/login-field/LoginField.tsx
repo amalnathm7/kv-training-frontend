@@ -12,7 +12,7 @@ type LoginFieldPropTypes = {
 const LoginField: React.FC<LoginFieldPropTypes> = (props) => {
     return (
         <div className="login-floating-label-group">
-            <input className="login-field" onChange={props.onChange} type={props.type} value={props.value}></input>
+            <input className="login-field" onChange={props.onChange} type={props.type} value={props.value} required></input>
             <label className="login-floating-label">{props.label}</label>
             {props.showError && <label className="login-error">Enter {props.label.toLowerCase()}</label>}
         </div>

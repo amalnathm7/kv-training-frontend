@@ -13,3 +13,13 @@
     right: 20px;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
+
+.form-buttons {
+    display: flex;
+    width: 100%;
+    padding-left: 20px;
+}
+
+.form-primary-button{
+    margin-right: 30px;
+}

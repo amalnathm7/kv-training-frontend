@@ -12,10 +12,6 @@ type CardItemPropsType = {
 const CardItem: React.FC<CardItemPropsType> = (props) => {
     let status: Status;
 
-    const style = {
-        marginTop: "15px"
-    };
-
     if (props.isStatus)
         status = {
             label: props.value,
@@ -25,7 +21,7 @@ const CardItem: React.FC<CardItemPropsType> = (props) => {
     return <div className="card-item">
         <label className="card-label">{props.label}</label>
         {!props.isStatus && <label className="card-value">{props.value}</label>}
-        {props.isStatus && <div style={style}><StatusIcon status={status}></StatusIcon></div>}
+        {props.isStatus && <div className="card-value"><StatusIcon status={status}></StatusIcon></div>}
     </div>;
 };
 

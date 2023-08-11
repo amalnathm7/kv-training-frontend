@@ -6,11 +6,9 @@ type DropDownPropType = {
     onChange: (event) => void,
     label: string,
     placeholder: string,
-    type: string,
     showError: boolean
     options: string[]
 };
-
 
 const DropDown: React.FC<DropDownPropType> = (props) => {
     const options = props.options.map((option) =>

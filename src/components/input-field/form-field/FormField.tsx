@@ -2,7 +2,7 @@ import React from "react";
 import "./FormField.css";
 
 type InputPropTypes = {
-    value: string,
+    value: string | number | string[],
     onChange: (event) => void,
     label: string,
     placeholder: string,

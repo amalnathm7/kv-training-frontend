@@ -1,17 +1,17 @@
-.primary-button {
-    background-color: #03AEEE;
-    color: white;
+.secondary-button {
+    color: #8A8C8F;
     font-weight: bold;
     font-size: 16px;
     margin-top: 40px;
     margin-bottom: 40px;
-    border: none;
     height: 35px;
     padding-left: 50px;
     padding-right: 50px;
-    background: #03AEEE 0% 0% no-repeat padding-box;
-    box-shadow: 0px 3px 6px #B0E6FA;
     border-radius: 3px;
     opacity: 1;
     cursor: pointer;
+    background: #FFFFFF 0% 0% no-repeat padding-box;
+    box-shadow: 0px 3px 6px #C9C9C929;
+    border: 1px solid #8A8C8F;
+    border-radius: 3px;
 }
