@@ -7,8 +7,8 @@ type StatusProps = {
 const StatusIcon: React.FC<StatusProps> = (props) => {
     const style = {
         backgroundColor: props.status.color,
-        paddingTop: "10px",
-        paddingBottom: "10px",
+        paddingTop: "5px",
+        paddingBottom: "5px",
         paddingLeft: "20px",
         paddingRight: "20px",
         borderRadius: "20px",

@@ -1,4 +1,4 @@
-import PrimaryButton from "../../components/button/PrimaryButton";
+import PrimaryButton from "../../components/button/PrimaryButton/PrimaryButton";
 import InputField from "../../components/input-field/InputField";
 import React, { useState } from "react";
 import "./LoginPage.css";
