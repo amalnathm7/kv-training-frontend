@@ -9,7 +9,8 @@ import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
 type FormPropsType = {
     employee: Employee,
     onSubmit: () => void,
-    onCancel: () => void
+    onCancel: () => void,
+    isEdit: boolean
 };
 
 const Form: React.FC<FormPropsType> = (props) => {
@@ -116,21 +117,24 @@ const Form: React.FC<FormPropsType> = (props) => {
         setPincodeError(false);
     };
 
+    const primaryButtonLabel = props.isEdit ? "Save" : "Create";
+
     return <div className="form-container">
-        <FormField type="text" value={name} label="Employee Name" placeholder="John Doe" onChange={onChangeName} showError={nameError} />
-        <FormField type="date" value={date} label="Joining Date" placeholder="" onChange={onChangeDate} showError={dateError} />
-        <FormField type="number" value={experience} label="Experience (Years)" placeholder="" onChange={onChangeExperience} showError={experienceError} />
+        <FormField disabled={false} type="text" value={name} label="Employee Name" placeholder="John Doe" onChange={onChangeName} showError={nameError} />
+        <FormField disabled={false} type="date" value={date} label="Joining Date" placeholder="" onChange={onChangeDate} showError={dateError} />
+        <FormField disabled={false} type="number" value={experience} label="Experience (Years)" placeholder="" onChange={onChangeExperience} showError={experienceError} />
         <DropDown options={["HR", "Dev", "UI/UX"]} value={department} label="Department" placeholder="Select Department" onChange={onChangeDepartment} showError={departmentError} />
         <DropDown options={["Manager", "Developer", "Designer"]} value={role} label="Role" placeholder="Select Role" onChange={onChangeRole} showError={roleError} />
         <DropDown options={["Active", "Inactive", "Probation"]} value={status} label="Status" placeholder="Select Status" onChange={onChangeStatus} showError={statusError} />
-        <FormField type="text" value={line1} label="Address" placeholder="Line 1" onChange={onChangeLine1} showError={line1Error} />
-        <FormField type="text" value={line2} label="" placeholder="Line 2" onChange={onChangeLine2} showError={line2Error} />
-        <FormField type="text" value={city} label="" placeholder="City" onChange={onChangeCity} showError={cityError} />
-        <FormField type="text" value={state} label=" " placeholder="State" onChange={onChangeState} showError={stateError} />
-        <FormField type="text" value={country} label=" " placeholder="Country" onChange={onChangeCountry} showError={countryError} />
-        <FormField type="text" value={pincode} label=" " placeholder="Pincode" onChange={onChangePincode} showError={pincodeError} />
+        <FormField disabled={false} type="text" value={line1} label="Address" placeholder="Line 1" onChange={onChangeLine1} showError={line1Error} />
+        <FormField disabled={false} type="text" value={line2} label="" placeholder="Line 2" onChange={onChangeLine2} showError={line2Error} />
+        <FormField disabled={false} type="text" value={city} label="" placeholder="City" onChange={onChangeCity} showError={cityError} />
+        <FormField disabled={false} type="text" value={state} label=" " placeholder="State" onChange={onChangeState} showError={stateError} />
+        <FormField disabled={false} type="text" value={country} label=" " placeholder="Country" onChange={onChangeCountry} showError={countryError} />
+        <FormField disabled={false} type="text" value={pincode} label=" " placeholder="Pincode" onChange={onChangePincode} showError={pincodeError} />
+        {props.isEdit && <FormField disabled={true} value={props.employee.id} onChange={() => {}} label={"Employee ID"} placeholder={"Employee ID"} type={"text"} showError={false} />}
         <div className="form-buttons">
-            <div className="form-primary-button"><PrimaryButton height="35px" type="submit" label="Create" onClick={props.onSubmit} /></div>
+            <div className="form-primary-button"><PrimaryButton height="35px" type="submit" label={primaryButtonLabel} onClick={props.onSubmit} /></div>
             <SecondaryButton type="button" label="Cancel" onClick={props.onCancel} />
         </div>
     </div>;

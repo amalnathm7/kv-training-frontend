@@ -2,10 +2,11 @@ import Card from "../../components/card/Card";
 import { data } from "../../constants/data";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const EmployeeDetailsPage: React.FC = () => {
     const { id } = useParams();
+    const navigate = useNavigate();
 
     const employee = data.find((employee) => employee.id === id);
 
@@ -53,6 +54,7 @@ const EmployeeDetailsPage: React.FC = () => {
     ];
 
     const onEditClicked = () => {
+        navigate(`/employee/${id}/edit`);
     };
 
     return <HomeLayout subHeaderAction={onEditClicked} subHeaderLabel="Employee Details" subHeaderActionLabel="Edit" subHeaderActionIcon="edit.svg">

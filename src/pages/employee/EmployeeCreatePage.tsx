@@ -4,7 +4,7 @@ import React from "react";
 
 const EmployeeCreatePage: React.FC = () => {
     return <HomeLayout subHeaderAction={() => { }} subHeaderLabel="Create Employee" subHeaderActionLabel="" subHeaderActionIcon="">
-        <Form employee={null} onSubmit={() => { }} onCancel={() => { }} />
+        <Form employee={null} onSubmit={() => { } } onCancel={() => { } } isEdit={false} />
     </HomeLayout>;
 };
 

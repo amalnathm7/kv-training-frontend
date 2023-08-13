@@ -18,6 +18,12 @@
     border: 1px solid #D9D9D9;
 }
 
+.form-field:disabled {
+    background: #D1D1D1 0% 0% no-repeat padding-box;
+    border: 1px solid #D9D9D9;
+    opacity: 1;
+}
+
 .form-label {
     margin-top: 20px;
     font-size: 14px;

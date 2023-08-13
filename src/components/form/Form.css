@@ -5,7 +5,7 @@
     border-radius: 10px;
     display: flex;
     flex-wrap: wrap;
-    position: fixed;
+    position: absolute;
     flex-direction: row;
     justify-content: start;
     top: 210px;

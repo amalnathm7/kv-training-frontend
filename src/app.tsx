@@ -5,6 +5,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import EmployeeListingPage from './pages/employee/EmployeeListingPage';
 import EmployeeDetailsPage from './pages/employee/EmployeeDetailsPage';
 import EmployeeCreatePage from './pages/employee/EmployeeCreatePage';
+import EmployeeEditPage from './pages/employee/EmployeeEditPage';
 
 const App: FC = () => {
   return <div className='app'>
@@ -14,6 +15,7 @@ const App: FC = () => {
         <Route path='/employee' element={<EmployeeListingPage />} />
         <Route path='/employee/:id' element={<EmployeeDetailsPage />} />
         <Route path='/employee/create' element={<EmployeeCreatePage />} />
+        <Route path='/employee/:id/edit' element={<EmployeeEditPage />} />
       </Routes>
     </BrowserRouter>
   </div>;
