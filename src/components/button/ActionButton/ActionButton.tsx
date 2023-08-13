@@ -7,7 +7,10 @@ type ActionButtonProps = {
 };
 
 const ActionButton: React.FC<ActionButtonProps> = (props) => {
-    return <img className="action-button-icon" src={`assets/icons/${props.icon}`} onClick={props.onClick}></img>;
+    return <img className="action-button-icon" src={`assets/icons/${props.icon}`} onClick={(event) => {
+        event.stopPropagation();
+        props.onClick();
+    }}></img>;
 };
 
 export default ActionButton;

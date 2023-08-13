@@ -1,0 +1,19 @@
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  padding: 0px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 80px;
+  margin-right: 80px;
+  border: none;
+}
+
+.popup-buttons {
+  width: 120%;
+  display: flex;
+  justify-content: space-evenly;
+}

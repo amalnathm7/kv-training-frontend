@@ -13,11 +13,11 @@ type HomeLayoutPropsType = {
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     return <div className="home">
-        <Sidebar />
-        <Header />
+        {props.children}
         <SubHeader action={props.subHeaderAction} label={props.subHeaderLabel} actionLabel={
             props.subHeaderActionLabel} actionIcon={props.subHeaderActionIcon} />
-        {props.children}
+        <Sidebar />
+        <Header />
     </div>;
 };
 

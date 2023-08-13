@@ -1,10 +1,12 @@
 import { Employee } from "../../types/Employee";
-import React from "react";
+import React, { useState } from "react";
 import "./ListItem.css";
-import { Status } from "@app/types/Status";
+import { Status } from "../../types/Status";
 import StatusIcon from "../status-icon/StatusIcon";
 import ActionButton from "../button/ActionButton/ActionButton";
 import { useNavigate } from "react-router-dom";
+import 'reactjs-popup/dist/index.css';
+import CustomPopup from "../popup/CustomPopup";
 
 type ListItemProps = {
     employee: Employee
@@ -12,15 +14,18 @@ type ListItemProps = {
 
 const ListItem: React.FC<ListItemProps> = (props) => {
     const navigate = useNavigate();
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
     let status: Status = {
         label: props.employee.status,
         color: props.employee.status === 'Active' ? '#D3F4BE' : props.employee.status === 'Inactive' ? '#FFBFBF' : '#F5ECB8'
     };
 
     const handleEdit = () => {
+        navigate(`/employee/${props.employee.id}/edit`);
     };
 
     const handleDelete = () => {
+        setShowDeletePopup(true);
     };
 
     const onClick = () => {
@@ -37,9 +42,10 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         <td>{props.employee.experience + " years"}</td>
         <td>{props.employee.address.addressLine1 + ", " + props.employee.address.addressLine2 + ", " + props.employee.address.city + ", " + props.employee.address.state + ", " + props.employee.address.country + ", " + props.employee.address.pincode}</td>
         <td>
-            <ActionButton icon="delete.png" onClick={handleEdit}></ActionButton>
-            <ActionButton icon="edit.png" onClick={handleDelete}></ActionButton>
+            <ActionButton icon="delete.png" onClick={handleDelete}></ActionButton>
+            <ActionButton icon="edit.png" onClick={handleEdit}></ActionButton>
         </td>
+        <CustomPopup showPopup={showDeletePopup} onConfirm={() => { setShowDeletePopup(false); }} onCancel={() => { setShowDeletePopup(false); }} />
     </tr>;
 };
 

@@ -5,11 +5,11 @@ import DropDown from "../input-field/drop-down/DropDown";
 import { Employee } from "@app/types/Employee";
 import PrimaryButton from "../button/PrimaryButton/PrimaryButton";
 import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
+import { useNavigate } from "react-router-dom";
 
 type FormPropsType = {
     employee: Employee,
     onSubmit: () => void,
-    onCancel: () => void,
     isEdit: boolean
 };
 
@@ -118,6 +118,7 @@ const Form: React.FC<FormPropsType> = (props) => {
     };
 
     const primaryButtonLabel = props.isEdit ? "Save" : "Create";
+    const navigate = useNavigate();
 
     return <div className="form-container">
         <FormField disabled={false} type="text" value={name} label="Employee Name" placeholder="John Doe" onChange={onChangeName} showError={nameError} />
@@ -132,10 +133,12 @@ const Form: React.FC<FormPropsType> = (props) => {
         <FormField disabled={false} type="text" value={state} label=" " placeholder="State" onChange={onChangeState} showError={stateError} />
         <FormField disabled={false} type="text" value={country} label=" " placeholder="Country" onChange={onChangeCountry} showError={countryError} />
         <FormField disabled={false} type="text" value={pincode} label=" " placeholder="Pincode" onChange={onChangePincode} showError={pincodeError} />
-        {props.isEdit && <FormField disabled={true} value={props.employee.id} onChange={() => {}} label={"Employee ID"} placeholder={"Employee ID"} type={"text"} showError={false} />}
+        {props.isEdit && <FormField disabled={true} value={props.employee.id} onChange={() => { }} label={"Employee ID"} placeholder={"Employee ID"} type={"text"} showError={false} />}
         <div className="form-buttons">
             <div className="form-primary-button"><PrimaryButton height="35px" type="submit" label={primaryButtonLabel} onClick={props.onSubmit} /></div>
-            <SecondaryButton type="button" label="Cancel" onClick={props.onCancel} />
+            <SecondaryButton type="button" label="Cancel" onClick={() => {
+                navigate(-1);
+            }} />
         </div>
     </div>;
 };
