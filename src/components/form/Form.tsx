@@ -42,7 +42,7 @@ const Form: React.FC<FormPropsType> = (props) => {
             setCountry(props.employee.address.country);
             setPincode(props.employee.address.pincode);
         }
-    });
+    }, []);
 
     const [nameError, setNameError] = useState(false);
     const [dateError, setDateError] = useState(false);
