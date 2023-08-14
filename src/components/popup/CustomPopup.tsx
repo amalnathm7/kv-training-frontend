@@ -1,5 +1,4 @@
 import React from 'react';
-import Popup from 'reactjs-popup';
 import './CustomPopup.css';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
@@ -11,7 +10,7 @@ type PopupPropType = {
 }
 
 const CustomPopup: React.FC<PopupPropType> = (props) => (
-  <Popup open={props.showPopup} onClose={props.onCancel}>
+  <div className='popup-overlay' onClick={(event) => { event.stopPropagation(); }}>
     <div className="popup-content">
       <h2>Are you sure?</h2>
       <p>Do you really want to delete the employee?</p>
@@ -20,7 +19,7 @@ const CustomPopup: React.FC<PopupPropType> = (props) => (
         <SecondaryButton onClick={props.onCancel} type={'button'} label={'Cancel'} />
       </div>
     </div>
-  </Popup>
+  </div>
 );
 
 export default CustomPopup;
