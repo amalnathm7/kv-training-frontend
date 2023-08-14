@@ -16,7 +16,7 @@ const CustomPopup: React.FC<PopupPropType> = (props) => (
       <h2>Are you sure?</h2>
       <p>Do you really want to delete the employee?</p>
       <div className="popup-buttons">
-        <PrimaryButton onClick={props.onConfirm} type={'button'} label={'Confirm'} height={'35px'} />
+        <PrimaryButton onClick={props.onConfirm} type={'button'} label={'Confirm'} />
         <SecondaryButton onClick={props.onCancel} type={'button'} label={'Cancel'} />
       </div>
     </div>

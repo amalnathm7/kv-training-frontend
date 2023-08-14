@@ -13,23 +13,19 @@ const EmployeeDetailsPage: React.FC = () => {
     const items = [
         {
             label: "Employee Name",
-            value: employee.name,
-            isStatus: false
+            value: employee.name
         },
         {
             label: "Joining Date",
-            value: employee.joiningDate.toDateString(),
-            isStatus: false
+            value: employee.joiningDate.toDateString()
         },
         {
             label: "Department",
-            value: employee.department.name,
-            isStatus: false
+            value: employee.department.name
         },
         {
             label: "Role",
-            value: employee.role.role,
-            isStatus: false
+            value: employee.role.role
         },
         {
             label: "Status",
@@ -38,18 +34,15 @@ const EmployeeDetailsPage: React.FC = () => {
         },
         {
             label: "Experience",
-            value: employee.experience + " Years",
-            isStatus: false
+            value: employee.experience + " Years"
         },
         {
             label: "Address",
-            value: employee.address.addressLine1 + ", " + employee.address.addressLine2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode,
-            isStatus: false
+            value: employee.address.addressLine1 + ", " + employee.address.addressLine2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode
         },
         {
             label: "Employee ID",
-            value: employee.id,
-            isStatus: false
+            value: employee.id
         }
     ];
 

@@ -135,7 +135,7 @@ const Form: React.FC<FormPropsType> = (props) => {
         <FormField disabled={false} type="text" value={pincode} label=" " placeholder="Pincode" onChange={onChangePincode} showError={pincodeError} />
         {props.isEdit && <FormField disabled={true} value={props.employee.id} onChange={() => { }} label={"Employee ID"} placeholder={"Employee ID"} type={"text"} showError={false} />}
         <div className="form-buttons">
-            <div className="form-primary-button"><PrimaryButton height="35px" type="submit" label={primaryButtonLabel} onClick={props.onSubmit} /></div>
+            <div className="form-primary-button"><PrimaryButton type="submit" label={primaryButtonLabel} onClick={props.onSubmit} /></div>
             <SecondaryButton type="button" label="Cancel" onClick={() => {
                 navigate(-1);
             }} />

@@ -5,7 +5,7 @@ import "./Card.css";
 type CardItemType = {
     label: string,
     value: string,
-    isStatus: boolean
+    isStatus?: boolean
 }
 
 type CardPropsType = {
@@ -14,7 +14,7 @@ type CardPropsType = {
 
 const Card: React.FC<CardPropsType> = (props) => {
     const items = props.items.map(
-        (item: CardItemType) => <CardItem key={item.value} label={item.label} value={item.value} isStatus={item.isStatus} />);
+        (item: CardItemType) => <CardItem key={item.value} label={item.label} value={item.value} isStatus={item.isStatus ? item.isStatus : false} />);
 
     return <div>
         <div className="details-card">
