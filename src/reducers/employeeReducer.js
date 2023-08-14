@@ -1,3 +1,5 @@
+import DispatchConstants from "../constants/dispatch";
+
 const initialState = [
     {
         "id": "1",
@@ -99,10 +101,19 @@ const initialState = [
 
 const employeeReducer = (state = initialState, action) => {
     let newState;
+    let index;
 
     switch (action.type) {
-        case "EMPLOYEE:CREATE":
+        case DispatchConstants.createEmployee:
             newState = [...state, action.payload];
+            break;
+        case DispatchConstants.editEmployee:
+            index = state.findIndex((employee) => employee.id === action.payload.id);
+            state[index] = action.payload;
+            newState = state;
+            break;
+        case DispatchConstants.deleteEmployee:
+            newState = state.filter((employee) => employee.id !== action.payload.id);
             break;
         default:
             newState = state;

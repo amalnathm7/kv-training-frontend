@@ -7,6 +7,7 @@ import PrimaryButton from "../button/PrimaryButton/PrimaryButton";
 import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import DispatchConstants from "../../constants/dispatch";
 
 type FormPropsType = {
     employee: Employee
@@ -124,9 +125,9 @@ const Form: React.FC<FormPropsType> = (props) => {
 
     const saveEmployee = () => {
         dispatch({
-            type: "EMPLOYEE:CREATE",
+            type: props.isEdit ? DispatchConstants.editEmployee : DispatchConstants.createEmployee,
             payload: {
-                "id": "5",
+                "id": props.employee ? props.employee.id : "5",
                 "name": name,
                 "role": {
                     role: role,

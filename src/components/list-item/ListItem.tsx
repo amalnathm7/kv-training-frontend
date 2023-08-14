@@ -6,6 +6,8 @@ import StatusIcon from "../status-icon/StatusIcon";
 import ActionButton from "../button/ActionButton/ActionButton";
 import { useNavigate } from "react-router-dom";
 import CustomPopup from "../popup/CustomPopup";
+import { useDispatch } from "react-redux";
+import DispatchConstants from "../../constants/dispatch";
 
 type ListItemProps = {
     employee: Employee
@@ -31,6 +33,18 @@ const ListItem: React.FC<ListItemProps> = (props) => {
         navigate(`/employee/${props.employee.id}`);
     };
 
+    const dispatch = useDispatch();
+
+    const onConfirmDelete = () => {
+        dispatch({
+            type: DispatchConstants.deleteEmployee,
+            payload: {
+                id: props.employee.id
+            }
+        });
+        setShowDeletePopup(false);
+    };
+
     return <tr className="list-item" onClick={onClick}>
         <td>{props.employee.id}</td>
         <td>{props.employee.name}</td>
@@ -44,9 +58,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             <ActionButton icon="delete.png" onClick={handleDelete}></ActionButton>
             <ActionButton icon="edit.png" onClick={handleEdit}></ActionButton>
         </td>
-        {showDeletePopup && <CustomPopup showPopup={showDeletePopup} onConfirm={() => {
-            setShowDeletePopup(false);
-        }} onCancel={() => {
+        {showDeletePopup && <CustomPopup showPopup={showDeletePopup} onConfirm={onConfirmDelete} onCancel={() => {
             setShowDeletePopup(false);
         }} />}
     </tr>;
