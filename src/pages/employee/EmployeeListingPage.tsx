@@ -1,7 +1,6 @@
 import Listing from "../../components/listing/Listing";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React from "react";
-import { data } from "../../constants/data";
 import { useNavigate } from "react-router-dom";
 
 const EmployeeListingPage: React.FC = () => {
@@ -13,7 +12,7 @@ const EmployeeListingPage: React.FC = () => {
     };
 
     return <HomeLayout subHeaderAction={onCreateClicked} subHeaderLabel="Employee List" subHeaderActionLabel="Create Employee" subHeaderActionIcon="create.png">
-        <Listing labels={labels} employees={data} />
+        <Listing labels={labels} />
     </HomeLayout>;
 };
 

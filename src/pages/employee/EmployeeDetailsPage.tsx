@@ -1,5 +1,5 @@
+import { useSelector } from "react-redux";
 import Card from "../../components/card/Card";
-import { data } from "../../constants/data";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React from "react";
 import { useNavigate, useParams } from "react-router-dom";
@@ -8,7 +8,11 @@ const EmployeeDetailsPage: React.FC = () => {
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const employee = data.find((employee) => employee.id === id);
+    const employeesData = useSelector((state: any) => {
+        return state.employees;
+    });
+
+    const employee = employeesData.find((employee) => employee.id === id);
 
     const items = [
         {

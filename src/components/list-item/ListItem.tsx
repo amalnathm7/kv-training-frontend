@@ -5,7 +5,6 @@ import { Status } from "../../types/Status";
 import StatusIcon from "../status-icon/StatusIcon";
 import ActionButton from "../button/ActionButton/ActionButton";
 import { useNavigate } from "react-router-dom";
-import 'reactjs-popup/dist/index.css';
 import CustomPopup from "../popup/CustomPopup";
 
 type ListItemProps = {
@@ -45,7 +44,11 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             <ActionButton icon="delete.png" onClick={handleDelete}></ActionButton>
             <ActionButton icon="edit.png" onClick={handleEdit}></ActionButton>
         </td>
-        <CustomPopup showPopup={showDeletePopup} onConfirm={() => { setShowDeletePopup(false); }} onCancel={() => { setShowDeletePopup(false); }} />
+        {showDeletePopup && <CustomPopup showPopup={showDeletePopup} onConfirm={() => {
+            setShowDeletePopup(false);
+        }} onCancel={() => {
+            setShowDeletePopup(false);
+        }} />}
     </tr>;
 };
 

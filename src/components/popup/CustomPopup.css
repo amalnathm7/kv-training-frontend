@@ -1,15 +1,29 @@
+.popup-overlay {
+  z-index: 1;
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: rgba(0, 0, 0, .5);
+  cursor: default;
+}
+
 .popup-content {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: fit-content;
-  padding: 0px;
-  margin-top: 20px;
-  margin-bottom: 20px;
-  margin-left: 80px;
-  margin-right: 80px;
+  padding-left: 50px;
+  padding-right: 50px;
+  padding-top: 10px;
+  padding-bottom: 10px;
   border: none;
+  background-color: white;
 }
 
 .popup-buttons {

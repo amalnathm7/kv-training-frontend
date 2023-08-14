@@ -6,10 +6,10 @@ import { Employee } from "@app/types/Employee";
 import PrimaryButton from "../button/PrimaryButton/PrimaryButton";
 import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 type FormPropsType = {
-    employee: Employee,
-    onSubmit: () => void,
+    employee: Employee
     isEdit: boolean
 };
 
@@ -120,6 +120,39 @@ const Form: React.FC<FormPropsType> = (props) => {
     const primaryButtonLabel = props.isEdit ? "Save" : "Create";
     const navigate = useNavigate();
 
+    const dispatch = useDispatch();
+
+    const saveEmployee = () => {
+        dispatch({
+            type: "EMPLOYEE:CREATE",
+            payload: {
+                "id": "5",
+                "name": name,
+                "role": {
+                    role: role,
+                    permissionLevel: 0
+                },
+                "joiningDate": new Date(),
+                "status": status,
+                "experience": experience,
+                "department": {
+                    name: department,
+                    id: "1"
+                },
+                "address": {
+                    id: "1",
+                    addressLine1: line1,
+                    addressLine2: line2,
+                    city: city,
+                    state: state,
+                    country: country,
+                    pincode: pincode
+                }
+            }
+        });
+        navigate(-1);
+    };
+
     return <div className="form-container">
         <FormField disabled={false} type="text" value={name} label="Employee Name" placeholder="John Doe" onChange={onChangeName} showError={nameError} />
         <FormField disabled={false} type="date" value={date} label="Joining Date" placeholder="" onChange={onChangeDate} showError={dateError} />
@@ -135,7 +168,7 @@ const Form: React.FC<FormPropsType> = (props) => {
         <FormField disabled={false} type="text" value={pincode} label=" " placeholder="Pincode" onChange={onChangePincode} showError={pincodeError} />
         {props.isEdit && <FormField disabled={true} value={props.employee.id} onChange={() => { }} label={"Employee ID"} placeholder={"Employee ID"} type={"text"} showError={false} />}
         <div className="form-buttons">
-            <div className="form-primary-button"><PrimaryButton type="submit" label={primaryButtonLabel} onClick={props.onSubmit} /></div>
+            <div className="form-primary-button"><PrimaryButton type="submit" label={primaryButtonLabel} onClick={saveEmployee} /></div>
             <SecondaryButton type="button" label="Cancel" onClick={() => {
                 navigate(-1);
             }} />

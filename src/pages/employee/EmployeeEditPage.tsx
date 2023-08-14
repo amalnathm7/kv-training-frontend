@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Form from "../../components/form/Form";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React from "react";
@@ -8,13 +8,8 @@ const EmployeeEditPage: React.FC = () => {
     const { id } = useParams();
     const employee = data.find((employee) => employee.id === id);
 
-    const navigate = useNavigate();
-    const updateEmployee = () => {
-        navigate(`/employee/${id}`);
-    };
-
     return <HomeLayout subHeaderAction={() => { }} subHeaderLabel="Edit Employee" subHeaderActionLabel="" subHeaderActionIcon="">
-        <Form employee={employee} onSubmit={updateEmployee} isEdit={true} />
+        <Form employee={employee} isEdit={true} />
     </HomeLayout>;
 };
 
