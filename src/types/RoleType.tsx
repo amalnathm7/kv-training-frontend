@@ -1,4 +1,4 @@
-export type Role = {
+export type RoleType = {
     role: string,
     permissionLevel: number
 };

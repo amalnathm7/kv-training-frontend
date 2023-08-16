@@ -1,31 +1,32 @@
-import React, { useEffect, useState } from "react";
-import "./Form.css";
-import FormField from "../input-field/form-field/FormField";
-import DropDown from "../input-field/drop-down/DropDown";
-import { Employee } from "@app/types/Employee";
-import PrimaryButton from "../button/PrimaryButton/PrimaryButton";
-import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import './Form.css';
+import FormField from '../input-field/form-field/FormField';
+import DropDown from '../input-field/drop-down/DropDown';
+import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
+import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { addEmployee, editEmployee } from '../../actions/employeeAction';
+import { EmployeeType } from '../../types/EmployeeType';
 
 type FormPropsType = {
-    employee: Employee,
-    onSubmit: () => void,
-    isEdit: boolean
+    employee: EmployeeType;
+    isEdit: boolean;
 };
 
 const Form: React.FC<FormPropsType> = (props) => {
-    const [name, setName] = useState("");
-    const [date, setDate] = useState("");
+    const [name, setName] = useState('');
+    const [date, setDate] = useState('');
     const [experience, setExperience] = useState(0);
-    const [department, setDepartment] = useState("Select Department");
-    const [role, setRole] = useState("Select Role");
-    const [status, setStatus] = useState("Select Status");
-    const [line1, setLine1] = useState("");
-    const [line2, setLine2] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [country, setCountry] = useState("");
-    const [pincode, setPincode] = useState("");
+    const [department, setDepartment] = useState('Select Department');
+    const [role, setRole] = useState('Select Role');
+    const [status, setStatus] = useState('Select Status');
+    const [line1, setLine1] = useState('');
+    const [line2, setLine2] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [country, setCountry] = useState('');
+    const [pincode, setPincode] = useState('');
 
     useEffect(() => {
         if (props.employee) {
@@ -117,30 +118,173 @@ const Form: React.FC<FormPropsType> = (props) => {
         setPincodeError(false);
     };
 
-    const primaryButtonLabel = props.isEdit ? "Save" : "Create";
-    const navigate = useNavigate();
+    const primaryButtonLabel = props.isEdit ? 'Save' : 'Create';
 
-    return <div className="form-container">
-        <FormField disabled={false} type="text" value={name} label="Employee Name" placeholder="John Doe" onChange={onChangeName} showError={nameError} />
-        <FormField disabled={false} type="date" value={date} label="Joining Date" placeholder="" onChange={onChangeDate} showError={dateError} />
-        <FormField disabled={false} type="number" value={experience} label="Experience (Years)" placeholder="" onChange={onChangeExperience} showError={experienceError} />
-        <DropDown options={["HR", "Dev", "UI/UX"]} value={department} label="Department" placeholder="Select Department" onChange={onChangeDepartment} showError={departmentError} />
-        <DropDown options={["Manager", "Developer", "Designer"]} value={role} label="Role" placeholder="Select Role" onChange={onChangeRole} showError={roleError} />
-        <DropDown options={["Active", "Inactive", "Probation"]} value={status} label="Status" placeholder="Select Status" onChange={onChangeStatus} showError={statusError} />
-        <FormField disabled={false} type="text" value={line1} label="Address" placeholder="Line 1" onChange={onChangeLine1} showError={line1Error} />
-        <FormField disabled={false} type="text" value={line2} label="" placeholder="Line 2" onChange={onChangeLine2} showError={line2Error} />
-        <FormField disabled={false} type="text" value={city} label="" placeholder="City" onChange={onChangeCity} showError={cityError} />
-        <FormField disabled={false} type="text" value={state} label=" " placeholder="State" onChange={onChangeState} showError={stateError} />
-        <FormField disabled={false} type="text" value={country} label=" " placeholder="Country" onChange={onChangeCountry} showError={countryError} />
-        <FormField disabled={false} type="text" value={pincode} label=" " placeholder="Pincode" onChange={onChangePincode} showError={pincodeError} />
-        {props.isEdit && <FormField disabled={true} value={props.employee.id} onChange={() => { }} label={"Employee ID"} placeholder={"Employee ID"} type={"text"} showError={false} />}
-        <div className="form-buttons">
-            <div className="form-primary-button"><PrimaryButton type="submit" label={primaryButtonLabel} onClick={props.onSubmit} /></div>
-            <SecondaryButton type="button" label="Cancel" onClick={() => {
-                navigate(-1);
-            }} />
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const saveEmployee = () => {
+        const employee = {
+            id: props.employee ? props.employee.id : '5',
+            name: name,
+            role: {
+                role: role,
+                permissionLevel: 0
+            },
+            joiningDate: new Date(),
+            status: status,
+            experience: experience,
+            department: {
+                name: department,
+                id: '1'
+            },
+            address: {
+                id: '1',
+                addressLine1: line1,
+                addressLine2: line2,
+                city: city,
+                state: state,
+                country: country,
+                pincode: pincode
+            }
+        };
+
+        dispatch(!props.isEdit ? addEmployee(employee) : editEmployee(employee));
+        navigate(-1);
+    };
+
+    return (
+        <div className='form-container'>
+            <FormField
+                disabled={false}
+                type='text'
+                value={name}
+                label='Employee Name'
+                placeholder='John Doe'
+                onChange={onChangeName}
+                showError={nameError}
+            />
+            <FormField
+                disabled={false}
+                type='date'
+                value={date}
+                label='Joining Date'
+                placeholder=''
+                onChange={onChangeDate}
+                showError={dateError}
+            />
+            <FormField
+                disabled={false}
+                type='number'
+                value={experience}
+                label='Experience (Years)'
+                placeholder=''
+                onChange={onChangeExperience}
+                showError={experienceError}
+            />
+            <DropDown
+                options={['HR', 'Dev', 'UI/UX']}
+                value={department}
+                label='Department'
+                placeholder='Select Department'
+                onChange={onChangeDepartment}
+                showError={departmentError}
+            />
+            <DropDown
+                options={['Manager', 'Developer', 'Designer']}
+                value={role}
+                label='Role'
+                placeholder='Select Role'
+                onChange={onChangeRole}
+                showError={roleError}
+            />
+            <DropDown
+                options={['Active', 'Inactive', 'Probation']}
+                value={status}
+                label='Status'
+                placeholder='Select Status'
+                onChange={onChangeStatus}
+                showError={statusError}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={line1}
+                label='Address'
+                placeholder='Line 1'
+                onChange={onChangeLine1}
+                showError={line1Error}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={line2}
+                label=''
+                placeholder='Line 2'
+                onChange={onChangeLine2}
+                showError={line2Error}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={city}
+                label=''
+                placeholder='City'
+                onChange={onChangeCity}
+                showError={cityError}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={state}
+                label=' '
+                placeholder='State'
+                onChange={onChangeState}
+                showError={stateError}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={country}
+                label=' '
+                placeholder='Country'
+                onChange={onChangeCountry}
+                showError={countryError}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={pincode}
+                label=' '
+                placeholder='Pincode'
+                onChange={onChangePincode}
+                showError={pincodeError}
+            />
+            {props.isEdit && (
+                <FormField
+                    disabled={true}
+                    value={props.employee.id}
+                    onChange={() => { }}
+                    label={'Employee ID'}
+                    placeholder={'Employee ID'}
+                    type={'text'}
+                    showError={false}
+                />
+            )}
+            <div className='form-buttons'>
+                <div className='form-primary-button'>
+                    <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveEmployee} />
+                </div>
+                <SecondaryButton
+                    type='button'
+                    label='Cancel'
+                    onClick={() => {
+                        navigate(-1);
+                    }}
+                />
+            </div>
         </div>
-    </div>;
+    );
 };
 
 export default Form;

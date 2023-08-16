@@ -1,4 +1,4 @@
-export type Status = {
+export type StatusType = {
     label: string,
     color: string
 };

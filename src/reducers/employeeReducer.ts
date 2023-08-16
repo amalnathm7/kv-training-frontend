@@ -1,6 +1,8 @@
-import { Employee } from "../types/Employee";
+import { createReducer } from "@reduxjs/toolkit";
+import { addEmployee, deleteEmployee, editEmployee } from "../actions/employeeAction";
+import { EmployeeType } from "../types/EmployeeType";
 
-export const data: Employee[] = [
+const initialState: EmployeeType[] = [
     {
         "id": "1",
         "name": "Daniel Brown",
@@ -98,3 +100,27 @@ export const data: Employee[] = [
         }
     }
 ];
+
+const employeeReducer = createReducer(initialState, (builder) => {
+    builder.addCase(addEmployee, (state, action) => {
+        state = [...state, action.payload];
+
+        return state;
+    });
+
+    builder.addCase(editEmployee, (state, action) => {
+        const index = state.findIndex((employee) => employee.id === action.payload.id);
+
+        state[index] = action.payload;
+
+        return state;
+    });
+
+    builder.addCase(deleteEmployee, (state, action) => {
+        state = state.filter((employee) => employee.id !== action.payload.id);
+
+        return state;
+    });
+});
+
+export default employeeReducer;

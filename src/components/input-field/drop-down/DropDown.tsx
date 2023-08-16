@@ -17,7 +17,7 @@ const DropDown: React.FC<DropDownPropType> = (props) => {
     return <div className="dropdown-item">
         <label className="dropdown-label">{props.label}</label>
         <select onChange={props.onChange} className="dropdown-field" value={props.value}>
-            <option selected disabled>{props.placeholder}</option>
+            <option selected hidden>{props.placeholder}</option>
             {options}
         </select>
         {props.showError && <label className="dropdown-error">Enter {props.label.toLowerCase()}</label>}

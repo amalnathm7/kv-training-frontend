@@ -6,11 +6,13 @@ import EmployeeListingPage from './pages/employee/EmployeeListingPage';
 import EmployeeDetailsPage from './pages/employee/EmployeeDetailsPage';
 import EmployeeCreatePage from './pages/employee/EmployeeCreatePage';
 import EmployeeEditPage from './pages/employee/EmployeeEditPage';
+import SplashPage from './pages/splash/SplashPage';
 
 const App: FC = () => {
   return <div className='app'>
     <BrowserRouter>
       <Routes>
+        <Route path='/' element={<SplashPage />} />
         <Route path='/login' element={<LoginPage />} />
         <Route path='/employee' element={<EmployeeListingPage />} />
         <Route path='/employee/:id' element={<EmployeeDetailsPage />} />
