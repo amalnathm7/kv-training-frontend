@@ -1,8 +1,9 @@
 import PrimaryButton from "../../components/button/PrimaryButton/PrimaryButton";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import LoginField from "../../components/input-field/login-field/LoginField";
+import { useLoginMutation } from "../../services/loginApi";
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState("");
@@ -21,11 +22,24 @@ const LoginPage: React.FC = () => {
         setPassword(event.target.value);
     };
 
+    const [login, { data, isSuccess }] = useLoginMutation();
+
     const onClick = () => {
         if (username.trim().length === 0) setUsernameError(true);
         if (password.trim().length === 0) setPasswordError(true);
-        if (username.trim().length > 0 && password.trim().length > 0) navigate("/employee");
+        if (username.trim().length > 0 && password.trim().length > 0)
+            login({
+                username,
+                password
+            });
     };
+
+    useEffect(() => {
+        if (isSuccess && data) {
+            localStorage.setItem('token', data.data.token);
+            navigate("/employee");
+        }
+    }, [data, isSuccess]);
 
     return <div className="login-container">
         <div className="split left">

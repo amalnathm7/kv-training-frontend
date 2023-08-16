@@ -1,6 +1,8 @@
-import DispatchConstants from "../constants/dispatch";
+import { createReducer } from "@reduxjs/toolkit";
+import { addEmployee, deleteEmployee, editEmployee } from "../actions/employeeAction";
+import { EmployeeType } from "../types/EmployeeType";
 
-const initialState = [
+const initialState: EmployeeType[] = [
     {
         "id": "1",
         "name": "Daniel Brown",
@@ -99,29 +101,26 @@ const initialState = [
     }
 ];
 
-const employeeReducer = (state = initialState, action) => {
-    let newState;
+const employeeReducer = createReducer(initialState, (builder) => {
+    builder.addCase(addEmployee, (state, action) => {
+        state = [...state, action.payload];
 
-    switch (action.type) {
-        case DispatchConstants.createEmployee:
-            newState = [...state, action.payload];
-            break;
-        case DispatchConstants.editEmployee: {
-            const index = state.findIndex((employee) => employee.id === action.payload.id);
+        return state;
+    });
 
-            state[index] = action.payload;
-            newState = state;
+    builder.addCase(editEmployee, (state, action) => {
+        const index = state.findIndex((employee) => employee.id === action.payload.id);
 
-            break;
-        }
-        case DispatchConstants.deleteEmployee:
-            newState = state.filter((employee) => employee.id !== action.payload.id);
-            break;
-        default:
-            newState = state;
-    }
+        state[index] = action.payload;
 
-    return newState;
-};
+        return state;
+    });
+
+    builder.addCase(deleteEmployee, (state, action) => {
+        state = state.filter((employee) => employee.id !== action.payload.id);
+
+        return state;
+    });
+});
 
 export default employeeReducer;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./CardItem.css";
 import StatusIcon from "../status-icon/StatusIcon";
-import { Status } from "../../types/Status";
+import { StatusType } from "../../types/StatusType";
 
 type CardItemPropsType = {
     label: string,
@@ -10,7 +10,7 @@ type CardItemPropsType = {
 };
 
 const CardItem: React.FC<CardItemPropsType> = (props) => {
-    let status: Status;
+    let status: StatusType;
 
     if (props.isStatus)
         status = {

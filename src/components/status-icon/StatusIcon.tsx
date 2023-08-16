@@ -1,8 +1,8 @@
-import { Status } from "../../types/Status";
+import { StatusType } from "../../types/StatusType";
 import React from "react";
 
 type StatusProps = {
-    status: Status
+    status: StatusType
 };
 const StatusIcon: React.FC<StatusProps> = (props) => {
     const style = {
