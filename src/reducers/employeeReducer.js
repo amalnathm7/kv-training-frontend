@@ -101,17 +101,19 @@ const initialState = [
 
 const employeeReducer = (state = initialState, action) => {
     let newState;
-    let index;
 
     switch (action.type) {
         case DispatchConstants.createEmployee:
             newState = [...state, action.payload];
             break;
-        case DispatchConstants.editEmployee:
-            index = state.findIndex((employee) => employee.id === action.payload.id);
+        case DispatchConstants.editEmployee: {
+            const index = state.findIndex((employee) => employee.id === action.payload.id);
+
             state[index] = action.payload;
             newState = state;
+
             break;
+        }
         case DispatchConstants.deleteEmployee:
             newState = state.filter((employee) => employee.id !== action.payload.id);
             break;
