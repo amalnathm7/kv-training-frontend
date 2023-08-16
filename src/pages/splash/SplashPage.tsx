@@ -17,7 +17,7 @@ const SplashPage: react.FC = () => {
     }, [token]);
 
     return <div className='splash-body'>
-        <Header></Header>
+        <Header isSplash={true}></Header>
         <h3 className='splash-heading'>KeyValue</h3>
         <h1 className='splash-main-heading'>Employee Application</h1>
     </div>;
