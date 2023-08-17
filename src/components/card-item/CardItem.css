@@ -4,6 +4,7 @@
     flex-direction: column;
     font-size: 16px;
     width: 16.5%;
+    overflow: hidden;
 }
 
 .card-label {

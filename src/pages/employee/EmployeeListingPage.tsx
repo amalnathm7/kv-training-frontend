@@ -13,7 +13,7 @@ const EmployeeListingPage: React.FC = () => {
     const [labels, setLabels] = useState([]);
 
     useEffect(() => {
-        if (isSuccess && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
+        if (isSuccess && myProfile.data.role && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
             setIsSuperAuthorized(true);
     }, [isSuccess]);
 

@@ -11,7 +11,7 @@ const EmployeeDetailsPage: React.FC = () => {
     const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
     useEffect(() => {
-        if (isProfileSuccess && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
+        if (isProfileSuccess && myProfile.data.role && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
             setIsSuperAuthorized(true);
     }, [isProfileSuccess]);
 

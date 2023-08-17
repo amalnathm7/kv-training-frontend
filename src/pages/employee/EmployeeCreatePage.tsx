@@ -11,7 +11,7 @@ const EmployeeCreatePage: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isSuccess && myProfile.data.role.permissionLevel !== PermissionLevel.SUPER)
+        if (isSuccess && !myProfile.data.role || isSuccess && myProfile.data.role.permissionLevel !== PermissionLevel.SUPER)
             navigate(`${RouteConstants.employee}`);
     }, [isSuccess]);
 
