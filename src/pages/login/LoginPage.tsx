@@ -36,8 +36,6 @@ const LoginPage: React.FC = () => {
     };
 
     useEffect(() => {
-        console.log(isError);
-        console.log(error);
         if (isSuccess && data) {
             localStorage.setItem('token', data.data.token);
             navigate(RouteConstants.employee, { replace: true });

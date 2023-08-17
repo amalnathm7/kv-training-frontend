@@ -3,6 +3,9 @@ import "./Header.css";
 import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
 import { useNavigate } from "react-router-dom";
 import { RouteConstants } from "../../constants/routeConstants";
+import { useDispatch } from "react-redux";
+// import { GET_MY_PROFILE } from "../../constants/apiConstants";
+import { baseApi } from "../../services";
 
 type HeaderPropsType = {
     isSplash?: boolean
@@ -14,9 +17,11 @@ const Header: React.FC<HeaderPropsType> = (props) => {
     };
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
+        dispatch(baseApi.util.resetApiState());
         navigate(RouteConstants.login, { replace: true });
     };
 

@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
-import { API_BASE_URL, GET_EMPLOYEE_LIST } from "../constants/apiConstants";
+import { API_BASE_URL, GET_EMPLOYEE_LIST, GET_MY_PROFILE } from "../constants/apiConstants";
 
 export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
@@ -18,5 +18,5 @@ export const baseApi = createApi({
     refetchOnMountOrArgChange: true,
     refetchOnReconnect: true,
     endpoints: () => ({}),
-    tagTypes: [GET_EMPLOYEE_LIST]
+    tagTypes: [GET_EMPLOYEE_LIST, GET_MY_PROFILE]
 });

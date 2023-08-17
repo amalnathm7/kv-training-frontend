@@ -1,8 +1,19 @@
 import Form from "../../components/form/Form";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
-import React from "react";
+import React, { useEffect } from "react";
+import { useGetMyProfileQuery } from "../../services/employeeApi";
+import { PermissionLevel } from "../../utils/PermissionLevel";
+import { useNavigate } from "react-router-dom";
+import { RouteConstants } from "../../constants/routeConstants";
 
 const EmployeeCreatePage: React.FC = () => {
+    const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (isSuccess && myProfile.data.role.permissionLevel !== PermissionLevel.SUPER)
+            navigate(`${RouteConstants.employee}`);
+    }, [isSuccess]);
 
     return <HomeLayout subHeaderAction={() => { }} subHeaderLabel="Create Employee" subHeaderActionLabel="" subHeaderActionIcon="">
         <Form employee={null} isEdit={false} />

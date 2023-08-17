@@ -1,11 +1,20 @@
 import Card from "../../components/card/Card";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { useGetEmployeeByIdQuery } from "../../services/employeeApi";
+import { useGetEmployeeByIdQuery, useGetMyProfileQuery } from "../../services/employeeApi";
 import { RouteConstants } from "../../constants/routeConstants";
+import { PermissionLevel } from "../../utils/PermissionLevel";
 
 const EmployeeDetailsPage: React.FC = () => {
+    const { data: myProfile, isSuccess: isProfileSuccess } = useGetMyProfileQuery();
+    const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+
+    useEffect(() => {
+        if (isProfileSuccess && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
+            setIsSuperAuthorized(true);
+    }, [isProfileSuccess]);
+
     const { id } = useParams();
     const navigate = useNavigate();
 
@@ -18,8 +27,16 @@ const EmployeeDetailsPage: React.FC = () => {
 
         items = [
             {
+                label: "Employee ID",
+                value: employee.id
+            },
+            {
                 label: "Employee Name",
                 value: employee.name
+            },
+            {
+                label: "Username",
+                value: employee.username
             },
             {
                 label: "Joining Date",
@@ -45,10 +62,6 @@ const EmployeeDetailsPage: React.FC = () => {
             {
                 label: "Address",
                 value: employee.address.addressLine1 + ", " + employee.address.addressLine2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode
-            },
-            {
-                label: "Employee ID",
-                value: employee.id
             }
         ];
     }
@@ -57,7 +70,7 @@ const EmployeeDetailsPage: React.FC = () => {
         navigate(`${RouteConstants.employee}/${id}/edit`);
     };
 
-    return <HomeLayout subHeaderAction={onEditClicked} subHeaderLabel="Employee Details" subHeaderActionLabel="Edit" subHeaderActionIcon="edit.svg">
+    return <HomeLayout subHeaderAction={isSuperAuthorized ? onEditClicked : null} subHeaderLabel="Employee Details" subHeaderActionLabel={isSuperAuthorized ? "Edit" : ""} subHeaderActionIcon={isSuperAuthorized ? "edit.svg" : ""}>
         <Card items={items}></Card>
     </HomeLayout>;
 };

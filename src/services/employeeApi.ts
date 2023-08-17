@@ -1,5 +1,5 @@
 import { baseApi } from ".";
-import { GET_EMPLOYEE_LIST } from "../constants/apiConstants";
+import { GET_EMPLOYEE_LIST, GET_MY_PROFILE } from "../constants/apiConstants";
 import { RouteConstants } from "../constants/routeConstants";
 import { EmployeeType } from "../types/EmployeeType";
 import { ResponseType } from "../types/ResponseType";
@@ -9,6 +9,10 @@ export const employeeApi = baseApi.injectEndpoints({
         getEmployeeList: builder.query<ResponseType<EmployeeType[]>, void>({
             query: () => `${RouteConstants.employeeApi}`,
             providesTags: [GET_EMPLOYEE_LIST]
+        }),
+        getMyProfile: builder.query<ResponseType<EmployeeType>, void>({
+            query: () => `${RouteConstants.employeeApi}/profile`,
+            providesTags: [GET_MY_PROFILE]
         }),
         getEmployeeById: builder.query<ResponseType<EmployeeType>, string>({
             query: (id) => `${RouteConstants.employeeApi}/${id}`
@@ -37,5 +41,5 @@ export const employeeApi = baseApi.injectEndpoints({
     })
 });
 
-export const { useGetEmployeeListQuery, useGetEmployeeByIdQuery, useCreateEmployeeMutation,
+export const { useGetEmployeeListQuery, useGetMyProfileQuery, useGetEmployeeByIdQuery, useCreateEmployeeMutation,
     useUpdateEmployeeMutation, useDeleteEmployeeMutation } = employeeApi;

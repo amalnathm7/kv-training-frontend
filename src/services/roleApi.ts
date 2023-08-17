@@ -8,8 +8,11 @@ export const roleApi = baseApi.injectEndpoints({
         getRoleList: builder.query<ResponseType<RoleType[]>, void>({
             query: () => `${RouteConstants.roleApi}`,
             providesTags: []
+        }),
+        getRoleById: builder.query<ResponseType<RoleType>, string>({
+            query: (id) => `${RouteConstants.roleApi}/${id}`
         })
     })
 });
 
-export const { useGetRoleListQuery } = roleApi;
+export const { useGetRoleListQuery, useGetRoleByIdQuery } = roleApi;

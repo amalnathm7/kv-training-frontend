@@ -16,7 +16,6 @@ type FormPropsType = {
 };
 
 const Form: React.FC<FormPropsType> = (props) => {
-
     const [name, setName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -140,7 +139,7 @@ const Form: React.FC<FormPropsType> = (props) => {
         if (name.trim().length === 0) { flag = true; setNameError(true); }
         if (date.trim().length === 0) { flag = true; setDateError(true); }
         if (username.trim().length === 0) { flag = true; setUsernameError(true); }
-        if (experience <= 0) { flag = true; setExperienceError(true); }
+        if (experience < 0) { flag = true; setExperienceError(true); }
         if (status.trim().length === 0 || status === 'Select Status') { flag = true; setStatusError(true); }
         if (line1.trim().length === 0) { flag = true; setLine1Error(true); }
         if (line2.trim().length === 0) { flag = true; setLine2Error(true); }
@@ -319,7 +318,7 @@ const Form: React.FC<FormPropsType> = (props) => {
             {props.isEdit && (
                 <FormField
                     disabled={true}
-                    value={props.employee.id}
+                    value={props.employee?.id}
                     onChange={() => { }}
                     label={'Employee ID'}
                     placeholder={'Employee ID'}
