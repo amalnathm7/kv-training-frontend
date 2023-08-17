@@ -1,4 +1,4 @@
-import { baseApi } from ".";
+import { baseApi } from "./baseApi";
 import { RouteConstants } from "../constants/routeConstants";
 
 type LoginPayloadType = { username: string, password: string };

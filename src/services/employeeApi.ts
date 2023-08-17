@@ -1,5 +1,5 @@
-import { baseApi } from ".";
-import { GET_EMPLOYEE_LIST, GET_MY_PROFILE } from "../constants/apiConstants";
+import { baseApi } from "./baseApi";
+import { GET_EMPLOYEE_LIST } from "../constants/apiConstants";
 import { RouteConstants } from "../constants/routeConstants";
 import { EmployeeType } from "../types/EmployeeType";
 import { ResponseType } from "../types/ResponseType";
@@ -11,8 +11,7 @@ export const employeeApi = baseApi.injectEndpoints({
             providesTags: [GET_EMPLOYEE_LIST]
         }),
         getMyProfile: builder.query<ResponseType<EmployeeType>, void>({
-            query: () => `${RouteConstants.employeeApi}/profile`,
-            providesTags: [GET_MY_PROFILE]
+            query: () => `${RouteConstants.employeeApi}/profile`
         }),
         getEmployeeById: builder.query<ResponseType<EmployeeType>, string>({
             query: (id) => `${RouteConstants.employeeApi}/${id}`

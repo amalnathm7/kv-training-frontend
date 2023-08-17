@@ -10,7 +10,7 @@ type ListingPropsType = {
 const Listing: React.FC<ListingPropsType> = (props) => {
     const { data: employeesData, isSuccess } = useGetEmployeeListQuery();
 
-    const labels = props.labels.map((label) => <div className="listing-label" key={label}><label>{label}</label></div>);
+    const labels = props.labels.map((label) => <td className="listing-label" key={label}><label>{label}</label></td>);
 
     let employees = [];
 
@@ -18,8 +18,8 @@ const Listing: React.FC<ListingPropsType> = (props) => {
         employees = employeesData.data.map((employee) => <ListItem key={employee.id} employee={employee}></ListItem>);
 
     return <div className="listing">
-        <div className="list-header">{labels}</div>
         <table>
+            <thead className="list-header">{labels}</thead>
             <tbody className="list-items">
                 {employees}
             </tbody>

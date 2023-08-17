@@ -1,4 +1,4 @@
-import { baseApi } from ".";
+import { baseApi } from "./baseApi";
 import { RouteConstants } from "../constants/routeConstants";
 import { DepartmentType } from "../types/DepartmentType";
 import { ResponseType } from "../types/ResponseType";

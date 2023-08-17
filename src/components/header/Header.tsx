@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { RouteConstants } from "../../constants/routeConstants";
 import { useDispatch } from "react-redux";
 // import { GET_MY_PROFILE } from "../../constants/apiConstants";
-import { baseApi } from "../../services";
+import { baseApi } from "../../services/baseApi";
 
 type HeaderPropsType = {
     isSplash?: boolean
