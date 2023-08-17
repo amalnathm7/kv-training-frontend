@@ -1,6 +1,7 @@
 .header {
     background-color: white;
     display: flex;
+    justify-content: space-between;
     position: fixed;
     margin: 0;
     top: 0;
@@ -21,4 +22,8 @@
     justify-content: start;
     height: 100px;
     background-color: #E2E8FA50;
+}
+
+.header-logout-button {
+    margin-right: 30px;
 }

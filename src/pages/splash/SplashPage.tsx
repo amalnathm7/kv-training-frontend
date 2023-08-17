@@ -2,6 +2,7 @@ import react, { useEffect } from 'react';
 import './index.css';
 import Header from '../../components/header/Header';
 import { useNavigate } from 'react-router-dom';
+import { RouteConstants } from '../../constants/routeConstants';
 
 const SplashPage: react.FC = () => {
     const token = localStorage.getItem('token');
@@ -10,9 +11,9 @@ const SplashPage: react.FC = () => {
     useEffect(() => {
         setTimeout(() => {
             if (token)
-                navigate('/employee');
+                navigate(`${RouteConstants.employee}`);
             else
-                navigate('/login');
+                navigate(`${RouteConstants.login}`);
         }, 1000);
     }, [token]);
 

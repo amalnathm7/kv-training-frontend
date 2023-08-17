@@ -5,9 +5,10 @@ import DropDown from '../input-field/drop-down/DropDown';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { addEmployee, editEmployee } from '../../actions/employeeAction';
 import { EmployeeType } from '../../types/EmployeeType';
+import { useGetRoleListQuery } from '../../services/roleApi';
+import { useGetDepartmentListQuery } from '../../services/departmentApi';
+import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../services/employeeApi';
 
 type FormPropsType = {
     employee: EmployeeType;
@@ -15,7 +16,10 @@ type FormPropsType = {
 };
 
 const Form: React.FC<FormPropsType> = (props) => {
+
     const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
     const [date, setDate] = useState('');
     const [experience, setExperience] = useState(0);
     const [department, setDepartment] = useState('Select Department');
@@ -31,10 +35,11 @@ const Form: React.FC<FormPropsType> = (props) => {
     useEffect(() => {
         if (props.employee) {
             setName(props.employee.name);
-            setDate(props.employee.joiningDate.toDateString());
+            setUsername(props.employee.username);
+            setDate(new Date(props.employee.joiningDate).toISOString().split('T')[0]);
             setExperience(props.employee.experience);
-            setDepartment(props.employee.department.name);
-            setRole(props.employee.role.role);
+            setDepartment(props.employee.department?.name);
+            setRole(props.employee.role?.role);
             setStatus(props.employee.status);
             setLine1(props.employee.address.addressLine1);
             setLine2(props.employee.address.addressLine2);
@@ -46,6 +51,7 @@ const Form: React.FC<FormPropsType> = (props) => {
     }, []);
 
     const [nameError, setNameError] = useState(false);
+    const [usernameError, setUsernameError] = useState(false);
     const [dateError, setDateError] = useState(false);
     const [experienceError, setExperienceError] = useState(false);
     const [departmentError, setDepartmentError] = useState(false);
@@ -61,6 +67,12 @@ const Form: React.FC<FormPropsType> = (props) => {
     const onChangeName = (event) => {
         setName(event.target.value);
         setNameError(false);
+    };
+
+    const onChangeUsername = (event) => {
+        setUsername(event.target.value);
+        setPassword(event.target.value);
+        setUsernameError(false);
     };
 
     const onChangeDate = (event) => {
@@ -121,37 +133,70 @@ const Form: React.FC<FormPropsType> = (props) => {
     const primaryButtonLabel = props.isEdit ? 'Save' : 'Create';
 
     const navigate = useNavigate();
-    const dispatch = useDispatch();
 
     const saveEmployee = () => {
-        const employee = {
-            id: props.employee ? props.employee.id : '5',
-            name: name,
-            role: {
-                role: role,
-                permissionLevel: 0
-            },
-            joiningDate: new Date(),
-            status: status,
-            experience: experience,
-            department: {
-                name: department,
-                id: '1'
-            },
-            address: {
-                id: '1',
-                addressLine1: line1,
-                addressLine2: line2,
-                city: city,
-                state: state,
-                country: country,
-                pincode: pincode
-            }
-        };
+        let flag = false;
 
-        dispatch(!props.isEdit ? addEmployee(employee) : editEmployee(employee));
-        navigate(-1);
+        if (name.trim().length === 0) { flag = true; setNameError(true); }
+        if (date.trim().length === 0) { flag = true; setDateError(true); }
+        if (username.trim().length === 0) { flag = true; setUsernameError(true); }
+        if (experience <= 0) { flag = true; setExperienceError(true); }
+        if (status.trim().length === 0 || status === 'Select Status') { flag = true; setStatusError(true); }
+        if (line1.trim().length === 0) { flag = true; setLine1Error(true); }
+        if (line2.trim().length === 0) { flag = true; setLine2Error(true); }
+        if (city.trim().length === 0) { flag = true; setCityError(true); }
+        if (state.trim().length === 0) { flag = true; setStateError(true); }
+        if (country.trim().length === 0) { flag = true; setCountryError(true); }
+        if (pincode.trim().length === 0) { flag = true; setPincodeError(true); }
+
+        if (!flag) {
+            const employee = {
+                id: props.employee?.id,
+                name: name,
+                username: username,
+                password: password,
+                joiningDate: new Date(date),
+                status: status,
+                experience: Number(experience),
+                departmentId: (departmentData.data.find((dept) => dept.name === department))?.id,
+                roleId: (rolesData.data.find((roleData) => roleData.role === role))?.id,
+                address: {
+                    addressLine1: line1,
+                    addressLine2: line2,
+                    city: city,
+                    state: state,
+                    country: country,
+                    pincode: pincode
+                }
+            };
+
+            props.isEdit ? updateEmployee({ id: props.employee.id, employee: employee }) : createEmployee(employee);
+        }
     };
+
+    let roles = [];
+    let departments = [];
+
+    const [createEmployee, { isSuccess: isCreateEmployeeSuccess }] = useCreateEmployeeMutation();
+    const [updateEmployee, { isSuccess: isUpdateEmployeeSuccess }] = useUpdateEmployeeMutation();
+    const { data: departmentData, isSuccess: isDeptFetchSuccess } = useGetDepartmentListQuery();
+    const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
+
+    useEffect(() => {
+        if (props.isEdit) {
+            if (isUpdateEmployeeSuccess)
+                navigate(-1);
+        } else {
+            if (isCreateEmployeeSuccess)
+                navigate(-1);
+        }
+    }, [isCreateEmployeeSuccess, isUpdateEmployeeSuccess]);
+
+    if (isDeptFetchSuccess)
+        departments = departmentData.data.map((department) => department.name);
+
+    if (isRoleFetchSuccess)
+        roles = rolesData.data.map((role) => role.role);
 
     return (
         <div className='form-container'>
@@ -163,6 +208,15 @@ const Form: React.FC<FormPropsType> = (props) => {
                 placeholder='John Doe'
                 onChange={onChangeName}
                 showError={nameError}
+            />
+            <FormField
+                disabled={false}
+                type='text'
+                value={username}
+                label='Username'
+                placeholder='johndoe'
+                onChange={onChangeUsername}
+                showError={usernameError}
             />
             <FormField
                 disabled={false}
@@ -183,7 +237,7 @@ const Form: React.FC<FormPropsType> = (props) => {
                 showError={experienceError}
             />
             <DropDown
-                options={['HR', 'Dev', 'UI/UX']}
+                options={departments}
                 value={department}
                 label='Department'
                 placeholder='Select Department'
@@ -191,7 +245,7 @@ const Form: React.FC<FormPropsType> = (props) => {
                 showError={departmentError}
             />
             <DropDown
-                options={['Manager', 'Developer', 'Designer']}
+                options={roles}
                 value={role}
                 label='Role'
                 placeholder='Select Role'
@@ -206,60 +260,62 @@ const Form: React.FC<FormPropsType> = (props) => {
                 onChange={onChangeStatus}
                 showError={statusError}
             />
-            <FormField
-                disabled={false}
-                type='text'
-                value={line1}
-                label='Address'
-                placeholder='Line 1'
-                onChange={onChangeLine1}
-                showError={line1Error}
-            />
-            <FormField
-                disabled={false}
-                type='text'
-                value={line2}
-                label=''
-                placeholder='Line 2'
-                onChange={onChangeLine2}
-                showError={line2Error}
-            />
-            <FormField
-                disabled={false}
-                type='text'
-                value={city}
-                label=''
-                placeholder='City'
-                onChange={onChangeCity}
-                showError={cityError}
-            />
-            <FormField
-                disabled={false}
-                type='text'
-                value={state}
-                label=' '
-                placeholder='State'
-                onChange={onChangeState}
-                showError={stateError}
-            />
-            <FormField
-                disabled={false}
-                type='text'
-                value={country}
-                label=' '
-                placeholder='Country'
-                onChange={onChangeCountry}
-                showError={countryError}
-            />
-            <FormField
-                disabled={false}
-                type='text'
-                value={pincode}
-                label=' '
-                placeholder='Pincode'
-                onChange={onChangePincode}
-                showError={pincodeError}
-            />
+            <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
+                <FormField
+                    disabled={false}
+                    type='text'
+                    value={line1}
+                    label='Address'
+                    placeholder='Line 1'
+                    onChange={onChangeLine1}
+                    showError={line1Error}
+                />
+                <FormField
+                    disabled={false}
+                    type='text'
+                    value={line2}
+                    label=''
+                    placeholder='Line 2'
+                    onChange={onChangeLine2}
+                    showError={line2Error}
+                />
+                <FormField
+                    disabled={false}
+                    type='text'
+                    value={city}
+                    label=''
+                    placeholder='City'
+                    onChange={onChangeCity}
+                    showError={cityError}
+                />
+                <FormField
+                    disabled={false}
+                    type='text'
+                    value={state}
+                    label=' '
+                    placeholder='State'
+                    onChange={onChangeState}
+                    showError={stateError}
+                />
+                <FormField
+                    disabled={false}
+                    type='text'
+                    value={country}
+                    label=' '
+                    placeholder='Country'
+                    onChange={onChangeCountry}
+                    showError={countryError}
+                />
+                <FormField
+                    disabled={false}
+                    type='text'
+                    value={pincode}
+                    label=' '
+                    placeholder='Pincode'
+                    onChange={onChangePincode}
+                    showError={pincodeError}
+                />
+            </div>
             {props.isEdit && (
                 <FormField
                     disabled={true}

@@ -1,13 +1,13 @@
 import { EmployeeType } from "../../types/EmployeeType";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ListItem.css";
 import { StatusType } from "../../types/StatusType";
 import StatusIcon from "../status-icon/StatusIcon";
 import ActionButton from "../button/ActionButton/ActionButton";
 import { useNavigate } from "react-router-dom";
 import CustomPopup from "../popup/CustomPopup";
-import { useDispatch } from "react-redux";
-import DispatchConstants from "../../constants/dispatchConstants";
+import { useDeleteEmployeeMutation } from "../../services/employeeApi";
+import { RouteConstants } from "../../constants/routeConstants";
 
 type ListItemProps = {
     employee: EmployeeType
@@ -22,7 +22,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     };
 
     const handleEdit = () => {
-        navigate(`/employee/${props.employee.id}/edit`);
+        navigate(`${RouteConstants.employee}/${props.employee.id}/edit`);
     };
 
     const handleDelete = () => {
@@ -30,25 +30,23 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     };
 
     const onClick = () => {
-        navigate(`/employee/${props.employee.id}`);
+        navigate(`${RouteConstants.employee}/${props.employee.id}`);
     };
-
-    const dispatch = useDispatch();
 
     const onConfirmDelete = () => {
-        dispatch({
-            type: DispatchConstants.deleteEmployee,
-            payload: {
-                id: props.employee.id
-            }
-        });
-        setShowDeletePopup(false);
+        deleteEmployee(props.employee.id);
     };
+
+    const [deleteEmployee, { isSuccess: isDeleteSuccess }] = useDeleteEmployeeMutation();
+
+    useEffect(() => {
+        setShowDeletePopup(false);
+    }, [isDeleteSuccess]);
 
     return <tr className="list-item" onClick={onClick}>
         <td>{props.employee.id}</td>
         <td>{props.employee.name}</td>
-        <td>{props.employee.joiningDate}</td>
+        <td>{new Date(props.employee.joiningDate).toISOString().split('T')[0]}</td>
         <td>{props.employee.role ? props.employee.role.role : "NIL"}</td>
         <td>{props.employee.department ? props.employee.department.name : "NIL"}</td>
         <td><StatusIcon status={status}></StatusIcon></td>

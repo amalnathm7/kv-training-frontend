@@ -1,4 +1,5 @@
 import Listing from "../../components/listing/Listing";
+import { RouteConstants } from "../../constants/routeConstants";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ const EmployeeListingPage: React.FC = () => {
     const labels = ["Employee ID", "Employee Name", "Joining Date", "Role", "Department", "Status", "Experience", "Address", "Action"];
 
     const onCreateClicked = () => {
-        navigate("/employee/create");
+        navigate(`${RouteConstants.employee}/create`);
     };
 
     return <HomeLayout subHeaderAction={onCreateClicked} subHeaderLabel="Employee List" subHeaderActionLabel="Create Employee" subHeaderActionIcon="create.png">

@@ -67,3 +67,7 @@
         width: 100%;
     }
 }
+
+.login-error {
+    text-align: center;
+}

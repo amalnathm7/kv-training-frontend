@@ -1,7 +1,5 @@
-import { EmployeeType } from "./EmployeeType"
-
-export type EmployeeResponseType = {
-    data: EmployeeType[]
+export type ResponseType<type> = {
+    data: type
     errors: [],
     message: string,
     meta: {
@@ -10,4 +8,4 @@ export type EmployeeResponseType = {
         took: number,
         total: number
     }
-}
+};

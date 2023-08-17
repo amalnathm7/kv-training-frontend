@@ -17,7 +17,7 @@ const FormField: React.FC<InputPropTypes> = (props) => {
             {props.label.length === 0 && <div className="spacing"></div>}
             <label className="form-label">{props.label}</label>
             <input className="form-field" placeholder={props.placeholder} onChange={props.onChange} type={props.type} value={props.value} disabled={props.disabled}></input>
-            {props.showError && <label className="form-error">Enter {props.label.toLowerCase()}</label>}
+            {props.showError && <label className="form-error">Enter {props.label.trim().length !== 0 ? props.label.toLowerCase() : props.placeholder.toLowerCase()}</label>}
         </div>
     );
 };

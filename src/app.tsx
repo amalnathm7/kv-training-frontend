@@ -7,17 +7,18 @@ import EmployeeDetailsPage from './pages/employee/EmployeeDetailsPage';
 import EmployeeCreatePage from './pages/employee/EmployeeCreatePage';
 import EmployeeEditPage from './pages/employee/EmployeeEditPage';
 import SplashPage from './pages/splash/SplashPage';
+import { RouteConstants } from './constants/routeConstants';
 
 const App: FC = () => {
   return <div className='app'>
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<SplashPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/employee' element={<EmployeeListingPage />} />
-        <Route path='/employee/:id' element={<EmployeeDetailsPage />} />
-        <Route path='/employee/create' element={<EmployeeCreatePage />} />
-        <Route path='/employee/:id/edit' element={<EmployeeEditPage />} />
+        <Route path={RouteConstants.login} element={<LoginPage />} />
+        <Route path={RouteConstants.employee} element={<EmployeeListingPage />} />
+        <Route path={`${RouteConstants.employee}/:id`} element={<EmployeeDetailsPage />} />
+        <Route path={`${RouteConstants.employee}/create`} element={<EmployeeCreatePage />} />
+        <Route path={`${RouteConstants.employee}/:id/edit`} element={<EmployeeEditPage />} />
       </Routes>
     </BrowserRouter>
   </div>;

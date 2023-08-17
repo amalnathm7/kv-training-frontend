@@ -4,6 +4,7 @@ import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 import LoginField from "../../components/input-field/login-field/LoginField";
 import { useLoginMutation } from "../../services/loginApi";
+import { RouteConstants } from "../../constants/routeConstants";
 
 const LoginPage: React.FC = () => {
     const [username, setUsername] = useState("");
@@ -22,7 +23,7 @@ const LoginPage: React.FC = () => {
         setPassword(event.target.value);
     };
 
-    const [login, { data, isSuccess }] = useLoginMutation();
+    const [login, { data, isSuccess, isError, error }] = useLoginMutation();
 
     const onClick = () => {
         if (username.trim().length === 0) setUsernameError(true);
@@ -35,11 +36,18 @@ const LoginPage: React.FC = () => {
     };
 
     useEffect(() => {
+        console.log(isError);
+        console.log(error);
         if (isSuccess && data) {
             localStorage.setItem('token', data.data.token);
-            navigate("/employee");
+            navigate(RouteConstants.employee, { replace: true });
         }
-    }, [data, isSuccess]);
+    }, [data, isSuccess, isError]);
+
+    useEffect(() => {
+        if (localStorage.getItem('token'))
+            navigate(RouteConstants.employee, { replace: true });
+    });
 
     return <div className="login-container">
         <div className="split left">
@@ -52,7 +60,8 @@ const LoginPage: React.FC = () => {
                 <img className="login-logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
                 <LoginField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
                 <LoginField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
-                <PrimaryButton height="50px" type="submit" label='Log in' onClick={onClick} />
+                <PrimaryButton style={{ height: "50px", marginBottom: "0px" }} type="submit" label='Log in' onClick={onClick} />
+                {isError && <div className="login-error"><p>{error["data"].errors.error}</p></div>}
             </div>
         </div>
     </div>;
