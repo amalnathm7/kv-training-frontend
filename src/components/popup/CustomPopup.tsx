@@ -3,14 +3,13 @@ import './CustomPopup.css';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
 
-type PopupPropType = {
-  showPopup: boolean,
+export type CustomPopupPropsType = {
   onConfirm: () => void,
   onCancel: () => void
 }
 
-const CustomPopup: React.FC<PopupPropType> = (props) => (
-  <div className='popup-overlay' onClick={(event) => { event.stopPropagation(); }}>
+const CustomPopup: React.FC<CustomPopupPropsType> = (props) => (
+  <div className='popup-overlay' onClick={(event) => { event.stopPropagation(); }} data-testid="custom-popup-test">
     <div className="popup-content">
       <h2>Are you sure?</h2>
       <p>Do you really want to delete the employee?</p>

@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 // import { GET_MY_PROFILE } from "../../constants/apiConstants";
 import { baseApi } from "../../services/baseApi";
 
-type HeaderPropsType = {
+export type HeaderPropsType = {
     isSplash?: boolean
 }
 

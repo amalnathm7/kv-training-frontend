@@ -1,16 +1,16 @@
 import React from "react";
 import "./ActionButton.css";
 
-type ActionButtonProps = {
+export type ActionButtonPropsType = {
     icon: string,
     onClick: () => void
 };
 
-const ActionButton: React.FC<ActionButtonProps> = (props) => {
+const ActionButton: React.FC<ActionButtonPropsType> = (props) => {
     return <img className="action-button-icon" src={`assets/icons/${props.icon}`} onClick={(event) => {
         event.stopPropagation();
         props.onClick();
-    }}></img>;
+    }} data-testid="action-button-test"></img>;
 };
 
 export default ActionButton;

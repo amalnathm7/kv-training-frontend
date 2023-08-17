@@ -10,7 +10,7 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import { useGetDepartmentListQuery } from '../../services/departmentApi';
 import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../services/employeeApi';
 
-type FormPropsType = {
+export type FormPropsType = {
     employee: EmployeeType;
     isEdit: boolean;
 };

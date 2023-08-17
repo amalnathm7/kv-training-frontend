@@ -5,20 +5,18 @@ exports[`Primary Button Props Test If button rendered correctly 1`] = `
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <input
-        class="primary-button"
-        data-testid="primary-button-test"
-        type="button"
-        value="Button"
+      <img
+        class="action-button-icon"
+        data-testid="action-button-test"
+        src="assets/icons/icon.png"
       />
     </div>
   </body>,
   "container": <div>
-    <input
-      class="primary-button"
-      data-testid="primary-button-test"
-      type="button"
-      value="Button"
+    <img
+      class="action-button-icon"
+      data-testid="action-button-test"
+      src="assets/icons/icon.png"
     />
   </div>,
   "debug": [Function],

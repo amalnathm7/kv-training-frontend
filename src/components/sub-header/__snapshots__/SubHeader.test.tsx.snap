@@ -1,25 +1,65 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Primary Button Props Test If button rendered correctly 1`] = `
+exports[`SubHeader Props Test If SubHeader rendered correctly 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <input
-        class="primary-button"
-        data-testid="primary-button-test"
-        type="button"
-        value="Button"
-      />
+      <div
+        class="sub-header"
+      >
+        <label
+          class="sub-header-label"
+        >
+          SubHeader-label
+        </label>
+        <div
+          class="action-button"
+        >
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon.png"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
+        </div>
+      </div>
     </div>
   </body>,
   "container": <div>
-    <input
-      class="primary-button"
-      data-testid="primary-button-test"
-      type="button"
-      value="Button"
-    />
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="action-button"
+      >
+        <div
+          class="sub-header-action-icon-container"
+        >
+          <img
+            class="sub-header-action-icon"
+            src="/assets/icons/SubHeader-action-icon.png"
+          />
+        </div>
+        <label
+          class="sub-header-action-label"
+        >
+          SubHeader-action-label
+        </label>
+      </div>
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

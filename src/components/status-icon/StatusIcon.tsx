@@ -1,10 +1,11 @@
 import { StatusType } from "../../types/StatusType";
 import React from "react";
 
-type StatusProps = {
+export type StatusIconPropsType = {
     status: StatusType
 };
-const StatusIcon: React.FC<StatusProps> = (props) => {
+
+const StatusIcon: React.FC<StatusIconPropsType> = (props) => {
     const style = {
         backgroundColor: props.status.color,
         paddingTop: "5px",

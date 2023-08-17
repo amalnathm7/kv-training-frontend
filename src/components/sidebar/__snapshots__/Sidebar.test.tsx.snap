@@ -1,25 +1,51 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Primary Button Props Test If button rendered correctly 1`] = `
+exports[`Sidebar Props Test If Sidebar rendered correctly 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <input
-        class="primary-button"
-        data-testid="primary-button-test"
-        type="button"
-        value="Button"
-      />
+      <div
+        class="sidebar"
+      >
+        <div
+          class="item container"
+        >
+          <div
+            class="icon container"
+          >
+            <img
+              alt="Icon"
+              src="/assets/icons/employees.svg"
+            />
+          </div>
+          <h3>
+            Employee List
+          </h3>
+        </div>
+      </div>
     </div>
   </body>,
   "container": <div>
-    <input
-      class="primary-button"
-      data-testid="primary-button-test"
-      type="button"
-      value="Button"
-    />
+    <div
+      class="sidebar"
+    >
+      <div
+        class="item container"
+      >
+        <div
+          class="icon container"
+        >
+          <img
+            alt="Icon"
+            src="/assets/icons/employees.svg"
+          />
+        </div>
+        <h3>
+          Employee List
+        </h3>
+      </div>
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

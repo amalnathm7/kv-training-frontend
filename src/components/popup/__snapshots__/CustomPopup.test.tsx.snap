@@ -1,25 +1,75 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Primary Button Props Test If button rendered correctly 1`] = `
+exports[`CustomPopup Props Test If CustomPopup rendered correctly 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
-      <input
-        class="primary-button"
-        data-testid="primary-button-test"
-        type="button"
-        value="Button"
-      />
+      <div
+        class="popup-overlay"
+        data-testid="custom-popup-test"
+      >
+        <div
+          class="popup-content"
+        >
+          <h2>
+            Are you sure?
+          </h2>
+          <p>
+            Do you really want to delete the employee?
+          </p>
+          <div
+            class="popup-buttons"
+          >
+            <input
+              class="primary-button"
+              data-testid="primary-button-test"
+              type="button"
+              value="Confirm"
+            />
+            <input
+              class="secondary-button"
+              data-testid="secondary-button-test"
+              type="button"
+              value="Cancel"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </body>,
   "container": <div>
-    <input
-      class="primary-button"
-      data-testid="primary-button-test"
-      type="button"
-      value="Button"
-    />
+    <div
+      class="popup-overlay"
+      data-testid="custom-popup-test"
+    >
+      <div
+        class="popup-content"
+      >
+        <h2>
+          Are you sure?
+        </h2>
+        <p>
+          Do you really want to delete the employee?
+        </p>
+        <div
+          class="popup-buttons"
+        >
+          <input
+            class="primary-button"
+            data-testid="primary-button-test"
+            type="button"
+            value="Confirm"
+          />
+          <input
+            class="secondary-button"
+            data-testid="secondary-button-test"
+            type="button"
+            value="Cancel"
+          />
+        </div>
+      </div>
+    </div>
   </div>,
   "debug": [Function],
   "findAllByAltText": [Function],

@@ -8,7 +8,7 @@ type CardItemType = {
     isStatus?: boolean
 }
 
-type CardPropsType = {
+export type CardPropsType = {
     items: CardItemType[]
 };
 

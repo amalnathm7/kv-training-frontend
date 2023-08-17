@@ -66,7 +66,7 @@ const ListItem: React.FC<ListItemProps> = (props) => {
             <ActionButton icon="delete.png" onClick={handleDelete}></ActionButton>
             <ActionButton icon="edit.png" onClick={handleEdit}></ActionButton>
         </td>}
-        {showDeletePopup && <CustomPopup showPopup={showDeletePopup} onConfirm={onConfirmDelete} onCancel={() => {
+        {showDeletePopup && <CustomPopup onConfirm={onConfirmDelete} onCancel={() => {
             setShowDeletePopup(false);
         }} />}
     </tr>;

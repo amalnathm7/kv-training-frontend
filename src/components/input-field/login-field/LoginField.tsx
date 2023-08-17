@@ -1,7 +1,7 @@
 import React from "react";
 import "./LoginField.css";
 
-type LoginFieldPropTypes = {
+export type LoginFieldPropsType = {
     value: string,
     onChange: (event) => void,
     label: string,
@@ -9,7 +9,7 @@ type LoginFieldPropTypes = {
     showError: boolean
 }
 
-const LoginField: React.FC<LoginFieldPropTypes> = (props) => {
+const LoginField: React.FC<LoginFieldPropsType> = (props) => {
     return (
         <div className="login-floating-label-group">
             <input className="login-field" onChange={props.onChange} type={props.type} value={props.value} required></input>

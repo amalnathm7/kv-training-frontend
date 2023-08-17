@@ -1,7 +1,7 @@
 import React from "react";
 import "./FormField.css";
 
-type InputPropTypes = {
+export type FormFieldPropsType = {
     value: string | number | string[],
     onChange: (event) => void,
     label: string,
@@ -11,7 +11,7 @@ type InputPropTypes = {
     disabled: boolean
 }
 
-const FormField: React.FC<InputPropTypes> = (props) => {
+const FormField: React.FC<FormFieldPropsType> = (props) => {
     return (
         <div className="form-item">
             {props.label.length === 0 && <div className="spacing"></div>}

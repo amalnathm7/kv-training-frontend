@@ -1,13 +1,13 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Primary Button Props Test If button rendered correctly 1`] = `
+exports[`Secondary Button Props Test If button rendered correctly 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>
     <div>
       <input
-        class="primary-button"
-        data-testid="primary-button-test"
+        class="secondary-button"
+        data-testid="secondary-button-test"
         type="button"
         value="Button"
       />
@@ -15,8 +15,8 @@ exports[`Primary Button Props Test If button rendered correctly 1`] = `
   </body>,
   "container": <div>
     <input
-      class="primary-button"
-      data-testid="primary-button-test"
+      class="secondary-button"
+      data-testid="secondary-button-test"
       type="button"
       value="Button"
     />

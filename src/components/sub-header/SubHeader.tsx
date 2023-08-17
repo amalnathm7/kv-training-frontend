@@ -1,7 +1,7 @@
 import React from "react";
 import "./SubHeader.css";
 
-type SubHeaderPropsType = {
+export type SubHeaderPropsType = {
     label: string,
     actionLabel: string,
     actionIcon: string,
