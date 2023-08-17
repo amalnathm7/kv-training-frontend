@@ -11,9 +11,9 @@ const SplashPage: react.FC = () => {
     useEffect(() => {
         setTimeout(() => {
             if (token)
-                navigate(`${RouteConstants.employee}`);
+                navigate(`${RouteConstants.employee}`, { replace: true });
             else
-                navigate(`${RouteConstants.login}`);
+                navigate(`${RouteConstants.login}`, { replace: true });
         }, 1000);
     }, [token]);
 
