@@ -7,15 +7,15 @@ import { useLoginMutation } from "../../services/loginApi";
 import { RouteConstants } from "../../constants/routeConstants";
 
 const LoginPage: React.FC = () => {
-    const [username, setUsername] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [usernameError, setUsernameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
     const [passwordError, setPasswordError] = useState(false);
     const navigate = useNavigate();
 
-    const changeUsername = (event) => {
-        setUsernameError(false);
-        setUsername(event.target.value);
+    const changeEmail = (event) => {
+        setEmailError(false);
+        setEmail(event.target.value);
     };
 
     const changePassword = (event) => {
@@ -26,11 +26,11 @@ const LoginPage: React.FC = () => {
     const [login, { data, isSuccess, isError, error }] = useLoginMutation();
 
     const onClick = () => {
-        if (username.trim().length === 0) setUsernameError(true);
+        if (email.trim().length === 0) setEmailError(true);
         if (password.trim().length === 0) setPasswordError(true);
-        if (username.trim().length > 0 && password.trim().length > 0)
+        if (email.trim().length > 0 && password.trim().length > 0)
             login({
-                username,
+                email,
                 password
             });
     };
@@ -56,7 +56,7 @@ const LoginPage: React.FC = () => {
         <div className="split right">
             <div className="login-form-container">
                 <img className="login-logo" src="assets/img/kv-logo.png" alt="KeyValue Logo"></img>
-                <LoginField label="Username" onChange={changeUsername} showError={usernameError} value={username} type="text" />
+                <LoginField label="Email" onChange={changeEmail} showError={emailError} value={email} type="text" />
                 <LoginField label="Password" onChange={changePassword} showError={passwordError} value={password} type="password" />
                 <PrimaryButton style={{ height: "50px", marginBottom: "0px" }} type="submit" label='Log in' onClick={onClick} />
                 {isError && <div className="login-error"><p>{error["data"].errors.error}</p></div>}

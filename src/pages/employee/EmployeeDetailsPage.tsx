@@ -35,8 +35,8 @@ const EmployeeDetailsPage: React.FC = () => {
                 value: employee.name
             },
             {
-                label: "Username",
-                value: employee.username
+                label: "Email",
+                value: employee.email
             },
             {
                 label: "Joining Date",
@@ -61,7 +61,7 @@ const EmployeeDetailsPage: React.FC = () => {
             },
             {
                 label: "Address",
-                value: employee.address.addressLine1 + ", " + employee.address.addressLine2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode
+                value: employee.address.line1 + ", " + employee.address.line2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode
             }
         ];
     }

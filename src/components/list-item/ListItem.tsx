@@ -55,13 +55,13 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     return <tr className="list-item" onClick={onClick}>
         <td>{props.employee.id}</td>
         <td>{props.employee.name}</td>
-        <td>{props.employee.username}</td>
+        <td>{props.employee.email}</td>
         <td>{new Date(props.employee.joiningDate).toISOString().split('T')[0]}</td>
         <td>{props.employee.role ? props.employee.role.role : "NIL"}</td>
         <td>{props.employee.department ? props.employee.department.name : "NIL"}</td>
         <td><StatusIcon status={status}></StatusIcon></td>
         <td>{props.employee.experience + " years"}</td>
-        <td className="address-td">{props.employee.address.addressLine1 + ", " + props.employee.address.addressLine2 + ", " + props.employee.address.city + ", " + props.employee.address.state + ", " + props.employee.address.country + ", " + props.employee.address.pincode}</td>
+        <td className="address-td">{props.employee.address.line1 + ", " + props.employee.address.line2 + ", " + props.employee.address.city + ", " + props.employee.address.state + ", " + props.employee.address.country + ", " + props.employee.address.pincode}</td>
         {isSuperAuthorized && <td>
             <ActionButton icon="delete.png" onClick={handleDelete}></ActionButton>
             <ActionButton icon="edit.png" onClick={handleEdit}></ActionButton>

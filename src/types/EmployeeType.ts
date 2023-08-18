@@ -5,7 +5,7 @@ import { RoleType } from "./RoleType";
 export type EmployeeType = {
     name: string,
     id: string,
-    username: string,
+    email: string,
     password: string,
     joiningDate: Date,
     role?: RoleType,

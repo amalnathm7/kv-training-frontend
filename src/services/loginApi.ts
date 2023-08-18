@@ -1,7 +1,7 @@
 import { baseApi } from "./baseApi";
 import { RouteConstants } from "../constants/routeConstants";
 
-type LoginPayloadType = { username: string, password: string };
+type LoginPayloadType = { email: string, password: string };
 
 export const loginApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({

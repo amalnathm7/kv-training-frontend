@@ -24,7 +24,7 @@ const EmployeeListingPage: React.FC = () => {
         }
     }, [isSuperAuthorized]);
 
-    const labelArray = ["Employee ID", "Employee Name", "Username", "Joining Date", "Role", "Department", "Status", "Experience", "Address"];
+    const labelArray = ["Employee ID", "Employee Name", "Email", "Joining Date", "Role", "Department", "Status", "Experience", "Address"];
 
     useEffect(() => {
         setLabels(labelArray);

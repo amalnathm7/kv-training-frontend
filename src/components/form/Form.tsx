@@ -17,7 +17,7 @@ export type FormPropsType = {
 
 const Form: React.FC<FormPropsType> = (props) => {
     const [name, setName] = useState('');
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [date, setDate] = useState('');
     const [experience, setExperience] = useState(0);
@@ -34,23 +34,23 @@ const Form: React.FC<FormPropsType> = (props) => {
     useEffect(() => {
         if (props.employee) {
             setName(props.employee.name);
-            setUsername(props.employee.username);
+            setEmail(props.employee.email);
             setDate(new Date(props.employee.joiningDate).toISOString().split('T')[0]);
             setExperience(props.employee.experience);
             setDepartment(props.employee.department?.name);
             setRole(props.employee.role?.role);
             setStatus(props.employee.status);
-            setLine1(props.employee.address.addressLine1);
-            setLine2(props.employee.address.addressLine2);
+            setLine1(props.employee.address.line1);
+            setLine2(props.employee.address.line2);
             setCity(props.employee.address.city);
             setState(props.employee.address.state);
             setCountry(props.employee.address.country);
             setPincode(props.employee.address.pincode);
         }
-    }, []);
+    }, [props.employee]);
 
     const [nameError, setNameError] = useState(false);
-    const [usernameError, setUsernameError] = useState(false);
+    const [emailError, setEmailError] = useState(false);
     const [dateError, setDateError] = useState(false);
     const [experienceError, setExperienceError] = useState(false);
     const [departmentError, setDepartmentError] = useState(false);
@@ -68,10 +68,10 @@ const Form: React.FC<FormPropsType> = (props) => {
         setNameError(false);
     };
 
-    const onChangeUsername = (event) => {
-        setUsername(event.target.value);
+    const onChangeEmail = (event) => {
+        setEmail(event.target.value);
         setPassword(event.target.value);
-        setUsernameError(false);
+        setEmailError(false);
     };
 
     const onChangeDate = (event) => {
@@ -138,7 +138,7 @@ const Form: React.FC<FormPropsType> = (props) => {
 
         if (name.trim().length === 0) { flag = true; setNameError(true); }
         if (date.trim().length === 0) { flag = true; setDateError(true); }
-        if (username.trim().length === 0) { flag = true; setUsernameError(true); }
+        if (email.trim().length === 0) { flag = true; setEmailError(true); }
         if (experience < 0) { flag = true; setExperienceError(true); }
         if (status.trim().length === 0 || status === 'Select Status') { flag = true; setStatusError(true); }
         if (line1.trim().length === 0) { flag = true; setLine1Error(true); }
@@ -151,21 +151,21 @@ const Form: React.FC<FormPropsType> = (props) => {
         if (!flag) {
             const employee = {
                 id: props.employee?.id,
-                name: name,
-                username: username,
-                password: password,
+                name,
+                email,
+                password,
                 joiningDate: new Date(date),
-                status: status,
+                status,
                 experience: Number(experience),
                 departmentId: (departmentData.data.find((dept) => dept.name === department))?.id,
                 roleId: (rolesData.data.find((roleData) => roleData.role === role))?.id,
                 address: {
-                    addressLine1: line1,
-                    addressLine2: line2,
-                    city: city,
-                    state: state,
-                    country: country,
-                    pincode: pincode
+                    line1,
+                    line2,
+                    city,
+                    state,
+                    country,
+                    pincode
                 }
             };
 
@@ -200,7 +200,6 @@ const Form: React.FC<FormPropsType> = (props) => {
     return (
         <div className='form-container'>
             <FormField
-                disabled={false}
                 type='text'
                 value={name}
                 label='Employee Name'
@@ -209,16 +208,14 @@ const Form: React.FC<FormPropsType> = (props) => {
                 showError={nameError}
             />
             <FormField
-                disabled={false}
                 type='text'
-                value={username}
-                label='Username'
-                placeholder='johndoe'
-                onChange={onChangeUsername}
-                showError={usernameError}
+                value={email}
+                label='Email'
+                placeholder='johndoe@mail.com'
+                onChange={onChangeEmail}
+                showError={emailError}
             />
             <FormField
-                disabled={false}
                 type='date'
                 value={date}
                 label='Joining Date'
@@ -227,7 +224,6 @@ const Form: React.FC<FormPropsType> = (props) => {
                 showError={dateError}
             />
             <FormField
-                disabled={false}
                 type='number'
                 value={experience}
                 label='Experience (Years)'
@@ -261,7 +257,6 @@ const Form: React.FC<FormPropsType> = (props) => {
             />
             <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
                 <FormField
-                    disabled={false}
                     type='text'
                     value={line1}
                     label='Address'
@@ -270,7 +265,6 @@ const Form: React.FC<FormPropsType> = (props) => {
                     showError={line1Error}
                 />
                 <FormField
-                    disabled={false}
                     type='text'
                     value={line2}
                     label=''
@@ -279,7 +273,6 @@ const Form: React.FC<FormPropsType> = (props) => {
                     showError={line2Error}
                 />
                 <FormField
-                    disabled={false}
                     type='text'
                     value={city}
                     label=''
@@ -288,7 +281,6 @@ const Form: React.FC<FormPropsType> = (props) => {
                     showError={cityError}
                 />
                 <FormField
-                    disabled={false}
                     type='text'
                     value={state}
                     label=' '
@@ -297,7 +289,6 @@ const Form: React.FC<FormPropsType> = (props) => {
                     showError={stateError}
                 />
                 <FormField
-                    disabled={false}
                     type='text'
                     value={country}
                     label=' '
@@ -306,7 +297,6 @@ const Form: React.FC<FormPropsType> = (props) => {
                     showError={countryError}
                 />
                 <FormField
-                    disabled={false}
                     type='text'
                     value={pincode}
                     label=' '
