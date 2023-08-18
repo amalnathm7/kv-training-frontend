@@ -4,7 +4,6 @@ import SecondaryButton from "../button/SecondaryButton/SecondaryButton";
 import { useNavigate } from "react-router-dom";
 import { RouteConstants } from "../../constants/routeConstants";
 import { useDispatch } from "react-redux";
-// import { GET_MY_PROFILE } from "../../constants/apiConstants";
 import { baseApi } from "../../services/baseApi";
 
 export type HeaderPropsType = {
