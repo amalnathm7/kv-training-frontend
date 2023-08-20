@@ -7,15 +7,15 @@ import { useNavigate } from "react-router-dom";
 import { RouteConstants } from "../../constants/routeConstants";
 
 const EmployeeCreatePage: React.FC = () => {
-    const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+    const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isSuccess && !myProfile.data.role || isSuccess && myProfile.data.role.permissionLevel !== PermissionLevel.SUPER)
+        if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel !== PermissionLevel.SUPER)
             navigate(`${RouteConstants.employee}`);
-    }, [isSuccess]);
+    }, [isMyProfileFetchSuccess]);
 
-    return <HomeLayout subHeaderAction={() => { }} subHeaderLabel="Create Employee" subHeaderActionLabel="" subHeaderActionIcon="">
+    return <HomeLayout subHeaderPrimaryAction={() => { }} subHeaderLabel="Create Employee" subHeaderPrimaryActionLabel="" subHeaderPrimaryActionIcon="">
         <EmployeeForm employee={null} isEdit={false} />
     </HomeLayout>;
 };

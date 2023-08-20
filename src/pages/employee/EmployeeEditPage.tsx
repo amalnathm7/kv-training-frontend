@@ -11,8 +11,7 @@ const EmployeeEditPage: React.FC = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (isMyProfileFetchSuccess && !myProfile.data.role ||
-            isMyProfileFetchSuccess && myProfile.data.role.permissionLevel !== PermissionLevel.SUPER)
+        if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel !== PermissionLevel.SUPER)
             navigate(`${RouteConstants.employee}`, { replace: true });
     }, [isMyProfileFetchSuccess]);
 
@@ -27,7 +26,7 @@ const EmployeeEditPage: React.FC = () => {
             setEmployee(employeesData.data);
     }, [isEmployeeFetchSuccess]);
 
-    return <HomeLayout subHeaderAction={null} subHeaderLabel="Edit Employee" subHeaderActionLabel="" subHeaderActionIcon="">
+    return <HomeLayout subHeaderPrimaryAction={null} subHeaderLabel="Edit Employee" subHeaderPrimaryActionLabel="" subHeaderPrimaryActionIcon="">
         <EmployeeForm employee={employee} isEdit={true} />
     </HomeLayout>;
 };

@@ -56,6 +56,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
         <td>{props.employee.id}</td>
         <td>{props.employee.name}</td>
         <td>{props.employee.email}</td>
+        <td>{props.employee.phone}</td>
         <td>{new Date(props.employee.joiningDate).toISOString().split('T')[0]}</td>
         <td>{props.employee.role ? props.employee.role.role : "NIL"}</td>
         <td>{props.employee.department ? props.employee.department.name : "NIL"}</td>

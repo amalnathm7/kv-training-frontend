@@ -1,72 +1,99 @@
-// import { useGetMyProfileQuery } from "../../services/employeeApi";
+import React from "react";
+import { useEffect, useState } from "react";
+import { useGetMyProfileQuery } from "../../services/employeeApi";
+import { PermissionLevel } from "../../utils/PermissionLevel";
+import { useNavigate, useParams } from "react-router-dom";
+import { useGetOpeningByIdQuery } from "../../services/openingApi";
+import HomeLayout from "../../layouts/home-layout/HomeLayout";
+import Card from "../../components/card/Card";
+import { RouteConstants } from "../../constants/routeConstants";
 
-// const OpeningDetailsPage: React.FC = () => {
-//     const { data: myProfile, isSuccess: isProfileSuccess } = useGetMyProfileQuery();
-//     const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+const OpeningDetailsPage: React.FC = () => {
+    const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
-//     useEffect(() => {
-//         if (isProfileSuccess && myProfile.data.role && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
-//             setIsSuperAuthorized(true);
-//     }, [isProfileSuccess]);
+    useEffect(() => {
+        if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
+            setIsSuperAuthorized(true);
 
-//     const { id } = useParams();
-//     const navigate = useNavigate();
+        if (isMyProfileFetchSuccess && myProfile.data.role && myProfile.data.role.permissionLevel !== PermissionLevel.BASIC)
+            setIsAuthorized(true);
+    }, [isMyProfileFetchSuccess]);
 
-//     const { data: employeesData, isSuccess } = useGetEmployeeByIdQuery(id);
+    const { id } = useParams();
+    const navigate = useNavigate();
 
-//     let items = [];
+    const { data: openingData, isSuccess } = useGetOpeningByIdQuery(id);
 
-//     if (isSuccess) {
-//         const employee = employeesData.data;
+    let items = [];
 
-//         items = [
-//             {
-//                 label: "Employee ID",
-//                 value: employee.id
-//             },
-//             {
-//                 label: "Employee Name",
-//                 value: employee.name
-//             },
-//             {
-//                 label: "Email",
-//                 value: employee.email
-//             },
-//             {
-//                 label: "Joining Date",
-//                 value: new Date(employee.joiningDate).toISOString().split('T')[0]
-//             },
-//             {
-//                 label: "Role",
-//                 value: employee.role ? employee.role.role : "NIL"
-//             },
-//             {
-//                 label: "Department",
-//                 value: employee.department ? employee.department.name : "NIL"
-//             },
-//             {
-//                 label: "Status",
-//                 value: employee.status,
-//                 isStatus: true
-//             },
-//             {
-//                 label: "Experience",
-//                 value: employee.experience + " Years"
-//             },
-//             {
-//                 label: "Address",
-//                 value: employee.address.line1 + ", " + employee.address.line2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode
-//             }
-//         ];
-//     }
+    if (isSuccess) {
+        const opening = openingData.data;
 
-//     const onEditClicked = () => {
-//         navigate(`${RouteConstants.employee}/${id}/edit`);
-//     };
+        items = [
+            {
+                label: "Opening ID",
+                value: opening.id
+            },
+            {
+                label: "Title",
+                value: opening.title
+            },
+            {
+                label: "Description",
+                value: opening.description
+            },
+            {
+                label: "Skills",
+                value: opening.skills
+            },
+            {
+                label: "Location",
+                value: opening.location
+            },
+            {
+                label: "Experience",
+                value: opening.experience + " Years"
+            },
+            {
+                label: "Number of openings",
+                value: opening.count
+            },
+            {
+                label: "Posted At",
+                value: new Date(opening.createdAt).toISOString().split('T')[0]
+            },
+            {
+                label: "Department",
+                value: opening.department ? opening.department.name : "NIL"
+            },
+            {
+                label: "Role",
+                value: opening.role ? opening.role.role : "NIL"
+            }
+        ];
+    }
 
-//     return <HomeLayout subHeaderAction={isSuperAuthorized ? onEditClicked : null} subHeaderLabel="Employee Details" subHeaderActionLabel={isSuperAuthorized ? "Edit" : ""} subHeaderActionIcon={isSuperAuthorized ? "edit.svg" : ""}>
-//         <Card items={items}></Card>
-//     </HomeLayout>;
-// };
+    const onEditClicked = () => {
+        navigate(`${RouteConstants.opening}/${id}/edit`);
+    };
 
-// export default EmployeeDetailsPage;
+    const onReferClicked = () => {
+        navigate(`${RouteConstants.referral}/create`);
+    };
+
+    return <HomeLayout
+        subHeaderLabel="Opening Details"
+        subHeaderPrimaryAction={isAuthorized ? onReferClicked : null}
+        subHeaderPrimaryActionLabel={isAuthorized ? "Refer a friend" : ""}
+        subHeaderPrimaryActionIcon={isAuthorized ? "friend.png" : ""}
+        subHeaderSecondaryAction={isSuperAuthorized ? onEditClicked : null}
+        subHeaderSecondaryActionLabel={isSuperAuthorized ? "Edit" : ""}
+        subHeaderSecondaryActionIcon={isSuperAuthorized ? "edit.svg" : ""}
+    >
+        <Card items={items}></Card>
+    </HomeLayout>;
+};
+
+export default OpeningDetailsPage;

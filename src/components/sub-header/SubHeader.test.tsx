@@ -7,9 +7,9 @@ describe("SubHeader Props Test", () => {
     test("If SubHeader rendered correctly", () => {
         const props: SubHeaderPropsType = {
             label: "SubHeader-label",
-            actionLabel: "SubHeader-action-label",
-            actionIcon: "SubHeader-action-icon.png",
-            action: () => {}
+            primaryActionLabel: "SubHeader-action-label",
+            primaryActionIcon: "SubHeader-action-icon.png",
+            primaryAction: () => {}
         }
 
         const element = render(<SubHeader {...props} />);
