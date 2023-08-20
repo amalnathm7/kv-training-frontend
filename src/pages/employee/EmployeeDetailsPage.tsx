@@ -7,23 +7,23 @@ import { RouteConstants } from "../../constants/routeConstants";
 import { PermissionLevel } from "../../utils/PermissionLevel";
 
 const EmployeeDetailsPage: React.FC = () => {
-    const { data: myProfile, isSuccess: isProfileSuccess } = useGetMyProfileQuery();
+    const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
     const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
     useEffect(() => {
-        if (isProfileSuccess && myProfile.data.role && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
+        if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
             setIsSuperAuthorized(true);
-    }, [isProfileSuccess]);
+    }, [isMyProfileFetchSuccess]);
 
     const { id } = useParams();
     const navigate = useNavigate();
 
-    const { data: employeesData, isSuccess } = useGetEmployeeByIdQuery(id);
+    const { data: employeeData, isSuccess } = useGetEmployeeByIdQuery(id);
 
     let items = [];
 
     if (isSuccess) {
-        const employee = employeesData.data;
+        const employee = employeeData.data;
 
         items = [
             {
@@ -37,6 +37,10 @@ const EmployeeDetailsPage: React.FC = () => {
             {
                 label: "Email",
                 value: employee.email
+            },
+            {
+                label: "Phone",
+                value: employee.phone
             },
             {
                 label: "Joining Date",
@@ -70,7 +74,7 @@ const EmployeeDetailsPage: React.FC = () => {
         navigate(`${RouteConstants.employee}/${id}/edit`);
     };
 
-    return <HomeLayout subHeaderAction={isSuperAuthorized ? onEditClicked : null} subHeaderLabel="Employee Details" subHeaderActionLabel={isSuperAuthorized ? "Edit" : ""} subHeaderActionIcon={isSuperAuthorized ? "edit.svg" : ""}>
+    return <HomeLayout subHeaderPrimaryAction={isSuperAuthorized ? onEditClicked : null} subHeaderLabel="Employee Details" subHeaderPrimaryActionLabel={isSuperAuthorized ? "Edit" : ""} subHeaderPrimaryActionIcon={isSuperAuthorized ? "edit.svg" : ""}>
         <Card items={items}></Card>
     </HomeLayout>;
 };

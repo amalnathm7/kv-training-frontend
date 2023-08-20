@@ -18,6 +18,7 @@ export type EmployeeFormPropsType = {
 const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+    const [phone, setPhone] = useState('');
     const [password, setPassword] = useState('');
     const [date, setDate] = useState('');
     const [experience, setExperience] = useState(0);
@@ -35,6 +36,7 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         if (props.employee) {
             setName(props.employee.name);
             setEmail(props.employee.email);
+            setPhone(props.employee.phone);
             setDate(new Date(props.employee.joiningDate).toISOString().split('T')[0]);
             setExperience(props.employee.experience);
             setDepartment(props.employee.department?.name);
@@ -51,6 +53,7 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
 
     const [nameError, setNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
+    const [phoneError, setPhoneError] = useState(false);
     const [dateError, setDateError] = useState(false);
     const [experienceError, setExperienceError] = useState(false);
     const [departmentError, setDepartmentError] = useState(false);
@@ -72,6 +75,11 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         setEmail(event.target.value);
         setPassword(event.target.value);
         setEmailError(false);
+    };
+
+    const onChangePhone = (event) => {
+        setPhone(event.target.value);
+        setPhoneError(false);
     };
 
     const onChangeDate = (event) => {
@@ -134,25 +142,27 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
     const navigate = useNavigate();
 
     const saveEmployee = () => {
-        let flag = false;
+        let isValidated = true;
 
-        if (name.trim().length === 0) { flag = true; setNameError(true); }
-        if (date.trim().length === 0) { flag = true; setDateError(true); }
-        if (email.trim().length === 0) { flag = true; setEmailError(true); }
-        if (experience < 0) { flag = true; setExperienceError(true); }
-        if (status.trim().length === 0 || status === 'Select Status') { flag = true; setStatusError(true); }
-        if (line1.trim().length === 0) { flag = true; setLine1Error(true); }
-        if (line2.trim().length === 0) { flag = true; setLine2Error(true); }
-        if (city.trim().length === 0) { flag = true; setCityError(true); }
-        if (state.trim().length === 0) { flag = true; setStateError(true); }
-        if (country.trim().length === 0) { flag = true; setCountryError(true); }
-        if (pincode.trim().length === 0) { flag = true; setPincodeError(true); }
+        if (name.trim().length === 0) { isValidated = false; setNameError(true); }
+        if (date.trim().length === 0) { isValidated = false; setDateError(true); }
+        if (email.trim().length === 0) { isValidated = false; setEmailError(true); }
+        if (phone.trim().length === 0) { isValidated = false; setPhoneError(true); }
+        if (experience < 0) { isValidated = false; setExperienceError(true); }
+        if (status.trim().length === 0 || status === 'Select Status') { isValidated = false; setStatusError(true); }
+        if (line1.trim().length === 0) { isValidated = false; setLine1Error(true); }
+        if (line2.trim().length === 0) { isValidated = false; setLine2Error(true); }
+        if (city.trim().length === 0) { isValidated = false; setCityError(true); }
+        if (state.trim().length === 0) { isValidated = false; setStateError(true); }
+        if (country.trim().length === 0) { isValidated = false; setCountryError(true); }
+        if (pincode.trim().length === 0) { isValidated = false; setPincodeError(true); }
 
-        if (!flag) {
+        if (isValidated) {
             const employee = {
                 id: props.employee?.id,
                 name,
                 email,
+                phone,
                 password,
                 joiningDate: new Date(date),
                 status,
@@ -214,6 +224,14 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
                 placeholder='johndoe@mail.com'
                 onChange={onChangeEmail}
                 showError={emailError}
+            />
+            <FormField
+                type='text'
+                value={phone}
+                label='Phone'
+                placeholder='1234567890'
+                onChange={onChangePhone}
+                showError={phoneError}
             />
             <FormField
                 type='date'

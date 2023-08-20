@@ -19,7 +19,12 @@
     font-weight: bold;
 }
 
+.sub-header-actions {
+    display: flex;
+}
+
 .action-button {
+    margin-left: 30px;
     display: flex;
     align-items: center;
     height: 50px;

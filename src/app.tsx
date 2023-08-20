@@ -8,6 +8,7 @@ import EmployeeCreatePage from './pages/employee/EmployeeCreatePage';
 import EmployeeEditPage from './pages/employee/EmployeeEditPage';
 import SplashPage from './pages/splash/SplashPage';
 import { RouteConstants } from './constants/routeConstants';
+import OpeningDetailsPage from './pages/opening/OpeningDetailsPage';
 
 const App: FC = () => {
   return <div className='app'>
@@ -19,6 +20,7 @@ const App: FC = () => {
         <Route path={`${RouteConstants.employee}/:id`} element={<EmployeeDetailsPage />} />
         <Route path={`${RouteConstants.employee}/create`} element={<EmployeeCreatePage />} />
         <Route path={`${RouteConstants.employee}/:id/edit`} element={<EmployeeEditPage />} />
+        <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
       </Routes>
     </BrowserRouter>
   </div>;
