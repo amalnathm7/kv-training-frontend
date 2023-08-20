@@ -1,4 +1,4 @@
-import Form from "../../components/form/EmployeeForm";
+import EmployeeForm from "../../components/form/EmployeeForm";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React, { useEffect } from "react";
 import { useGetMyProfileQuery } from "../../services/employeeApi";
@@ -16,7 +16,7 @@ const EmployeeCreatePage: React.FC = () => {
     }, [isSuccess]);
 
     return <HomeLayout subHeaderAction={() => { }} subHeaderLabel="Create Employee" subHeaderActionLabel="" subHeaderActionIcon="">
-        <Form employee={null} isEdit={false} />
+        <EmployeeForm employee={null} isEdit={false} />
     </HomeLayout>;
 };
 

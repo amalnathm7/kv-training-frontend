@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import Form from "../../components/form/EmployeeForm";
+import EmployeeForm from "../../components/form/EmployeeForm";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React, { useEffect, useState } from "react";
 import { useGetEmployeeByIdQuery, useGetMyProfileQuery } from "../../services/employeeApi";
@@ -28,7 +28,7 @@ const EmployeeEditPage: React.FC = () => {
     }, [isEmployeeFetchSuccess]);
 
     return <HomeLayout subHeaderAction={null} subHeaderLabel="Edit Employee" subHeaderActionLabel="" subHeaderActionIcon="">
-        <Form employee={employee} isEdit={true} />
+        <EmployeeForm employee={employee} isEdit={true} />
     </HomeLayout>;
 };
 

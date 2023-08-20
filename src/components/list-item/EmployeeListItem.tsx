@@ -10,11 +10,11 @@ import { useDeleteEmployeeMutation, useGetMyProfileQuery } from "../../services/
 import { RouteConstants } from "../../constants/routeConstants";
 import { PermissionLevel } from "../../utils/PermissionLevel";
 
-type ListItemProps = {
+type EmployeeListItemPropsType = {
     employee: EmployeeType
 };
 
-const ListItem: React.FC<ListItemProps> = (props) => {
+const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
     const { data: myProfile, isSuccess } = useGetMyProfileQuery();
     const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
@@ -72,4 +72,4 @@ const ListItem: React.FC<ListItemProps> = (props) => {
     </tr>;
 };
 
-export default ListItem;
+export default EmployeeListItem;

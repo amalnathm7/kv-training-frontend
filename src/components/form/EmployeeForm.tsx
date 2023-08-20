@@ -10,12 +10,12 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import { useGetDepartmentListQuery } from '../../services/departmentApi';
 import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../services/employeeApi';
 
-export type FormPropsType = {
+export type EmployeeFormPropsType = {
     employee: EmployeeType;
     isEdit: boolean;
 };
 
-const Form: React.FC<FormPropsType> = (props) => {
+const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -332,4 +332,4 @@ const Form: React.FC<FormPropsType> = (props) => {
     );
 };
 
-export default Form;
+export default EmployeeForm;

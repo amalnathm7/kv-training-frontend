@@ -1,13 +1,13 @@
 import React from "react";
 import "./EmployeeListing.css";
-import ListItem from "../list-item/EmployeeListItem";
+import EmployeeListItem from "../list-item/EmployeeListItem";
 import { useGetEmployeeListQuery } from "../../services/employeeApi";
 
-type ListingPropsType = {
+type EmployeeListingPropsType = {
     labels: string[]
 }
 
-const Listing: React.FC<ListingPropsType> = (props) => {
+const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
     const { data: employeesData, isSuccess } = useGetEmployeeListQuery();
 
     const labels = props.labels.map((label) => <td className="listing-label" key={label}><label>{label}</label></td>);
@@ -15,7 +15,7 @@ const Listing: React.FC<ListingPropsType> = (props) => {
     let employees = [];
 
     if (isSuccess)
-        employees = employeesData.data.map((employee) => <ListItem key={employee.id} employee={employee}></ListItem>);
+        employees = employeesData.data.map((employee) => <EmployeeListItem key={employee.id} employee={employee}></EmployeeListItem>);
 
     return <div className="listing">
         <table>
@@ -27,4 +27,4 @@ const Listing: React.FC<ListingPropsType> = (props) => {
     </div>;
 };
 
-export default Listing;
+export default EmployeeListing;

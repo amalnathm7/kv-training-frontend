@@ -1,4 +1,4 @@
-import Listing from "../../components/listing/EmployeeListing";
+import EmployeeListing from "../../components/listing/EmployeeListing";
 import { RouteConstants } from "../../constants/routeConstants";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React, { useEffect, useState } from "react";
@@ -35,7 +35,7 @@ const EmployeeListingPage: React.FC = () => {
     };
 
     return <HomeLayout subHeaderAction={isSuperAuthorized ? onCreateClicked : null} subHeaderLabel="Employee List" subHeaderActionLabel={isSuperAuthorized ? "Create Employee" : ""} subHeaderActionIcon={isSuperAuthorized ? "create.png" : ""}>
-        <Listing labels={labels} />
+        <EmployeeListing labels={labels} />
     </HomeLayout>;
 };
 
