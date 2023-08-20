@@ -9,6 +9,7 @@ import EmployeeEditPage from './pages/employee/EmployeeEditPage';
 import SplashPage from './pages/splash/SplashPage';
 import { RouteConstants } from './constants/routeConstants';
 import OpeningDetailsPage from './pages/opening/OpeningDetailsPage';
+import ReferralCreatePage from './pages/referral/ReferralCreatePage';
 
 const App: FC = () => {
   return <div className='app'>
@@ -21,6 +22,7 @@ const App: FC = () => {
         <Route path={`${RouteConstants.employee}/create`} element={<EmployeeCreatePage />} />
         <Route path={`${RouteConstants.employee}/:id/edit`} element={<EmployeeEditPage />} />
         <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
+        <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />
       </Routes>
     </BrowserRouter>
   </div>;

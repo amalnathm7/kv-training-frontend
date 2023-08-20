@@ -1,5 +1,5 @@
 import React from "react";
-import "./EmployeeListing.css";
+import "./Listing.css";
 import EmployeeListItem from "../list-item/EmployeeListItem";
 import { useGetEmployeeListQuery } from "../../services/employeeApi";
 

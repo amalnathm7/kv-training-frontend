@@ -1,64 +1,71 @@
 import React, { useEffect, useState } from 'react';
 import './Form.css';
 import FormField from '../input-field/form-field/FormField';
-import DropDown from '../input-field/drop-down/DropDown';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
+import { ReferralType } from '../../types/ReferralType';
 import { EmployeeType } from '../../types/EmployeeType';
-import { useGetRoleListQuery } from '../../services/roleApi';
-import { useGetDepartmentListQuery } from '../../services/departmentApi';
-import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../services/employeeApi';
+import { OpeningType } from '../../types/OpeningType';
+import { useCreateReferralMutation, useUpdateReferralMutation } from '../../services/referralApi';
+import FileUpload from '../input-field/file-upload/FileUpload';
+import { useUploadFileMutation } from '../../services/fileApi';
 
-export type EmployeeFormPropsType = {
-    employee: EmployeeType;
+export type ReferralFormPropsType = {
+    referredBy: EmployeeType,
+    opening: OpeningType,
+    referral: ReferralType;
     isEdit: boolean;
 };
 
-const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
+const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [phone, setPhone] = useState('');
-    const [password, setPassword] = useState('');
-    const [date, setDate] = useState('');
     const [experience, setExperience] = useState(0);
-    const [department, setDepartment] = useState('Select Department');
-    const [role, setRole] = useState('Select Role');
-    const [status, setStatus] = useState('Select Status');
+    const [resume, setResume] = useState(null);
     const [line1, setLine1] = useState('');
     const [line2, setLine2] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
     const [pincode, setPincode] = useState('');
+    const [referredById, setReferredById] = useState('');
+    const [roleId, setRoleId] = useState('');
+    const [openingId, setOpeningId] = useState('');
+
+    console.log(props.opening);
 
     useEffect(() => {
-        if (props.employee) {
-            setName(props.employee.name);
-            setEmail(props.employee.email);
-            setPhone(props.employee.phone);
-            setDate(new Date(props.employee.joiningDate).toISOString().split('T')[0]);
-            setExperience(props.employee.experience);
-            setDepartment(props.employee.department?.name);
-            setRole(props.employee.role?.role);
-            setStatus(props.employee.status);
-            setLine1(props.employee.address.line1);
-            setLine2(props.employee.address.line2);
-            setCity(props.employee.address.city);
-            setState(props.employee.address.state);
-            setCountry(props.employee.address.country);
-            setPincode(props.employee.address.pincode);
+        if (props.referral) {
+            setName(props.referral.name);
+            setEmail(props.referral.email);
+            setPhone(props.referral.phone);
+            setExperience(props.referral.experience);
+            setResume(props.referral.resume);
+            setLine1(props.referral.address.line1);
+            setLine2(props.referral.address.line2);
+            setCity(props.referral.address.city);
+            setState(props.referral.address.state);
+            setCountry(props.referral.address.country);
+            setPincode(props.referral.address.pincode);
         }
-    }, [props.employee]);
+    }, [props.referral]);
+
+    useEffect(() => {
+        setReferredById(props.referredBy?.id.toString());
+    }, [props.referredBy]);
+
+    useEffect(() => {
+        setRoleId(props.opening?.role.id.toString());
+        setOpeningId(props.opening?.id.toString());
+    }, [props.opening]);
 
     const [nameError, setNameError] = useState(false);
     const [emailError, setEmailError] = useState(false);
     const [phoneError, setPhoneError] = useState(false);
-    const [dateError, setDateError] = useState(false);
     const [experienceError, setExperienceError] = useState(false);
-    const [departmentError, setDepartmentError] = useState(false);
-    const [roleError, setRoleError] = useState(false);
-    const [statusError, setStatusError] = useState(false);
+    const [resumeError, setResumeError] = useState(false);
     const [line1Error, setLine1Error] = useState(false);
     const [line2Error, setLine2Error] = useState(false);
     const [cityError, setCityError] = useState(false);
@@ -73,7 +80,6 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
 
     const onChangeEmail = (event) => {
         setEmail(event.target.value);
-        setPassword(event.target.value);
         setEmailError(false);
     };
 
@@ -82,29 +88,14 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         setPhoneError(false);
     };
 
-    const onChangeDate = (event) => {
-        setDate(event.target.value);
-        setDateError(false);
-    };
-
     const onChangeExperience = (event) => {
         setExperience(event.target.value);
         setExperienceError(false);
     };
 
-    const onChangeDepartment = (event) => {
-        setDepartment(event.target.value);
-        setDepartmentError(false);
-    };
-
-    const onChangeRole = (event) => {
-        setRole(event.target.value);
-        setRoleError(false);
-    };
-
-    const onChangeStatus = (event) => {
-        setStatus(event.target.value);
-        setStatusError(false);
+    const onChangeResume = (event) => {
+        setResume(event.target.files[0]);
+        setResumeError(false);
     };
 
     const onChangeLine1 = (event) => {
@@ -137,17 +128,20 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         setPincodeError(false);
     };
 
+    const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
+
     const navigate = useNavigate();
 
-    const saveEmployee = () => {
+    const [uploadFile, { data: fileData, isSuccess: isFileUploadSuccess }] = useUploadFileMutation();
+
+    const saveReferral = () => {
         let isValidated = true;
 
         if (name.trim().length === 0) { isValidated = false; setNameError(true); }
-        if (date.trim().length === 0) { isValidated = false; setDateError(true); }
         if (email.trim().length === 0) { isValidated = false; setEmailError(true); }
         if (phone.trim().length === 0) { isValidated = false; setPhoneError(true); }
         if (experience < 0) { isValidated = false; setExperienceError(true); }
-        if (status.trim().length === 0 || status === 'Select Status') { isValidated = false; setStatusError(true); }
+        if (!resume) { isValidated = false; setResumeError(true); }
         if (line1.trim().length === 0) { isValidated = false; setLine1Error(true); }
         if (line2.trim().length === 0) { isValidated = false; setLine2Error(true); }
         if (city.trim().length === 0) { isValidated = false; setCityError(true); }
@@ -156,17 +150,25 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         if (pincode.trim().length === 0) { isValidated = false; setPincodeError(true); }
 
         if (isValidated) {
-            const employee = {
-                id: props.employee?.id,
+            const formData = new FormData();
+
+            formData.append('file', resume);
+            uploadFile(formData);
+        }
+    };
+
+    useEffect(() => {
+        if (!isFileUploadSuccess) {
+            const referral = {
+                id: props.referral?.id,
                 name,
                 email,
                 phone,
-                password,
-                joiningDate: new Date(date),
-                status,
                 experience: Number(experience),
-                departmentId: (departmentData.data.find((dept) => dept.name === department))?.id,
-                roleId: (rolesData.data.find((roleData) => roleData.role === role))?.id,
+                referredById,
+                openingId,
+                resume: fileData.data.file,
+                roleId,
                 address: {
                     line1,
                     line2,
@@ -177,45 +179,29 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
                 }
             };
 
-            props.isEdit ? updateEmployee({ id: props.employee.id, employee: employee }) : createEmployee(employee);
+            props.isEdit ? updateReferral({ id: props.referral.id, referral: referral }) : createReferral(referral);
         }
-    };
+    }, [isFileUploadSuccess]);
 
-    let roles = [];
-    let departments = [];
-
-    const { data: departmentData, isSuccess: isDeptFetchSuccess } = useGetDepartmentListQuery();
-    const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
-
-    useEffect(() => {
-        if (isDeptFetchSuccess)
-            departments = departmentData.data.map((department) => department.name);
-
-        if (isRoleFetchSuccess)
-            roles = rolesData.data.map((role) => role.role);
-    }, [isDeptFetchSuccess, isRoleFetchSuccess]);
-
-    const [createEmployee, { isSuccess: isCreateEmployeeSuccess }] = useCreateEmployeeMutation();
-    const [updateEmployee, { isSuccess: isUpdateEmployeeSuccess }] = useUpdateEmployeeMutation();
+    const [createReferral, { isSuccess: isCreateReferralSuccess }] = useCreateReferralMutation();
+    const [updateReferral, { isSuccess: isUpdateReferralSuccess }] = useUpdateReferralMutation();
 
     useEffect(() => {
         if (props.isEdit) {
-            if (isUpdateEmployeeSuccess)
+            if (isUpdateReferralSuccess)
                 navigate(-1);
         } else {
-            if (isCreateEmployeeSuccess)
+            if (isCreateReferralSuccess)
                 navigate(-1);
         }
-    }, [isCreateEmployeeSuccess, isUpdateEmployeeSuccess]);
-
-    const primaryButtonLabel = props.isEdit ? 'Save' : 'Create';
+    }, [isCreateReferralSuccess, isUpdateReferralSuccess]);
 
     return (
         <div className='form-container'>
             <FormField
                 type='text'
                 value={name}
-                label='Employee Name'
+                label='Candidate Name'
                 placeholder='John Doe'
                 onChange={onChangeName}
                 showError={nameError}
@@ -237,14 +223,6 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
                 showError={phoneError}
             />
             <FormField
-                type='date'
-                value={date}
-                label='Joining Date'
-                placeholder=''
-                onChange={onChangeDate}
-                showError={dateError}
-            />
-            <FormField
                 type='number'
                 value={experience}
                 label='Experience (Years)'
@@ -252,29 +230,10 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
                 onChange={onChangeExperience}
                 showError={experienceError}
             />
-            <DropDown
-                options={departments}
-                value={department}
-                label='Department'
-                placeholder='Select Department'
-                onChange={onChangeDepartment}
-                showError={departmentError}
-            />
-            <DropDown
-                options={roles}
-                value={role}
-                label='Role'
-                placeholder='Select Role'
-                onChange={onChangeRole}
-                showError={roleError}
-            />
-            <DropDown
-                options={['Active', 'Inactive', 'Probation']}
-                value={status}
-                label='Status'
-                placeholder='Select Status'
-                onChange={onChangeStatus}
-                showError={statusError}
+            <FileUpload
+                label='Resume'
+                onChange={onChangeResume}
+                showError={resumeError}
             />
             <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
                 <FormField
@@ -329,17 +288,17 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
             {props.isEdit && (
                 <FormField
                     disabled={true}
-                    value={props.employee?.id}
+                    value={props.referral?.id}
                     onChange={() => { }}
-                    label={'Employee ID'}
-                    placeholder={'Employee ID'}
+                    label={'Referral ID'}
+                    placeholder={'Referral ID'}
                     type={'text'}
                     showError={false}
                 />
             )}
             <div className='form-buttons'>
                 <div className='form-primary-button'>
-                    <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveEmployee} />
+                    <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />
                 </div>
                 <SecondaryButton
                     type='button'
@@ -353,4 +312,4 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
     );
 };
 
-export default EmployeeForm;
+export default ReferralForm;
