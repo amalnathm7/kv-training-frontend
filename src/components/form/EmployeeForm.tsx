@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Form.css';
+import './EmployeeForm.css';
 import FormField from '../input-field/form-field/FormField';
 import DropDown from '../input-field/drop-down/DropDown';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';

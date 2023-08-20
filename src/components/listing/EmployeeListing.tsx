@@ -1,6 +1,6 @@
 import React from "react";
-import "./Listing.css";
-import ListItem from "../list-item/ListItem";
+import "./EmployeeListing.css";
+import ListItem from "../list-item/EmployeeListItem";
 import { useGetEmployeeListQuery } from "../../services/employeeApi";
 
 type ListingPropsType = {

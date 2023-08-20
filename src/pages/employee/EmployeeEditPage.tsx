@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import Form from "../../components/form/Form";
+import Form from "../../components/form/EmployeeForm";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React, { useEffect, useState } from "react";
 import { useGetEmployeeByIdQuery, useGetMyProfileQuery } from "../../services/employeeApi";

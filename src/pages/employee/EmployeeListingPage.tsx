@@ -1,4 +1,4 @@
-import Listing from "../../components/listing/Listing";
+import Listing from "../../components/listing/EmployeeListing";
 import { RouteConstants } from "../../constants/routeConstants";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React, { useEffect, useState } from "react";

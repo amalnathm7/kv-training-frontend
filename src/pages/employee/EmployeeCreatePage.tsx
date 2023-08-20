@@ -1,4 +1,4 @@
-import Form from "../../components/form/Form";
+import Form from "../../components/form/EmployeeForm";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import React, { useEffect } from "react";
 import { useGetMyProfileQuery } from "../../services/employeeApi";
