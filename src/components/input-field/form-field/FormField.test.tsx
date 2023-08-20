@@ -63,4 +63,19 @@ describe("FormField Props Test", () => {
         const element = render(<FormField {...props} />);
         expect(element).toMatchSnapshot();
     });
+
+    test("If disabled FormField rendered correctly", () => {
+        const props: FormFieldPropsType = {
+            value: "FormField-value",
+            onChange: () => { },
+            label: "",
+            placeholder: "FormField-placeholder",
+            showError: false,
+            disabled: true,
+            type: "text"
+        }
+
+        const element = render(<FormField {...props} />);
+        expect(element).toMatchSnapshot();
+    });
 });
