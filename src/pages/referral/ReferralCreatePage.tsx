@@ -21,7 +21,7 @@ const ReferralCreatePage: React.FC = () => {
     }, [isOpeningFetchSucces]);
 
     useEffect(() => {
-        if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel !== PermissionLevel.SUPER)
+        if (isMyProfileFetchSuccess && (!myProfile.data.role || myProfile.data.role.permissionLevel === PermissionLevel.BASIC))
             navigate(`${RouteConstants.employee}`);
     }, [isMyProfileFetchSuccess]);
 
