@@ -71,6 +71,7 @@ const OpeningListItem: React.FC<OpeningListItemPropsType> = (props) => {
       )}
       {showDeletePopup && (
         <CustomPopup
+          subtext='Do you really want to delete the opening?'
           onConfirm={onConfirmDelete}
           onCancel={() => {
             setShowDeletePopup(false);
