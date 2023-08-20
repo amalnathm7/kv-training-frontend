@@ -158,7 +158,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     };
 
     useEffect(() => {
-        if (!isFileUploadSuccess) {
+        if (isFileUploadSuccess) {
             const referral = {
                 id: props.referral?.id,
                 name,
