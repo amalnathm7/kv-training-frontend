@@ -8,13 +8,13 @@ import { RouteConstants } from '../../constants/routeConstants';
 
 type HomeLayoutPropsType = {
   subHeaderLabel: string;
+  searchClicked?: boolean;
   subHeaderPrimaryActionLabel: string;
   subHeaderPrimaryActionIcon: string;
   subHeaderPrimaryAction: () => void;
   subHeaderSecondaryActionLabel?: string;
   subHeaderSecondaryActionIcon?: string;
   subHeaderSecondaryAction?: () => void;
-  searchClicked?: boolean;
 };
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
@@ -28,11 +28,14 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     <div className='home'>
       {props.children}
       <SubHeader
-        primaryAction={props.subHeaderPrimaryAction}
+        searchClicked={props.searchClicked}
         label={props.subHeaderLabel}
+        primaryAction={props.subHeaderPrimaryAction}
         primaryActionLabel={props.subHeaderPrimaryActionLabel}
         primaryActionIcon={props.subHeaderPrimaryActionIcon}
-        searchClicked={props.searchClicked}
+        secondaryAction={props.subHeaderSecondaryAction}
+        secondaryActionLabel={props.subHeaderSecondaryActionLabel}
+        secondaryActionIcon={props.subHeaderSecondaryActionIcon}
       />
       <Sidebar />
       <Header />

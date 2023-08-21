@@ -7,15 +7,15 @@ import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 
 const EmployeeListingPage: React.FC = () => {
-    const navigate = useNavigate();
-    const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
-    const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-    const [labels, setLabels] = useState([]);
+  const navigate = useNavigate();
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const [labels, setLabels] = useState([]);
 
-    useEffect(() => {
-        if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-            setIsSuperAuthorized(true);
-    }, [isMyProfileFetchSuccess]);
+  useEffect(() => {
+    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
     if (isSuperAuthorized) {
@@ -24,7 +24,18 @@ const EmployeeListingPage: React.FC = () => {
     }
   }, [isSuperAuthorized]);
 
-    const labelArray = ["Employee ID", "Employee Name", "Email", "Phone", "Joining Date", "Role", "Department", "Status", "Experience", "Address"];
+  const labelArray = [
+    'Employee ID',
+    'Employee Name',
+    'Email',
+    'Phone',
+    'Joining Date',
+    'Role',
+    'Department',
+    'Status',
+    'Experience',
+    'Address'
+  ];
 
   useEffect(() => {
     setLabels(labelArray);
@@ -34,9 +45,16 @@ const EmployeeListingPage: React.FC = () => {
     navigate(`${RouteConstants.employee}/create`);
   };
 
-    return <HomeLayout subHeaderPrimaryAction={isSuperAuthorized ? onCreateClicked : null} subHeaderLabel="Employee List" subHeaderPrimaryActionLabel={isSuperAuthorized ? "Create Employee" : ""} subHeaderPrimaryActionIcon={isSuperAuthorized ? "create.png" : ""}>
-        <EmployeeListing labels={labels} />
-    </HomeLayout>;
+  return (
+    <HomeLayout
+      subHeaderPrimaryAction={isSuperAuthorized ? onCreateClicked : null}
+      subHeaderLabel='Employee List'
+      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Create Employee' : ''}
+      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'create.png' : ''}
+    >
+      <EmployeeListing labels={labels} />
+    </HomeLayout>
+  );
 };
 
 export default EmployeeListingPage;

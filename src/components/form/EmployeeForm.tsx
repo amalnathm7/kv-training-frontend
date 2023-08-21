@@ -32,6 +32,8 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
   const [pincode, setPincode] = useState('');
+  const [roles, setRoles] = useState([]);
+  const [departments, setDepartments] = useState([]);
 
   useEffect(() => {
     if (props.employee) {
@@ -220,16 +222,14 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
     }
   };
 
-  let roles = [];
-  let departments = [];
-
   const { data: departmentData, isSuccess: isDeptFetchSuccess } = useGetDepartmentListQuery();
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
 
   useEffect(() => {
-    if (isDeptFetchSuccess) departments = departmentData.data.map((department) => department.name);
+    if (isDeptFetchSuccess)
+      setDepartments(departmentData.data.map((department) => department.name));
 
-    if (isRoleFetchSuccess) roles = rolesData.data.map((role) => role.role);
+    if (isRoleFetchSuccess) setRoles(rolesData.data.map((role) => role.role));
   }, [isDeptFetchSuccess, isRoleFetchSuccess]);
 
   const [createEmployee, { isSuccess: isCreateEmployeeSuccess }] = useCreateEmployeeMutation();

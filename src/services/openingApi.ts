@@ -4,7 +4,7 @@ import { RouteConstants } from '../constants/routeConstants';
 import { OpeningType } from '../types/OpeningType';
 import { GET_OPENING_LIST } from '../constants/apiConstants';
 
-export const OpeningApi = baseApi.injectEndpoints({
+export const openingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOpeningList: builder.query<ResponseType<OpeningType[]>, void>({
       query: () => `${RouteConstants.openingApi}`,
@@ -45,4 +45,4 @@ export const {
   useCreateOpeningMutation,
   useUpdateOpeningMutation,
   useDeleteOpeningMutation
-} = OpeningApi;
+} = openingApi;
