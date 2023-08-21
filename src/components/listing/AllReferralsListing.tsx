@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import ReferralListItem from '../list-item/ReferralListItem';
 import { useGetAllReferralsListQuery } from '../../services/referralApi';
-import './AllReferralsListing.css';
+import './Listing.css';
 
 type ReferralsListingPropsType = {
   labels: string[];
@@ -52,7 +52,7 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
       {props.searchLabel === 'Search' && (
         <div className='search-button'>
           <div className='sub-header-action-icon-container'>
-            <img className='sub-header-action-icon' src={'/assets/icons/' + 'searchicon.jpg'}></img>
+            <img className='sub-header-action-icon' src={'/assets/icons/' + 'search.png'}></img>
           </div>
           {/* <label className='sub-header-action-label'>Search</label> */}
           <input

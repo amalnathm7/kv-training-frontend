@@ -43,7 +43,7 @@ const ReferralListingPage: React.FC = () => {
       subHeaderPrimaryAction={isBasicAuthorized ? onSearchClicked : null}
       subHeaderLabel='Referral List'
       subHeaderPrimaryActionLabel={isBasicAuthorized ? 'Search' : ''}
-      subHeaderPrimaryActionIcon={isBasicAuthorized ? 'searchicon.jpg' : ''}
+      subHeaderPrimaryActionIcon={isBasicAuthorized ? 'search.png' : ''}
       searchClicked={searchClicked}
     >
       <AllReferralsListing labels={labels} searchLabel='Search' />

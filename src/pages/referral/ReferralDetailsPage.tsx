@@ -63,7 +63,7 @@ const ReferralDetailsPage: React.FC = () => {
         value: referral.referredBy ? referral.referredBy.name : 'NIL'
       },
       {
-        label: 'Opening ID',
+        label: 'Opening Title',
         value: referral.opening ? referral.opening.title : 'NIL'
       },
       {
