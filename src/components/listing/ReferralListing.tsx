@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReferralListItem from '../list-item/ReferralListItem';
 import { useGetAllReferralsListQuery, useGetMyReferralsQuery } from '../../services/referralApi';
+import './AllReferralsListing';
 
 type ReferralsListingPropsType = {
   labels: string[];
@@ -11,14 +12,15 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   const [referrals, setReferals] = useState([]);
 
   const { data, isSuccess } =
-    props.selection === 'my' ? useGetMyReferralsQuery() : useGetAllReferralsListQuery();
+    props.selection == 'my' ? useGetMyReferralsQuery() : useGetAllReferralsListQuery();
 
-  if (isSuccess)
+  useEffect(() => {
     setReferals(
-      data.data.map((referral) => (
+      data?.data.map((referral) => (
         <ReferralListItem key={referral.id} referral={referral}></ReferralListItem>
       ))
     );
+  }, [isSuccess]);
 
   const labels = props.labels.map((label) => (
     <td className='listing-label' key={label}>
