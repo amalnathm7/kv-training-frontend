@@ -8,18 +8,14 @@ import { PermissionLevel } from '../../utils/PermissionLevel';
 
 const EmployeeListingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
-  }, [isSuccess]);
+  }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
     if (isSuperAuthorized) {
@@ -32,6 +28,7 @@ const EmployeeListingPage: React.FC = () => {
     'Employee ID',
     'Employee Name',
     'Email',
+    'Phone',
     'Joining Date',
     'Role',
     'Department',
@@ -50,10 +47,10 @@ const EmployeeListingPage: React.FC = () => {
 
   return (
     <HomeLayout
-      subHeaderAction={isSuperAuthorized ? onCreateClicked : null}
+      subHeaderPrimaryAction={isSuperAuthorized ? onCreateClicked : null}
       subHeaderLabel='Employee List'
-      subHeaderActionLabel={isSuperAuthorized ? 'Create Employee' : ''}
-      subHeaderActionIcon={isSuperAuthorized ? 'create.png' : ''}
+      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Create Employee' : ''}
+      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'create.png' : ''}
     >
       <EmployeeListing labels={labels} />
     </HomeLayout>

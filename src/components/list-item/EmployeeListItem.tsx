@@ -1,6 +1,6 @@
 import { EmployeeType } from '../../types/EmployeeType';
 import React, { useEffect, useState } from 'react';
-import './EmployeeListItem.css';
+import './ListItem.css';
 import { StatusType } from '../../types/StatusType';
 import StatusIcon from '../status-icon/StatusIcon';
 import ActionButton from '../button/ActionButton/ActionButton';
@@ -66,6 +66,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
       <td>{props.employee.id}</td>
       <td>{props.employee.name}</td>
       <td>{props.employee.email}</td>
+      <td>{props.employee.phone}</td>
       <td>{new Date(props.employee.joiningDate).toISOString().split('T')[0]}</td>
       <td>{props.employee.role ? props.employee.role.role : 'NIL'}</td>
       <td>{props.employee.department ? props.employee.department.name : 'NIL'}</td>
@@ -98,6 +99,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
           onCancel={() => {
             setShowDeletePopup(false);
           }}
+          subtext='Do you really want to delete the employee?'
         />
       )}
     </tr>
