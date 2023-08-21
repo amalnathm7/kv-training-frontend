@@ -1,8 +1,9 @@
-import AllReferralsListing from '../../components/listing/AllReferralsListing';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+import ReferralListing from '../../components/listing/ReferralListing';
+
 const ReferralListingPage: React.FC = () => {
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
@@ -17,7 +18,6 @@ const ReferralListingPage: React.FC = () => {
     )
       setIsSuperAuthorized(true);
   }, [isSuccess]);
-
   const labelArray = [
     'Referral ID',
     'Candidate Name',
@@ -36,7 +36,6 @@ const ReferralListingPage: React.FC = () => {
   useEffect(() => {
     setLabels(labelArray);
   }, []);
-
   const onSearchClicked = () => {
     console.log('clicked');
     setSearchClicked(true);
@@ -51,7 +50,7 @@ const ReferralListingPage: React.FC = () => {
       subHeaderPrimaryActionIcon={isSuperAuthorized ? 'searchicon.jpg' : ''}
       searchClicked={searchClicked}
     >
-      <AllReferralsListing labels={labels} searchLabel='Search' />
+      <ReferralListing labels={labels} searchLabel='Search' selection='all' />
       {/* {searchClicked && <input type='text' placeholder='Search' />} */}
     </HomeLayout>
   );
