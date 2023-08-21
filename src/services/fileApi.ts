@@ -8,10 +8,7 @@ export const FileApi = baseApi.injectEndpoints({
             query: (body) => ({
                 url: `${RouteConstants.fileUploadApi}`,
                 method: 'POST',
-                body,
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
+                body
             })
         })
     })

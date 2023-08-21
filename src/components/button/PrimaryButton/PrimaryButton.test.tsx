@@ -7,7 +7,8 @@ describe("Primary Button Props Test", () => {
         const props: PrimaryButtonPropsType = {
             type: "button",
             label: "Button",
-            onClick: () => { }
+            onClick: () => { },
+            style: {}
         }
 
         const element = render(<PrimaryButton {...props} />);

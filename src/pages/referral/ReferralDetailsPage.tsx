@@ -2,11 +2,12 @@ import Card from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetEmployeeByIdQuery, useGetMyProfileQuery } from '../../services/employeeApi';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+import { useGetReferralByIdQuery } from '../../services/referralApi';
 
-const EmployeeDetailsPage: React.FC = () => {
+const ReferralDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
@@ -18,77 +19,79 @@ const EmployeeDetailsPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const { data: employeeData, isSuccess } = useGetEmployeeByIdQuery(id);
+  const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
 
   let items = [];
 
   if (isSuccess) {
-    const employee = employeeData.data;
+    const referral = referralData.data;
 
     items = [
       {
-        label: 'Employee ID',
-        value: employee.id
+        label: 'Referral ID',
+        value: referral.id
       },
       {
-        label: 'Employee Name',
-        value: employee.name
+        label: 'Name',
+        value: referral.name
       },
       {
         label: 'Email',
-        value: employee.email
+        value: referral.email
+      },
+
+      {
+        label: 'Experience',
+        value: referral.experience + ' Years'
       },
       {
         label: 'Phone',
-        value: employee.phone
+        value: referral.phone
       },
-      {
-        label: 'Joining Date',
-        value: new Date(employee.joiningDate).toISOString().split('T')[0]
-      },
+
       {
         label: 'Role',
-        value: employee.role ? employee.role.role : 'NIL'
-      },
-      {
-        label: 'Department',
-        value: employee.department ? employee.department.name : 'NIL'
+        value: referral.role ? referral.role.role : 'NIL'
       },
       {
         label: 'Status',
-        value: employee.status,
+        value: referral.status,
         isStatus: true
       },
       {
-        label: 'Experience',
-        value: employee.experience + ' Years'
+        label: 'Referred By ',
+        value: referral.referredBy ? referral.referredBy.name : 'NIL'
+      },
+      {
+        label: 'Opening ID',
+        value: referral.opening ? referral.opening.title : 'NIL'
       },
       {
         label: 'Address',
         value:
-          employee.address.line1 +
+          referral.address.line1 +
           ', ' +
-          employee.address.line2 +
+          referral.address.line2 +
           ', ' +
-          employee.address.city +
+          referral.address.city +
           ', ' +
-          employee.address.state +
+          referral.address.state +
           ', ' +
-          employee.address.country +
+          referral.address.country +
           ', ' +
-          employee.address.pincode
+          referral.address.pincode
       }
     ];
   }
 
   const onEditClicked = () => {
-    navigate(`${RouteConstants.employee}/${id}/edit`);
+    navigate(`${RouteConstants.referral}/${id}/edit`);
   };
 
   return (
     <HomeLayout
       subHeaderPrimaryAction={isSuperAuthorized ? onEditClicked : null}
-      subHeaderLabel='Employee Details'
+      subHeaderLabel='Referral Details'
       subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
       subHeaderPrimaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}
     >
@@ -97,4 +100,4 @@ const EmployeeDetailsPage: React.FC = () => {
   );
 };
 
-export default EmployeeDetailsPage;
+export default ReferralDetailsPage;

@@ -4,10 +4,21 @@ import '@testing-library/jest-dom';
 import CustomPopup, { CustomPopupPropsType } from "./CustomPopup";
 
 describe("CustomPopup Props Test", () => {
-    test("If CustomPopup rendered correctly", () => {
+    test("If CustomPopup rendered correctly without subtext", () => {
         const props: CustomPopupPropsType = {
             onConfirm: () => { },
             onCancel: () => { }
+        }
+
+        const element = render(<CustomPopup {...props} />);
+        expect(element).toMatchSnapshot();
+    });
+
+    test("If CustomPopup rendered correctly with subtext", () => {
+        const props: CustomPopupPropsType = {
+            onConfirm: () => { },
+            onCancel: () => { },
+            subtext: "custom-popup subtext"
         }
 
         const element = render(<CustomPopup {...props} />);

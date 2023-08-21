@@ -5,8 +5,8 @@ export const baseApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: API_BASE_URL,
         prepareHeaders: (headers) => {
-            if (!headers.get('Content-Type'))
-                headers.set('Content-Type', 'application/json');
+            // if (!headers.get('Content-Type'))
+            //     headers.set('Content-Type', 'application/json');
 
             const token = localStorage.getItem('token');
 

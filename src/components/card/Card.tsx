@@ -1,6 +1,7 @@
 import React from "react";
 import CardItem from "../card-item/CardItem";
 import "./Card.css";
+import SecondaryButton, { SecondaryButtonPropsType } from "../button/SecondaryButton/SecondaryButton";
 
 type CardItemType = {
     label: string,
@@ -9,7 +10,8 @@ type CardItemType = {
 }
 
 export type CardPropsType = {
-    items: CardItemType[]
+    items: CardItemType[],
+    secondaryButtonProps?: SecondaryButtonPropsType
 };
 
 const Card: React.FC<CardPropsType> = (props) => {
@@ -19,6 +21,14 @@ const Card: React.FC<CardPropsType> = (props) => {
     return <div>
         <div className="details-card">
             {items}
+            <div style={{ width: "100%" }}>
+                {props.secondaryButtonProps && <SecondaryButton
+                    style={props.secondaryButtonProps.style}
+                    type={props.secondaryButtonProps.type}
+                    label={props.secondaryButtonProps.label}
+                    onClick={props.secondaryButtonProps.onClick}
+                />}
+            </div>
         </div>
     </div>;
 };

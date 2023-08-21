@@ -7,10 +7,11 @@ describe("Secondary Button Props Test", () => {
         const props: SecondaryButtonPropsType = {
             type: "button",
             label: "Button",
-            onClick: () => {}
+            onClick: () => { },
+            style: {}
         }
 
-        const element = render(<SecondaryButton {...props}/>);
+        const element = render(<SecondaryButton {...props} />);
         expect(element).toMatchSnapshot();
     });
 
@@ -18,10 +19,10 @@ describe("Secondary Button Props Test", () => {
         const props: SecondaryButtonPropsType = {
             type: "button",
             label: "Button",
-            onClick: () => {}
+            onClick: () => { }
         }
 
-        render(<SecondaryButton {...props}/>);
+        render(<SecondaryButton {...props} />);
         const element = screen.getByTestId("secondary-button-test");
         expect(element).toHaveValue("Button");
     });
@@ -30,12 +31,11 @@ describe("Secondary Button Props Test", () => {
         const props: SecondaryButtonPropsType = {
             type: "button",
             label: "Button",
-            onClick: () => {}
+            onClick: () => { }
         }
 
-        render(<SecondaryButton {...props}/>);
+        render(<SecondaryButton {...props} />);
         const element = screen.getByTestId("secondary-button-test");
-        // expect(element.getAttribute("type")).not.toBe("submit");
         expect(element).toHaveAttribute("type", "button");
     });
 
@@ -47,7 +47,7 @@ describe("Secondary Button Props Test", () => {
             onClick
         }
 
-        render(<SecondaryButton {...props}/>);
+        render(<SecondaryButton {...props} />);
         const element = screen.getByTestId("secondary-button-test");
         fireEvent.click(element);
         element.click();
