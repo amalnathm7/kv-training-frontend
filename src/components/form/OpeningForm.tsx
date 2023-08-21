@@ -124,11 +124,11 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
     if (isValidated) {
       const opening = {
         id: props.opening?.id,
-        title,
-        description,
-        skills,
+        title: title.trim(),
+        description: description.trim(),
+        skills: skills.trim(),
         count: Number(count),
-        location,
+        location: location.trim(),
         experience: Number(experience),
         departmentId: departmentData.data.find((dept) => dept.name === department)?.id.toString(),
         roleId: rolesData.data.find((roleData) => roleData.role === role)?.id.toString()
@@ -152,13 +152,13 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
   }, [isCreateOpeningSuccess, isUpdateOpeningSuccess]);
 
   useEffect(() => {
-    if (isDeptFetchSuccess) setDepartments(departmentData.data.map((department) => department.name));
+    if (isDeptFetchSuccess)
+      setDepartments(departmentData.data.map((department) => department.name));
   }, [isDeptFetchSuccess]);
 
   useEffect(() => {
     if (isRoleFetchSuccess) setRoles(rolesData.data.map((role) => role.role));
   }, [isRoleFetchSuccess]);
-
 
   return (
     <div className='form-container'>

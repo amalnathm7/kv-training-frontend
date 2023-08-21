@@ -12,10 +12,11 @@ import FileUpload from '../input-field/file-upload/FileUpload';
 import { useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { validateEmail, validatePhoneNo } from '../../utils/validation';
 
 export type ReferralFormPropsType = {
-    referredBy: EmployeeType,
-    opening: OpeningType,
+    referredBy: EmployeeType;
+    opening: OpeningType;
     referral: ReferralType;
     isEdit: boolean;
 };
@@ -137,17 +138,50 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     const saveReferral = () => {
         let isValidated = true;
 
-        if (name.trim().length === 0) { isValidated = false; setNameError(true); }
-        if (email.trim().length === 0) { isValidated = false; setEmailError(true); }
-        if (phone.trim().length === 0) { isValidated = false; setPhoneError(true); }
-        if (experience < 0) { isValidated = false; setExperienceError(true); }
-        if (!resume) { isValidated = false; setResumeError(true); }
-        if (line1.trim().length === 0) { isValidated = false; setLine1Error(true); }
-        if (line2.trim().length === 0) { isValidated = false; setLine2Error(true); }
-        if (city.trim().length === 0) { isValidated = false; setCityError(true); }
-        if (state.trim().length === 0) { isValidated = false; setStateError(true); }
-        if (country.trim().length === 0) { isValidated = false; setCountryError(true); }
-        if (pincode.trim().length === 0) { isValidated = false; setPincodeError(true); }
+        if (name.trim().length === 0) {
+            isValidated = false;
+            setNameError(true);
+        }
+        if (!validateEmail(email.trim())) {
+            isValidated = false;
+            setEmailError(true);
+        }
+        if (!validatePhoneNo(phone.trim())) {
+            isValidated = false;
+            setPhoneError(true);
+        }
+        if (experience < 0) {
+            isValidated = false;
+            setExperienceError(true);
+        }
+        if (!resume) {
+            isValidated = false;
+            setResumeError(true);
+        }
+        if (line1.trim().length === 0) {
+            isValidated = false;
+            setLine1Error(true);
+        }
+        if (line2.trim().length === 0) {
+            isValidated = false;
+            setLine2Error(true);
+        }
+        if (city.trim().length === 0) {
+            isValidated = false;
+            setCityError(true);
+        }
+        if (state.trim().length === 0) {
+            isValidated = false;
+            setStateError(true);
+        }
+        if (country.trim().length === 0) {
+            isValidated = false;
+            setCountryError(true);
+        }
+        if (pincode.trim().length === 0) {
+            isValidated = false;
+            setPincodeError(true);
+        }
 
         if (isValidated) {
             const formData = new FormData();
@@ -161,25 +195,27 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         if (isFileUploadSuccess) {
             const referral = {
                 id: props.referral?.id,
-                name,
-                email,
-                phone,
+                name: name.trim(),
+                email: email.trim(),
+                phone: phone.trim(),
                 experience: Number(experience),
                 referredById,
                 openingId,
                 resume: fileData.data.file,
                 roleId,
                 address: {
-                    line1,
-                    line2,
-                    city,
-                    state,
-                    country,
-                    pincode
+                    line1: line1.trim(),
+                    line2: line2.trim(),
+                    city: city.trim(),
+                    state: state.trim(),
+                    country: country.trim(),
+                    pincode: pincode.trim()
                 }
             };
 
-            props.isEdit ? updateReferral({ id: props.referral.id, referral: referral }) : createReferral(referral);
+            props.isEdit
+                ? updateReferral({ id: props.referral.id, referral: referral })
+                : createReferral(referral);
         }
     }, [isFileUploadSuccess]);
 
@@ -235,12 +271,8 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
                 onChange={onChangeExperience}
                 showError={experienceError}
             />
-            <FileUpload
-                label='Resume'
-                onChange={onChangeResume}
-                showError={resumeError}
-            />
-            <div style={{ width: "100%", display: "flex", flexWrap: "wrap" }}>
+            <FileUpload label='Resume' onChange={onChangeResume} showError={resumeError} />
+            <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
                 <FormField
                     type='text'
                     value={line1}
