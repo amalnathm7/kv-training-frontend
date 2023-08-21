@@ -1,4 +1,4 @@
-import { useState, type FC, Dispatch, SetStateAction, Context, createContext } from 'react';
+import { useState, FC, Dispatch, SetStateAction, Context, createContext } from 'react';
 import './styles/global.css';
 import LoginPage from './pages/login/LoginPage';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
