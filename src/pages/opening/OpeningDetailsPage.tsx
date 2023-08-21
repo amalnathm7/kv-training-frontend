@@ -84,6 +84,10 @@ const OpeningDetailsPage: React.FC = () => {
         navigate(`${RouteConstants.opening}/${id}/refer`);
     };
 
+    const onViewReferralsClicked = () => {
+        navigate(``);
+    };
+
     return <HomeLayout
         subHeaderLabel="Opening Details"
         subHeaderPrimaryAction={isAuthorized ? onReferClicked : null}
@@ -93,7 +97,7 @@ const OpeningDetailsPage: React.FC = () => {
         subHeaderSecondaryActionLabel={isSuperAuthorized ? "Edit" : ""}
         subHeaderSecondaryActionIcon={isSuperAuthorized ? "edit.svg" : ""}
     >
-        <Card items={items}></Card>
+        <Card items={items} secondaryButtonProps={{ style: { marginTop: "40px", marginBottom: "20px" }, type: 'button', label: 'View Referrals', onClick: onViewReferralsClicked }}></Card>
         <ToastContainer
             position={toast.POSITION.BOTTOM_CENTER}
             autoClose={3000}
