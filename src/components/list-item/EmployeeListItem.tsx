@@ -11,46 +11,55 @@ import { RouteConstants } from "../../constants/routeConstants";
 import { PermissionLevel } from "../../utils/PermissionLevel";
 
 type EmployeeListItemPropsType = {
-    employee: EmployeeType
+  employee: EmployeeType;
 };
 
 const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
-    const { data: myProfile, isSuccess } = useGetMyProfileQuery();
-    const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
-    useEffect(() => {
-        if (isSuccess && myProfile.data.role && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
-            setIsSuperAuthorized(true);
-    }, [isSuccess]);
+  useEffect(() => {
+    if (
+      isSuccess &&
+      myProfile.data.role &&
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
+    )
+      setIsSuperAuthorized(true);
+  }, [isSuccess]);
 
-    const navigate = useNavigate();
-    const [showDeletePopup, setShowDeletePopup] = useState(false);
-    let status: StatusType = {
-        label: props.employee.status,
-        color: props.employee.status === 'Active' ? '#D3F4BE' : props.employee.status === 'Inactive' ? '#FFBFBF' : '#F5ECB8'
-    };
+  const navigate = useNavigate();
+  const [showDeletePopup, setShowDeletePopup] = useState(false);
+  let status: StatusType = {
+    label: props.employee.status,
+    color:
+      props.employee.status === 'Active'
+        ? '#D3F4BE'
+        : props.employee.status === 'Inactive'
+        ? '#FFBFBF'
+        : '#F5ECB8'
+  };
 
-    const handleEdit = () => {
-        navigate(`${RouteConstants.employee}/${props.employee.id}/edit`);
-    };
+  const handleEdit = () => {
+    navigate(`${RouteConstants.employee}/${props.employee.id}/edit`);
+  };
 
-    const handleDelete = () => {
-        setShowDeletePopup(true);
-    };
+  const handleDelete = () => {
+    setShowDeletePopup(true);
+  };
 
-    const onClick = () => {
-        navigate(`${RouteConstants.employee}/${props.employee.id}`);
-    };
+  const onClick = () => {
+    navigate(`${RouteConstants.employee}/${props.employee.id}`);
+  };
 
-    const onConfirmDelete = () => {
-        deleteEmployee(props.employee.id);
-    };
+  const onConfirmDelete = () => {
+    deleteEmployee(props.employee.id);
+  };
 
-    const [deleteEmployee, { isSuccess: isDeleteSuccess }] = useDeleteEmployeeMutation();
+  const [deleteEmployee, { isSuccess: isDeleteSuccess }] = useDeleteEmployeeMutation();
 
-    useEffect(() => {
-        setShowDeletePopup(false);
-    }, [isDeleteSuccess]);
+  useEffect(() => {
+    setShowDeletePopup(false);
+  }, [isDeleteSuccess]);
 
     return <tr className="list-item" onClick={onClick}>
         <td>{props.employee.id}</td>

@@ -1,5 +1,5 @@
-import React from "react";
-import "./SecondaryButton.css";
+import React from 'react';
+import './SecondaryButton.css';
 
 export type SecondaryButtonPropsType = {
     type: "button" | "submit"
