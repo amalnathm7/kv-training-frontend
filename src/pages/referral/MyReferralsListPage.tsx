@@ -30,9 +30,8 @@ const MyReferralListingPage: React.FC = () => {
     'Email',
     'Experience',
     'Status',
-    'Opening Id',
-    'Referred By',
-    'Role Id'
+    'Opening',
+    'Role'
   ];
 
   useEffect(() => {
@@ -47,10 +46,10 @@ const MyReferralListingPage: React.FC = () => {
     <HomeLayout
       subHeaderPrimaryAction={isSuperAuthorized ? onCreateClicked : null}
       subHeaderLabel='My Referrals'
-      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'create.png' : ''}
-      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Refer a friend' : ''}
+      subHeaderPrimaryActionIcon={''}
+      subHeaderPrimaryActionLabel={''}
     >
-      <ReferralListing labels={labels} selection='my' searchLabel='Search' />
+      <ReferralListing labels={labels} selection='my' searchLabel='' />
     </HomeLayout>
   );
 };

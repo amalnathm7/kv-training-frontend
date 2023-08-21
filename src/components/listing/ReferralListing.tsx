@@ -18,7 +18,11 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   useEffect(() => {
     setReferrals(
       data?.data.map((referral) => (
-        <ReferralListItem key={referral.id} referral={referral}></ReferralListItem>
+        <ReferralListItem
+          key={referral.id}
+          referral={referral}
+          selection={props.selection}
+        ></ReferralListItem>
       ))
     );
   }, [isSuccess]);
@@ -42,7 +46,11 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
 
     setReferrals(
       newreferrals.map((newReferral) => (
-        <ReferralListItem key={newReferral.id} referral={newReferral}></ReferralListItem>
+        <ReferralListItem
+          key={newReferral.id}
+          referral={newReferral}
+          selection={props.selection}
+        ></ReferralListItem>
       ))
     );
   };
@@ -52,20 +60,23 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
       {props.searchLabel === 'Search' && (
         <div className='search-button'>
           <div className='sub-header-action-icon-container'>
-            <img className='sub-header-action-icon' src={'/assets/icons/' + 'searchicon.jpg'}></img>
+            <img className='sub-header-action-icon' src={'/assets/icons/' + 'search.png'}></img>
           </div>
           {/* <label className='sub-header-action-label'>Search</label> */}
           <input
             className='sub-header-action-label'
+            style={{ fontSize: '14px', cursor: 'text' }}
             value={inputValue}
-            placeholder='Search'
+            placeholder='Search referral'
             onChange={handleSearch}
           />
         </div>
       )}
       <div className='listing'>
         <table>
-          <thead className='list-header'>{labels}</thead>
+          <thead>
+            <tr className='list-header'>{labels}</tr>
+          </thead>
           <tbody className='list-items'>{referrals}</tbody>
         </table>
       </div>

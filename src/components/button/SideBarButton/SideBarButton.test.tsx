@@ -1,7 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import SideBarButton, { SideBarButtonPropsType } from './SideBarButton';
-import { RouteConstants } from '../../../constants/routeConstants';
 import { BrowserRouter } from 'react-router-dom';
 
 describe('Sidebar Button Props Test', () => {
@@ -9,23 +8,35 @@ describe('Sidebar Button Props Test', () => {
     const props: SideBarButtonPropsType = {
       imgIcon: 'icon',
       headerText: 'text',
-      route: RouteConstants.employee
+      isSelected: true,
+      onClick: () => {}
     };
 
-    const element = render(
-      <BrowserRouter>
-        <SideBarButton {...props} />
-      </BrowserRouter>
-    );
+    const element = render(<SideBarButton {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
+
+  test('If sidebarbutton unselected rendered correctly', () => {
+    const props: SideBarButtonPropsType = {
+      imgIcon: 'icon',
+      headerText: 'text',
+      isSelected: false,
+      onClick: () => {}
+    };
+
+    const element = render(<SideBarButton {...props} />);
 
     expect(element).toMatchSnapshot();
   });
 
   test('If onClick called', () => {
+    const onClick = jest.fn();
     const props: SideBarButtonPropsType = {
       imgIcon: 'icon',
       headerText: 'text',
-      route: RouteConstants.employee
+      isSelected: true,
+      onClick: onClick
     };
 
     render(
@@ -36,6 +47,6 @@ describe('Sidebar Button Props Test', () => {
     const element = screen.getByTestId('sidebar-button-test');
 
     element.click();
-    expect(element).toMatchSnapshot();
+    expect(onClick).toBeCalled();
   });
 });

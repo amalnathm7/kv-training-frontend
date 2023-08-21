@@ -11,13 +11,10 @@ const ReferralListingPage: React.FC = () => {
   const [searchClicked, setSearchClicked] = useState(false);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (isSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
   }, [isSuccess]);
+
   const labelArray = [
     'Referral ID',
     'Candidate Name',
@@ -25,12 +22,15 @@ const ReferralListingPage: React.FC = () => {
     'Experience',
     'Status',
     'Opening',
-    'Referred By',
-    'Role '
+    'Role',
+    'Referred By'
   ];
 
   useEffect(() => {
-    if (isSuperAuthorized) labelArray.push('Actions');
+    if (isSuperAuthorized) {
+      labelArray.push('Actions');
+      setLabels(labelArray);
+    }
   }, [isSuperAuthorized]);
 
   useEffect(() => {
@@ -38,9 +38,7 @@ const ReferralListingPage: React.FC = () => {
   }, []);
 
   const onSearchClicked = () => {
-    console.log('clicked');
     setSearchClicked(true);
-    console.log(searchClicked);
   };
 
   return (
