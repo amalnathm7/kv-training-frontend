@@ -3,12 +3,12 @@ import ReferralListItem from '../list-item/ReferralListItem';
 import { useGetAllReferralsListQuery } from '../../services/referralApi';
 import './AllReferralsListing.css';
 
-type AllReferralsListingPropsType = {
+type ReferralsListingPropsType = {
   labels: string[];
   searchLabel?: string;
 };
 
-const AllReferralsListing: React.FC<AllReferralsListingPropsType> = (props) => {
+const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   const { data: allreferralsData, isSuccess } = useGetAllReferralsListQuery();
   const [inputValue, setInputValue] = useState('');
   const [referrals, setReferrals] = useState([]);
@@ -36,7 +36,13 @@ const AllReferralsListing: React.FC<AllReferralsListingPropsType> = (props) => {
       String(referral.id).includes(e.target.value)
     );
 
-    setReferrals(newreferrals);
+    console.log(newreferrals);
+
+    // setReferrals(
+    //   newreferrals.map((newreferral) => (
+    //     <ReferralListItem key={newreferral.id} referral={newreferral}></ReferralListItem>
+    //   ))
+    // );
 
     console.log(referrals);
   };
@@ -67,4 +73,4 @@ const AllReferralsListing: React.FC<AllReferralsListingPropsType> = (props) => {
   );
 };
 
-export default AllReferralsListing;
+export default ReferralsListing;
