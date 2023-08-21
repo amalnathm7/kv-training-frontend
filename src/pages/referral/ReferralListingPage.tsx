@@ -1,4 +1,4 @@
-import ReferralsListing from '../../components/listing/AllReferralsListing';
+import AllReferralsListing from '../../components/listing/AllReferralsListing';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
@@ -42,12 +42,13 @@ const ReferralListingPage: React.FC = () => {
 
   return (
     <HomeLayout
-      subHeaderAction={isBasicAuthorized ? onSearchClicked : null}
+      subHeaderPrimaryAction={isBasicAuthorized ? onSearchClicked : null}
       subHeaderLabel='Referral List'
-      subHeaderActionLabel={isBasicAuthorized ? 'Search' : ''}
-      subHeaderActionIcon={isBasicAuthorized ? 'searchicon.jpg' : ''}
+      subHeaderPrimaryActionLabel={isBasicAuthorized ? 'Search' : ''}
+      subHeaderPrimaryActionIcon={isBasicAuthorized ? 'searchicon.jpg' : ''}
+      searchClicked={searchClicked}
     >
-      <ReferralsListing labels={labels} searchLabel='Search' selection={'all'} />
+      <AllReferralsListing labels={labels} searchLabel='Search' />
       {/* {searchClicked && <input type='text' placeholder='Search' />} */}
     </HomeLayout>
   );

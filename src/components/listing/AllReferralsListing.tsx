@@ -6,7 +6,6 @@ import './AllReferralsListing.css';
 type ReferralsListingPropsType = {
   labels: string[];
   searchLabel?: string;
-  selection: 'my' | 'all';
 };
 
 const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {

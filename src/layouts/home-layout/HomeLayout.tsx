@@ -28,6 +28,7 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     <div className='home'>
       {props.children}
       <SubHeader
+        searchClicked={props.searchClicked}
         label={props.subHeaderLabel}
         primaryAction={props.subHeaderPrimaryAction}
         primaryActionLabel={props.subHeaderPrimaryActionLabel}
