@@ -7,7 +7,7 @@
     flex-wrap: wrap;
     position: absolute;
     flex-direction: row;
-    justify-content: start;
+    justify-content: flex-start;
     top: 210px;
     left: 320px;
     right: 20px;

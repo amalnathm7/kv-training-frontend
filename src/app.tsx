@@ -31,7 +31,7 @@ const App: FC = () => {
           <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />
           <Route path={`${RouteConstants.opening}/create`} element={<OpeningCreatePage />} />
           <Route path={`${RouteConstants.opening}/:id/edit`} element={<OpeningEditPage />} />
-          <Route path={`${RouteConstants.referralApi}/:id`} element={<ReferralDetailsPage />} />
+          <Route path={`${RouteConstants.referral}/:id`} element={<ReferralDetailsPage />} />
         </Routes>
       </BrowserRouter>
     </div>

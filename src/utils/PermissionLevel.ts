@@ -1,3 +1,5 @@
 export enum PermissionLevel {
-    SUPER, ADVANCED, BASIC
-};
+  SUPER,
+  ADVANCED,
+  BASIC
+}

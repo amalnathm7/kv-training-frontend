@@ -1,56 +1,60 @@
-import SecondaryButton, { SecondaryButtonPropsType } from "./SecondaryButton";
-import { render, screen, fireEvent } from "@testing-library/react";
+import SecondaryButton, { SecondaryButtonPropsType } from './SecondaryButton';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-describe("Secondary Button Props Test", () => {
-    test("If button rendered correctly", () => {
-        const props: SecondaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick: () => { },
-            style: {}
-        }
+describe('Secondary Button Props Test', () => {
+  test('If button rendered correctly', () => {
+    const props: SecondaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick: () => {},
+      style: {}
+    };
 
-        const element = render(<SecondaryButton {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+    const element = render(<SecondaryButton {...props} />);
 
-    test("If label rendered correctly", () => {
-        const props: SecondaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick: () => { }
-        }
+    expect(element).toMatchSnapshot();
+  });
 
-        render(<SecondaryButton {...props} />);
-        const element = screen.getByTestId("secondary-button-test");
-        expect(element).toHaveValue("Button");
-    });
+  test('If label rendered correctly', () => {
+    const props: SecondaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick: () => {}
+    };
 
-    test("If type rendered correctly", () => {
-        const props: SecondaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick: () => { }
-        }
+    render(<SecondaryButton {...props} />);
+    const element = screen.getByTestId('secondary-button-test');
 
-        render(<SecondaryButton {...props} />);
-        const element = screen.getByTestId("secondary-button-test");
-        expect(element).toHaveAttribute("type", "button");
-    });
+    expect(element).toHaveValue('Button');
+  });
 
-    test("If onClick called", () => {
-        const onClick = jest.fn();
-        const props: SecondaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick
-        }
+  test('If type rendered correctly', () => {
+    const props: SecondaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick: () => {}
+    };
 
-        render(<SecondaryButton {...props} />);
-        const element = screen.getByTestId("secondary-button-test");
-        fireEvent.click(element);
-        element.click();
-        expect(onClick).toBeCalledTimes(2);
-    });
+    render(<SecondaryButton {...props} />);
+    const element = screen.getByTestId('secondary-button-test');
+
+    expect(element).toHaveAttribute('type', 'button');
+  });
+
+  test('If onClick called', () => {
+    const onClick = jest.fn();
+    const props: SecondaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick
+    };
+
+    render(<SecondaryButton {...props} />);
+    const element = screen.getByTestId('secondary-button-test');
+
+    fireEvent.click(element);
+    element.click();
+    expect(onClick).toBeCalledTimes(2);
+  });
 });
