@@ -25,6 +25,21 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>{props.referral.opening.title}</td>
       <td>{props.referral.referredBy.name}</td>
       <td>{props.referral.role.role}</td>
+      {/* {isSuperAuthorized && (
+        <td>
+          <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
+          <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+        </td>
+      )}
+      {showDeletePopup && (
+        <CustomPopup
+          onConfirm={onConfirmDelete}
+          onCancel={() => {
+            setShowDeletePopup(false);
+          }}
+          subtext='Do you really want to delete the employee?'
+        />
+      )} */}
     </tr>
   );
 };
