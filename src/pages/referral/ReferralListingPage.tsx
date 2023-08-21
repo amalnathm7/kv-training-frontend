@@ -23,9 +23,9 @@ const ReferralListingPage: React.FC = () => {
     'Email',
     'Experience',
     'Status',
-    'Opening Id',
+    'Opening',
     'Referred By',
-    'Role Id'
+    'Role '
   ];
 
   useEffect(() => {
