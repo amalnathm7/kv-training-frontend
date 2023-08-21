@@ -69,7 +69,9 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
         </td>}
         {showDeletePopup && <CustomPopup onConfirm={onConfirmDelete} onCancel={() => {
             setShowDeletePopup(false);
-        }} />}
+        }}
+          subtext='Do you really want to delete the employee?'
+        />}
     </tr>;
 };
 
