@@ -31,21 +31,20 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
 
   const handleSearch = (e) => {
     setInputValue(e.target.value);
-    console.log(referrals);
 
     const newreferrals = allreferralsData?.data.filter(
       (referral) =>
         String(referral.id).includes(e.target.value) ||
         String(referral.email).includes(e.target.value) ||
         String(referral.opening.title).includes(e.target.value) ||
-        String(referral.role.role).includes(e.target.value)
+        String(referral.role.role).includes(e.target.value) ||
+        String(referral.name).includes(e.target.value)
     );
 
-    console.log(newreferrals);
-
+      console.log(newreferrals);
     setReferrals(
-      newreferrals.map((newreferral) => (
-        <ReferralListItem key={newreferral.id} referral={newreferral}></ReferralListItem>
+      newreferrals.map((newReferral) => (
+        <ReferralListItem key={newReferral.id} referral={newReferral}></ReferralListItem>
       ))
     );
 
