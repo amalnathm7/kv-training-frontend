@@ -16,7 +16,7 @@ exports[`CustomPopup Props Test If CustomPopup rendered correctly 1`] = `
             Are you sure?
           </h2>
           <p>
-            Do you really want to delete the employee?
+            Do you really want to delete this?
           </p>
           <div
             class="popup-buttons"
@@ -50,7 +50,7 @@ exports[`CustomPopup Props Test If CustomPopup rendered correctly 1`] = `
           Are you sure?
         </h2>
         <p>
-          Do you really want to delete the employee?
+          Do you really want to delete this?
         </p>
         <div
           class="popup-buttons"
