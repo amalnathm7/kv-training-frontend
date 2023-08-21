@@ -43,5 +43,6 @@ export const {
   useCreateReferralMutation,
   useUpdateReferralMutation,
   useGetReferralByIdQuery,
-  useGetMyReferralsQuery
+  useGetMyReferralsQuery,
+  useGetAllReferralsListQuery
 } = referralApi;
