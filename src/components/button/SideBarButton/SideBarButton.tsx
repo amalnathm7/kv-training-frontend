@@ -1,16 +1,30 @@
 import React from 'react';
 import './SideBarButton.css';
+import { useNavigate } from 'react-router-dom';
+import { RouteConstants } from '../../../constants/routeConstants';
 
 export type SideBarButtonPropsType = {
   imgIcon: string;
   headerText: string;
+  route: RouteConstants;
 };
 
 const SideBarButton: React.FC<SideBarButtonPropsType> = (props) => {
+  const navigate = useNavigate();
+
+  const onClick = () => {
+    navigate(props.route);
+  };
+
   return (
-    <div className='item container'>
+    <div onClick={onClick} className='item container' data-testid='sidebar-button-test'>
       <div className='icon container'>
-        <img src={props.imgIcon} alt='Icon'></img>
+        <img
+          className='filtered'
+          style={{ height: '15px', width: '15px' }}
+          src={props.imgIcon}
+          alt='Icon'
+        ></img>
       </div>
       <h3>{props.headerText}</h3>
     </div>

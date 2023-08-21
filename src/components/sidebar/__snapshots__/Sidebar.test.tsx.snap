@@ -9,19 +9,80 @@ exports[`Sidebar Props Test If Sidebar rendered correctly 1`] = `
         class="sidebar"
       >
         <div
-          class="item container"
+          class="sidebar-items"
         >
           <div
-            class="icon container"
+            class="item container"
+            data-testid="sidebar-button-test"
           >
-            <img
-              alt="Icon"
-              src="/assets/icons/employees.svg"
-            />
+            <div
+              class="icon container"
+            >
+              <img
+                alt="Icon"
+                class="filtered"
+                src="/assets/icons/employees.svg"
+                style="height: 15px; width: 15px;"
+              />
+            </div>
+            <h3>
+              Employee List
+            </h3>
           </div>
-          <h3>
-            Employee List
-          </h3>
+          <div
+            class="item container"
+            data-testid="sidebar-button-test"
+          >
+            <div
+              class="icon container"
+            >
+              <img
+                alt="Icon"
+                class="filtered"
+                src="/assets/icons/job_icon.png"
+                style="height: 15px; width: 15px;"
+              />
+            </div>
+            <h3>
+              Job Openings
+            </h3>
+          </div>
+          <div
+            class="item container"
+            data-testid="sidebar-button-test"
+          >
+            <div
+              class="icon container"
+            >
+              <img
+                alt="Icon"
+                class="filtered"
+                src="/assets/icons/my_referrals.png"
+                style="height: 15px; width: 15px;"
+              />
+            </div>
+            <h3>
+              My Referrals
+            </h3>
+          </div>
+          <div
+            class="item container"
+            data-testid="sidebar-button-test"
+          >
+            <div
+              class="icon container"
+            >
+              <img
+                alt="Icon"
+                class="filtered"
+                src="/assets/icons/all_referrals.png"
+                style="height: 15px; width: 15px;"
+              />
+            </div>
+            <h3>
+              All Referrals
+            </h3>
+          </div>
         </div>
       </div>
     </div>
@@ -31,19 +92,80 @@ exports[`Sidebar Props Test If Sidebar rendered correctly 1`] = `
       class="sidebar"
     >
       <div
-        class="item container"
+        class="sidebar-items"
       >
         <div
-          class="icon container"
+          class="item container"
+          data-testid="sidebar-button-test"
         >
-          <img
-            alt="Icon"
-            src="/assets/icons/employees.svg"
-          />
+          <div
+            class="icon container"
+          >
+            <img
+              alt="Icon"
+              class="filtered"
+              src="/assets/icons/employees.svg"
+              style="height: 15px; width: 15px;"
+            />
+          </div>
+          <h3>
+            Employee List
+          </h3>
         </div>
-        <h3>
-          Employee List
-        </h3>
+        <div
+          class="item container"
+          data-testid="sidebar-button-test"
+        >
+          <div
+            class="icon container"
+          >
+            <img
+              alt="Icon"
+              class="filtered"
+              src="/assets/icons/job_icon.png"
+              style="height: 15px; width: 15px;"
+            />
+          </div>
+          <h3>
+            Job Openings
+          </h3>
+        </div>
+        <div
+          class="item container"
+          data-testid="sidebar-button-test"
+        >
+          <div
+            class="icon container"
+          >
+            <img
+              alt="Icon"
+              class="filtered"
+              src="/assets/icons/my_referrals.png"
+              style="height: 15px; width: 15px;"
+            />
+          </div>
+          <h3>
+            My Referrals
+          </h3>
+        </div>
+        <div
+          class="item container"
+          data-testid="sidebar-button-test"
+        >
+          <div
+            class="icon container"
+          >
+            <img
+              alt="Icon"
+              class="filtered"
+              src="/assets/icons/all_referrals.png"
+              style="height: 15px; width: 15px;"
+            />
+          </div>
+          <h3>
+            All Referrals
+          </h3>
+        </div>
       </div>
     </div>
   </div>,

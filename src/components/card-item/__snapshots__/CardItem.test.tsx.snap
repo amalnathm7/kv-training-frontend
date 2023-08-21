@@ -19,7 +19,7 @@ exports[`Card Props Test If card rendered correctly 1`] = `
         >
           <div
             class="status-container"
-            style="background-color: rgb(245, 236, 184); padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
+            style="padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
           >
             <label>
               card-value
@@ -44,7 +44,7 @@ exports[`Card Props Test If card rendered correctly 1`] = `
       >
         <div
           class="status-container"
-          style="background-color: rgb(245, 236, 184); padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
+          style="padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
         >
           <label>
             card-value
@@ -126,7 +126,7 @@ exports[`Card Props Test If card status active rendered correctly 1`] = `
         >
           <div
             class="status-container"
-            style="background-color: rgb(211, 244, 190); padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
+            style="background-color: rgb(255, 191, 191); padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
           >
             <label>
               Active
@@ -151,7 +151,7 @@ exports[`Card Props Test If card status active rendered correctly 1`] = `
       >
         <div
           class="status-container"
-          style="background-color: rgb(211, 244, 190); padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
+          style="background-color: rgb(255, 191, 191); padding: 5px 20px 5px 20px; border-radius: 20px; width: 100px; display: flex; justify-content: center; font-size: 12px;"
         >
           <label>
             Active
