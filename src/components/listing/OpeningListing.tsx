@@ -25,10 +25,14 @@ const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
   return (
     <div className='listing'>
       <table>
-        <thead className='list-header'>{labels}</thead>
-        <tbody className='list-items'>{openings.map((opening) => (
-      <OpeningListItem key={opening.id} opening={opening}></OpeningListItem>
-    ))}</tbody>
+        <thead>
+          <tr className='list-header'>{labels}</tr>
+        </thead>
+        <tbody className='list-items'>
+          {openings.map((opening) => (
+            <OpeningListItem key={opening.id} opening={opening}></OpeningListItem>
+          ))}
+        </tbody>
       </table>
     </div>
   );

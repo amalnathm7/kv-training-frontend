@@ -35,7 +35,7 @@ const OpeningListingPage: React.FC = () => {
     'Skills',
     'Location',
     'Experience',
-    'Number of Openings',
+    'No. of Openings',
     'Posted At',
     'Department',
     'Role'
