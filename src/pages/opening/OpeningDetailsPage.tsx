@@ -7,6 +7,7 @@ import { useGetOpeningByIdQuery } from "../../services/openingApi";
 import HomeLayout from "../../layouts/home-layout/HomeLayout";
 import Card from "../../components/card/Card";
 import { RouteConstants } from "../../constants/routeConstants";
+import { ToastContainer, toast } from "react-toastify";
 
 const OpeningDetailsPage: React.FC = () => {
     const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
@@ -93,6 +94,11 @@ const OpeningDetailsPage: React.FC = () => {
         subHeaderSecondaryActionIcon={isSuperAuthorized ? "edit.svg" : ""}
     >
         <Card items={items}></Card>
+        <ToastContainer
+            position={toast.POSITION.BOTTOM_CENTER}
+            autoClose={3000}
+            hideProgressBar={true}
+        />
     </HomeLayout>;
 };
 

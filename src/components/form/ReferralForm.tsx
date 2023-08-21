@@ -10,6 +10,8 @@ import { OpeningType } from '../../types/OpeningType';
 import { useCreateReferralMutation, useUpdateReferralMutation } from '../../services/referralApi';
 import FileUpload from '../input-field/file-upload/FileUpload';
 import { useUploadFileMutation } from '../../services/fileApi';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export type ReferralFormPropsType = {
     referredBy: EmployeeType,
@@ -185,14 +187,19 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
     const [createReferral, { isSuccess: isCreateReferralSuccess }] = useCreateReferralMutation();
     const [updateReferral, { isSuccess: isUpdateReferralSuccess }] = useUpdateReferralMutation();
+    const notify = (action: string) => toast.success(`Successfully ${action} referral`);
 
     useEffect(() => {
         if (props.isEdit) {
-            if (isUpdateReferralSuccess)
+            if (isUpdateReferralSuccess) {
+                notify('updated');
                 navigate(-1);
+            }
         } else {
-            if (isCreateReferralSuccess)
+            if (isCreateReferralSuccess) {
+                notify('submitted');
                 navigate(-1);
+            }
         }
     }, [isCreateReferralSuccess, isUpdateReferralSuccess]);
 
