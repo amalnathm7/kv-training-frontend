@@ -48,7 +48,7 @@ const ReferralListingPage: React.FC = () => {
       subHeaderPrimaryAction={isSuperAuthorized ? onSearchClicked : null}
       subHeaderLabel='Referral List'
       subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Search' : ''}
-      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'searchicon.jpg' : ''}
+      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'search.png' : ''}
       searchClicked={searchClicked}
     >
       <ReferralListing labels={labels} searchLabel='Search' selection='all' />
