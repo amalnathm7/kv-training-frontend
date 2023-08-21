@@ -1,13 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './EmployeeListing.css';
 import OpeningListItem from '../list-item/OpeningListItem';
 import { useGetOpeningListQuery } from '../../services/openingApi';
+import { OpeningType } from '../../types/OpeningType';
 
 type OpeningListingPropsType = {
   labels: string[];
 };
 
 const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
+  const [openings, setOpenings] = useState<OpeningType[]>([]);
   const { data: openingData, isSuccess } = useGetOpeningListQuery();
 
   const labels = props.labels.map((label) => (
@@ -16,18 +18,17 @@ const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
     </td>
   ));
 
-  let openings = [];
-
-  if (isSuccess)
-    openings = openingData.data.map((opening) => (
-      <OpeningListItem key={opening.id} opening={opening}></OpeningListItem>
-    ));
+  useEffect(() => {
+    if (isSuccess) setOpenings(openingData.data);
+  }, [isSuccess]);
 
   return (
     <div className='listing'>
       <table>
         <thead className='list-header'>{labels}</thead>
-        <tbody className='list-items'>{openings}</tbody>
+        <tbody className='list-items'>{openings.map((opening) => (
+      <OpeningListItem key={opening.id} opening={opening}></OpeningListItem>
+    ))}</tbody>
       </table>
     </div>
   );

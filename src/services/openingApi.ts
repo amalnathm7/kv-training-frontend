@@ -18,14 +18,16 @@ export const OpeningApi = baseApi.injectEndpoints({
         url: `${RouteConstants.openingApi}`,
         method: 'POST',
         body
-      })
+      }),
+      invalidatesTags: [GET_OPENING_LIST]
     }),
     updateOpening: builder.mutation<Object, { id: string; opening: OpeningType }>({
       query: (params) => ({
         url: `${RouteConstants.openingApi}/${params.id}`,
         method: 'PATCH',
         body: params.opening
-      })
+      }),
+      invalidatesTags: [GET_OPENING_LIST]
     }),
     deleteOpening: builder.mutation<Object, string>({
       query: (id) => ({

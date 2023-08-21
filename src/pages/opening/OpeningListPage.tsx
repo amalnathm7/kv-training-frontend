@@ -32,13 +32,13 @@ const OpeningListingPage: React.FC = () => {
     'Opening ID',
     'Title',
     'Description',
-    'Created At',
-    'Count',
-    'Role',
     'Skills',
+    'Location',
     'Experience',
+    'Number of Openings',
+    'Posted At',
     'Department',
-    'Location'
+    'Role'
   ];
 
   useEffect(() => {

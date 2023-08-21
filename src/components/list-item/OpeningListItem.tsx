@@ -56,13 +56,13 @@ const OpeningListItem: React.FC<OpeningListItemPropsType> = (props) => {
       <td>{props.opening.id}</td>
       <td>{props.opening.title}</td>
       <td>{props.opening.description}</td>
-      <td>{new Date(props.opening.createdAt).toISOString().split('T')[0]}</td>
-      <td>{props.opening.count}</td>
-      <td>{props.opening.role ? props.opening.role.role : 'NIL'}</td>
       <td>{props.opening.skills}</td>
-      <td>{props.opening.experience + " years"}</td>
-      <td>{props.opening.department ? props.opening.department.name : 'NIL'}</td>
       <td>{props.opening.location}</td>
+      <td>{props.opening.experience + ' years'}</td>
+      <td>{props.opening.count}</td>
+      <td>{new Date(props.opening.createdAt).toISOString().split('T')[0]}</td>
+      <td>{props.opening.role.role}</td>
+      <td>{props.opening.department.name}</td>
       {isSuperAuthorized && (
         <td>
           <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
