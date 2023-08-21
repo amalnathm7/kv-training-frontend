@@ -15,6 +15,7 @@ import OpeningListingPage from './pages/opening/OpeningListPage';
 import OpeningCreatePage from './pages/opening/OpeningCreatePage';
 import OpeningEditPage from './pages/opening/OpeningEditPage';
 import ReferralEditPage from './pages/referral/ReferralEditPage';
+import MyReferralListingPage from './pages/referral/MyReferralsListPage';
 import ReferralDetailsPage from './pages/referral/ReferralDetailsPage';
 
 const App: FC = () => {
@@ -32,6 +33,7 @@ const App: FC = () => {
           <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
           <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />
           <Route path={`${RouteConstants.opening}/:id/refer/edit`} element={<ReferralEditPage />} />
+          <Route path={`${RouteConstants.referral}/refer/me`} element={<MyReferralListingPage />} />
           <Route path={`${RouteConstants.opening}/create`} element={<OpeningCreatePage />} />
           <Route path={`${RouteConstants.opening}/:id/edit`} element={<OpeningEditPage />} />
           <Route path={`${RouteConstants.referral}`} element={<ReferralListingPage />} />
