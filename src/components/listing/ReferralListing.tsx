@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import ReferralListItem from '../list-item/ReferralListItem';
 import { useGetAllReferralsListQuery, useGetMyReferralsQuery } from '../../services/referralApi';
-import './AllReferralsListing.css';
 
 type ReferralsListingPropsType = {
   labels: string[];
