@@ -3,13 +3,11 @@ import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
 import { ReferralType } from '../types/ReferralType';
-import { baseApi } from './baseApi';
-import { ResponseType } from '../types/ResponseType';
 
 export const referralApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllReferralsList: builder.query<ResponseType<ReferralType[]>, void>({
-      query: () => `${RouteConstants.referralsApi}`,
+      query: () => `${RouteConstants.referralApi}`,
       providesTags: [GET_REFERRAL_LIST]
     }),
     getReferralById: builder.query<ResponseType<ReferralType>, string>({
@@ -31,10 +29,6 @@ export const referralApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: params.referral
       })
-    }),
-    getAllReferralsList: builder.query<ResponseType<ReferralType[]>, void>({
-      query: () => `${RouteConstants.referralApi}`,
-      providesTags: [GET_REFERRAL_LIST]
     })
   })
 });
@@ -44,4 +38,4 @@ export const {
   useUpdateReferralMutation,
   useGetReferralByIdQuery,
   useGetAllReferralsListQuery
-} = ReferralApi;
+} = referralApi;

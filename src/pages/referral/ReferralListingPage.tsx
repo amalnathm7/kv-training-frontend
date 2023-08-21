@@ -2,8 +2,6 @@ import AllReferralsListing from '../../components/listing/AllReferralsListing';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
-//import { PermissionLevel } from '../../utils/PermissionLevel';
-import './ReferralListingPage.css';
 const ReferralListingPage: React.FC = () => {
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
   const [isBasicAuthorized, setIsBasicAuthorized] = useState(false);
