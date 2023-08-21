@@ -36,8 +36,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     const [roleId, setRoleId] = useState('');
     const [openingId, setOpeningId] = useState('');
 
-    console.log(props.opening);
-
     useEffect(() => {
         if (props.referral) {
             setName(props.referral.name);
