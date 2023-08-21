@@ -24,6 +24,8 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
   const [experience, setExperience] = useState(0);
   const [department, setDepartment] = useState('Select Department');
   const [role, setRole] = useState('Select Role');
+  const [roles, setRoles] = useState<string[]>([]);
+  const [departments, setDepartments] = useState<string[]>([]);
 
   useEffect(() => {
     if (props.opening) {
@@ -136,9 +138,6 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
     }
   };
 
-  let roles = [];
-  let departments = [];
-
   const [createOpening, { isSuccess: isCreateOpeningSuccess }] = useCreateOpeningMutation();
   const [updateOpening, { isSuccess: isUpdateOpeningSuccess }] = useUpdateOpeningMutation();
   const { data: departmentData, isSuccess: isDeptFetchSuccess } = useGetDepartmentListQuery();
@@ -152,9 +151,14 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
     }
   }, [isCreateOpeningSuccess, isUpdateOpeningSuccess]);
 
-  if (isDeptFetchSuccess) departments = departmentData.data.map((department) => department.name);
+  useEffect(() => {
+    if (isDeptFetchSuccess) setDepartments(departmentData.data.map((department) => department.name));
+  }, [isDeptFetchSuccess]);
 
-  if (isRoleFetchSuccess) roles = rolesData.data.map((role) => role.role);
+  useEffect(() => {
+    if (isRoleFetchSuccess) setRoles(rolesData.data.map((role) => role.role));
+  }, [isRoleFetchSuccess]);
+
 
   return (
     <div className='form-container'>
