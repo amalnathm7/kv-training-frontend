@@ -17,7 +17,7 @@ const SideBarButton: React.FC<SideBarButtonPropsType> = (props) => {
   };
 
   return (
-    <div onClick={onClick} className='item container'>
+    <div onClick={onClick} className='item container' data-testid='sidebar-button-test'>
       <div className='icon container'>
         <img
           className='filtered'
