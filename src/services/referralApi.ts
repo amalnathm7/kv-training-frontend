@@ -3,7 +3,7 @@ import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
 import { ReferralType } from '../types/ReferralType';
 
-export const ReferralApi = baseApi.injectEndpoints({
+export const referralApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getReferralById: builder.query<ResponseType<ReferralType>, string>({
       query: (id) => ({
@@ -29,4 +29,4 @@ export const ReferralApi = baseApi.injectEndpoints({
 });
 
 export const { useCreateReferralMutation, useUpdateReferralMutation, useGetReferralByIdQuery } =
-  ReferralApi;
+  referralApi;

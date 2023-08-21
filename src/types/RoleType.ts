@@ -1,5 +1,5 @@
 export type RoleType = {
-    id: string,
-    role: string,
-    permissionLevel: number
+  id: string;
+  role: string;
+  permissionLevel: number;
 };

@@ -1,28 +1,29 @@
-
-import { render } from "@testing-library/react";
+import { render } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import FileUpload, { FileUploadPropsType } from "./FileUpload";
+import FileUpload, { FileUploadPropsType } from './FileUpload';
 
-describe("File upload Props Test", () => {
-    test("If file upload field rendered correctly", () => {
-        const props: FileUploadPropsType = {
-            onChange: () => { },
-            label: "file-upload-label",
-            showError: false,
-        }
+describe('File upload Props Test', () => {
+  test('If file upload field rendered correctly', () => {
+    const props: FileUploadPropsType = {
+      onChange: () => {},
+      label: 'file-upload-label',
+      showError: false
+    };
 
-        const element = render(<FileUpload {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+    const element = render(<FileUpload {...props} />);
 
-    test("If file upload field rendered correctly with error", () => {
-        const props: FileUploadPropsType = {
-            onChange: () => { },
-            label: "file-upload-label",
-            showError: true,
-        }
+    expect(element).toMatchSnapshot();
+  });
 
-        const element = render(<FileUpload {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+  test('If file upload field rendered correctly with error', () => {
+    const props: FileUploadPropsType = {
+      onChange: () => {},
+      label: 'file-upload-label',
+      showError: true
+    };
+
+    const element = render(<FileUpload {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
 });
