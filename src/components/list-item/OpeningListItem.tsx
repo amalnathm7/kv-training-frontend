@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './EmployeeListItem.css';
+import './ListItem.css';
 import ActionButton from '../button/ActionButton/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import CustomPopup from '../popup/CustomPopup';

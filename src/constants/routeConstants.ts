@@ -9,4 +9,6 @@ export class RouteConstants {
     static roleApi = "/api/roles";
     static loginApi = "/employees/login";
     static openingApi = "/openings";
+    static referralApi = "/referrals";
+    static fileUploadApi = "/files/upload";
 };

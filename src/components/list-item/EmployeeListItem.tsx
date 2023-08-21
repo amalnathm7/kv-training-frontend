@@ -1,6 +1,6 @@
 import { EmployeeType } from "../../types/EmployeeType";
 import React, { useEffect, useState } from "react";
-import "./EmployeeListItem.css";
+import "./ListItem.css";
 import { StatusType } from "../../types/StatusType";
 import StatusIcon from "../status-icon/StatusIcon";
 import ActionButton from "../button/ActionButton/ActionButton";

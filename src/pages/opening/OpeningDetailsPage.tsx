@@ -80,7 +80,7 @@ const OpeningDetailsPage: React.FC = () => {
     };
 
     const onReferClicked = () => {
-        navigate(`${RouteConstants.referral}/create`);
+        navigate(`${RouteConstants.opening}/${id}/refer`);
     };
 
     return <HomeLayout

@@ -14,6 +14,129 @@ exports[`SubHeader Props Test If SubHeader rendered correctly 1`] = `
           SubHeader-label
         </label>
         <div
+          class="sub-header-actions"
+        />
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="sub-header-actions"
+      />
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`SubHeader Props Test If SubHeader rendered correctly with primary action 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="sub-header"
+      >
+        <label
+          class="sub-header-label"
+        >
+          SubHeader-label
+        </label>
+        <div
+          class="sub-header-actions"
+        >
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon.png"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="sub-header-actions"
+      >
+        <div
           class="action-button"
         >
           <div
@@ -32,6 +155,114 @@ exports[`SubHeader Props Test If SubHeader rendered correctly 1`] = `
         </div>
       </div>
     </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`SubHeader Props Test If SubHeader rendered correctly with primary and secondary actions 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="sub-header"
+      >
+        <label
+          class="sub-header-label"
+        >
+          SubHeader-label
+        </label>
+        <div
+          class="sub-header-actions"
+        >
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon.png"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>,
   "container": <div>
     <div
@@ -43,21 +274,42 @@ exports[`SubHeader Props Test If SubHeader rendered correctly 1`] = `
         SubHeader-label
       </label>
       <div
-        class="action-button"
+        class="sub-header-actions"
       >
         <div
-          class="sub-header-action-icon-container"
+          class="action-button"
         >
-          <img
-            class="sub-header-action-icon"
-            src="/assets/icons/SubHeader-action-icon.png"
-          />
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon.png"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
         </div>
-        <label
-          class="sub-header-action-label"
+        <div
+          class="action-button"
         >
-          SubHeader-action-label
-        </label>
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
+        </div>
       </div>
     </div>
   </div>,

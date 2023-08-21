@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './EmployeeListing.css';
+import './Listing.css';
 import OpeningListItem from '../list-item/OpeningListItem';
 import { useGetOpeningListQuery } from '../../services/openingApi';
 import { OpeningType } from '../../types/OpeningType';
