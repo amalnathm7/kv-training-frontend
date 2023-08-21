@@ -32,9 +32,11 @@ const ReferralListingPage: React.FC = () => {
   useEffect(() => {
     if (isSuperAuthorized) labelArray.push('Actions');
   }, [isSuperAuthorized]);
+
   useEffect(() => {
     setLabels(labelArray);
   }, []);
+
   const onSearchClicked = () => {
     console.log('clicked');
     setSearchClicked(true);
