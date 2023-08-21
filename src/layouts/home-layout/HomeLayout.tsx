@@ -8,6 +8,7 @@ import { RouteConstants } from '../../constants/routeConstants';
 
 type HomeLayoutPropsType = {
   subHeaderLabel: string;
+  searchClicked?: boolean;
   subHeaderPrimaryActionLabel: string;
   subHeaderPrimaryActionIcon: string;
   subHeaderPrimaryAction: () => void;

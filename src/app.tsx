@@ -8,6 +8,7 @@ import EmployeeCreatePage from './pages/employee/EmployeeCreatePage';
 import EmployeeEditPage from './pages/employee/EmployeeEditPage';
 import SplashPage from './pages/splash/SplashPage';
 import { RouteConstants } from './constants/routeConstants';
+import ReferralListingPage from './pages/referral/ReferralListingPage';
 import OpeningDetailsPage from './pages/opening/OpeningDetailsPage';
 import ReferralCreatePage from './pages/referral/ReferralCreatePage';
 import OpeningListingPage from './pages/opening/OpeningListPage';
@@ -27,6 +28,7 @@ const App: FC = () => {
           <Route path={`${RouteConstants.employee}/:id`} element={<EmployeeDetailsPage />} />
           <Route path={`${RouteConstants.employee}/create`} element={<EmployeeCreatePage />} />
           <Route path={`${RouteConstants.employee}/:id/edit`} element={<EmployeeEditPage />} />
+          <Route path={`${RouteConstants.referralsApi}`} element={<ReferralListingPage />} />
           <Route path={`${RouteConstants.opening}`} element={<OpeningListingPage />} />
           <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
           <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />

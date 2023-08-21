@@ -1,3 +1,4 @@
+import { GET_REFERRAL_LIST } from '../constants/apiConstants';
 import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
@@ -5,6 +6,10 @@ import { ReferralType } from '../types/ReferralType';
 
 export const referralApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
+    getAllReferralsList: builder.query<ResponseType<ReferralType[]>, void>({
+      query: () => `${RouteConstants.referralsApi}`,
+      providesTags: [GET_REFERRAL_LIST]
+    }),
     getReferralById: builder.query<ResponseType<ReferralType>, string>({
       query: (id) => ({
         url: `${RouteConstants.referralApi}/${id}`,
@@ -28,5 +33,5 @@ export const referralApi = baseApi.injectEndpoints({
   })
 });
 
-export const { useCreateReferralMutation, useUpdateReferralMutation, useGetReferralByIdQuery } =
+export const { useCreateReferralMutation, useUpdateReferralMutation, useGetReferralByIdQuery, useGetAllReferralsListQuery } =
   referralApi;

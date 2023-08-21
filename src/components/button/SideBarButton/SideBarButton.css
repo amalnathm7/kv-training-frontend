@@ -1,27 +1,17 @@
-.sidebar {
-    position: fixed;
-    top: 100px;
-    left: 0;
-    height: 100%;
-    width: 300px;
-    background-color: white;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-}
-
-/* .item.container {
+.item.container {
     font-size: 14px;
     color: white;
-    position: absolute;
     display: flex;
-    justify-content: flex-start;
+    justify-content: start;
     align-items: center;
-    right: 0px;
+    right: 0px; 
     top: 120px;
     width: 95%;
     height: 60px;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
     background-color: #03AEEE;
+    margin: 10px 0; 
 }
 
 .icon.container {
@@ -34,4 +24,4 @@
     padding: 10px;
     border-radius: 100%;
 }
- */
+
