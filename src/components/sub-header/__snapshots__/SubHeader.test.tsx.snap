@@ -13,9 +13,6 @@ exports[`SubHeader Props Test If SubHeader rendered correctly 1`] = `
         >
           SubHeader-label
         </label>
-        <div
-          class="sub-header-actions"
-        />
       </div>
     </div>
   </body>,
@@ -28,9 +25,6 @@ exports[`SubHeader Props Test If SubHeader rendered correctly 1`] = `
       >
         SubHeader-label
       </label>
-      <div
-        class="sub-header-actions"
-      />
     </div>
   </div>,
   "debug": [Function],
@@ -101,42 +95,6 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with primary actio
           SubHeader-label
         </label>
         <div
-          class="sub-header-actions"
-        >
-          <div
-            class="action-button"
-          >
-            <div
-              class="sub-header-action-icon-container"
-            >
-              <img
-                class="sub-header-action-icon"
-                src="/assets/icons/SubHeader-action-icon.png"
-              />
-            </div>
-            <label
-              class="sub-header-action-label"
-            >
-              SubHeader-action-label
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="sub-header"
-    >
-      <label
-        class="sub-header-label"
-      >
-        SubHeader-label
-      </label>
-      <div
-        class="sub-header-actions"
-      >
-        <div
           class="action-button"
         >
           <div
@@ -153,6 +111,34 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with primary actio
             SubHeader-action-label
           </label>
         </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="action-button"
+      >
+        <div
+          class="sub-header-action-icon-container"
+        >
+          <img
+            class="sub-header-action-icon"
+            src="/assets/icons/SubHeader-action-icon.png"
+          />
+        </div>
+        <label
+          class="sub-header-action-label"
+        >
+          SubHeader-action-label
+        </label>
       </div>
     </div>
   </div>,
@@ -224,59 +210,6 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with primary and s
           SubHeader-label
         </label>
         <div
-          class="sub-header-actions"
-        >
-          <div
-            class="action-button"
-          >
-            <div
-              class="sub-header-action-icon-container"
-            >
-              <img
-                class="sub-header-action-icon"
-                src="/assets/icons/SubHeader-action-icon.png"
-              />
-            </div>
-            <label
-              class="sub-header-action-label"
-            >
-              SubHeader-action-label
-            </label>
-          </div>
-          <div
-            class="action-button"
-          >
-            <div
-              class="sub-header-action-icon-container"
-            >
-              <img
-                class="sub-header-action-icon"
-                src="/assets/icons/SubHeader-action-icon"
-              />
-            </div>
-            <label
-              class="sub-header-action-label"
-            >
-              SubHeader-action-label
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="sub-header"
-    >
-      <label
-        class="sub-header-label"
-      >
-        SubHeader-label
-      </label>
-      <div
-        class="sub-header-actions"
-      >
-        <div
           class="action-button"
         >
           <div
@@ -310,6 +243,51 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with primary and s
             SubHeader-action-label
           </label>
         </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="action-button"
+      >
+        <div
+          class="sub-header-action-icon-container"
+        >
+          <img
+            class="sub-header-action-icon"
+            src="/assets/icons/SubHeader-action-icon.png"
+          />
+        </div>
+        <label
+          class="sub-header-action-label"
+        >
+          SubHeader-action-label
+        </label>
+      </div>
+      <div
+        class="action-button"
+      >
+        <div
+          class="sub-header-action-icon-container"
+        >
+          <img
+            class="sub-header-action-icon"
+            src="/assets/icons/SubHeader-action-icon"
+          />
+        </div>
+        <label
+          class="sub-header-action-label"
+        >
+          SubHeader-action-label
+        </label>
       </div>
     </div>
   </div>,
