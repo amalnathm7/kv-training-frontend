@@ -29,6 +29,12 @@ export const referralApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: params.referral
       })
+    }),
+    getMyReferrals: builder.query<ResponseType<ReferralType[]>, void>({
+      query: () => ({
+        url: `${RouteConstants.referralApi}/me`,
+        method: 'GET'
+      })
     })
   })
 });
@@ -37,5 +43,6 @@ export const {
   useCreateReferralMutation,
   useUpdateReferralMutation,
   useGetReferralByIdQuery,
+  useGetMyReferralsQuery,
   useGetAllReferralsListQuery
 } = referralApi;
