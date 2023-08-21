@@ -23,6 +23,7 @@ const ReferralListingPage: React.FC = () => {
     'Referral ID',
     'Candidate Name',
     'Email',
+    'Experience',
     'Status',
     'Opening Id',
     'Referred By',
@@ -45,9 +46,8 @@ const ReferralListingPage: React.FC = () => {
       subHeaderLabel='Referral List'
       subHeaderActionLabel={isBasicAuthorized ? 'Search' : ''}
       subHeaderActionIcon={isBasicAuthorized ? 'searchicon.jpg' : ''}
-      searchClicked={searchClicked}
     >
-      <AllReferralsListing labels={labels} />
+      <AllReferralsListing labels={labels} searchLabel='Search'/>
       {/* {searchClicked && <input type='text' placeholder='Search' />} */}
     </HomeLayout>
   );

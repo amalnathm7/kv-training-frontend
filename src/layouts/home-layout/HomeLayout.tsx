@@ -29,7 +29,6 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
         label={props.subHeaderLabel}
         actionLabel={props.subHeaderActionLabel}
         actionIcon={props.subHeaderActionIcon}
-        searchClicked={props.searchClicked}
       />
       <Sidebar />
       <Header />

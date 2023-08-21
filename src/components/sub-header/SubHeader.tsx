@@ -6,19 +6,14 @@ export type SubHeaderPropsType = {
   actionLabel: string;
   actionIcon: string;
   action: () => void;
-  searchClicked?: boolean;
 };
 
 const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
-  //const handleSearch = () => {};
-
   return (
     <div className='sub-header'>
       <label className='sub-header-label'>{props.label}</label>
-      {props.searchClicked && (
-        <input type='text' placeholder='Search by email / referral Id' />
-      )}
-      {props.actionLabel.length > 0 && (
+      {/* {props.searchClicked && <input type='text' placeholder='Search by email / referral Id' onChange={handleSearch}/>} */}
+      {props.actionLabel.length > 0 && props.actionLabel !== 'Search' && (
         <div className='action-button' onClick={props.action}>
           <div className='sub-header-action-icon-container'>
             <img className='sub-header-action-icon' src={'/assets/icons/' + props.actionIcon}></img>
