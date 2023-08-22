@@ -26,7 +26,7 @@ export type SelectedContextType = {
 export const SelectedContext: Context<SelectedContextType> = createContext(null);
 
 const App: FC = () => {
-  const [selectedTabIndex, setSelectedTabIndex] = useState(0);
+  const [selectedTabIndex, setSelectedTabIndex] = useState(-1);
 
   return (
     <div className='app'>
@@ -42,10 +42,7 @@ const App: FC = () => {
             <Route path={`${RouteConstants.opening}`} element={<OpeningListingPage />} />
             <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
             <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />
-            <Route
-              path={`${RouteConstants.opening}/:id/refer/edit`}
-              element={<ReferralEditPage />}
-            />
+            <Route path={`${RouteConstants.referral}/:id/edit`} element={<ReferralEditPage />} />
             <Route path={`${RouteConstants.opening}/create`} element={<OpeningCreatePage />} />
             <Route path={`${RouteConstants.opening}/:id/edit`} element={<OpeningEditPage />} />
             <Route path={`${RouteConstants.referral}`} element={<ReferralListingPage />} />

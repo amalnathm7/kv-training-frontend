@@ -9,3 +9,15 @@ export function validatePhoneNo(phone: string): boolean {
 
   return phoneRegex.test(phone);
 }
+
+export function validateResume(resume: File): boolean {
+  const fileTypes = ['application/pdf'];
+  const maxSize = 5 * 1024 * 1024;
+
+  const isValidFormat = fileTypes.includes(resume.type);
+  const isValidSize = resume.size <= maxSize;
+
+  if (isValidFormat && isValidSize) return true;
+
+  return false;
+}

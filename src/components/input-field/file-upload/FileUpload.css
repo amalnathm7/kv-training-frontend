@@ -19,11 +19,25 @@
     border: 1px solid #D9D9D9;
 }
 
+#file-upload-input {
+    display: none;
+}
+
 .file-upload-label {
     margin-top: 20px;
     font-size: 14px;
     color: #555555;
     font-weight: bold;
+}
+
+.file-upload-value {
+    font-size: 14px;
+    margin-top: 20px;
+}
+
+.file-upload-value-rules {
+    font-size: 14px;
+    color: grey;
 }
 
 .file-upload-error {

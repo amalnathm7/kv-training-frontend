@@ -12,7 +12,7 @@ import FileUpload from '../input-field/file-upload/FileUpload';
 import { useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { validateEmail, validatePhoneNo } from '../../utils/validation';
+import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -26,7 +26,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [experience, setExperience] = useState(0);
-  const [resume, setResume] = useState(null);
+  const [resume, setResume] = useState<string | File>('');
   const [line1, setLine1] = useState('');
   const [line2, setLine2] = useState('');
   const [city, setCity] = useState('');
@@ -58,7 +58,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   }, [props.referredBy]);
 
   useEffect(() => {
-    setRoleId(props.opening?.role.id.toString());
+    setRoleId(props.opening?.role?.id.toString());
     setOpeningId(props.opening?.id.toString());
   }, [props.opening]);
 
@@ -95,8 +95,13 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   };
 
   const onChangeResume = (event) => {
-    setResume(event.target.files[0]);
-    setResumeError(false);
+    if (event.target.files[0])
+      if (validateResume(event.target.files[0])) {
+        setResume(event.target.files[0]);
+        setResumeError(false);
+      } else {
+        setResumeError(true);
+      }
   };
 
   const onChangeLine1 = (event) => {
@@ -219,23 +224,47 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     }
   }, [isFileUploadSuccess]);
 
-  const [createReferral, { isSuccess: isCreateReferralSuccess }] = useCreateReferralMutation();
-  const [updateReferral, { isSuccess: isUpdateReferralSuccess }] = useUpdateReferralMutation();
-  const notify = (action: string) => toast.success(`Successfully ${action} referral`);
+  const [
+    createReferral,
+    {
+      isSuccess: isCreateReferralSuccess,
+      isError: isCreateReferralError,
+      error: createReferralError
+    }
+  ] = useCreateReferralMutation();
+  const [
+    updateReferral,
+    {
+      isSuccess: isUpdateReferralSuccess,
+      isError: isUpdateReferralError,
+      error: updateReferralError
+    }
+  ] = useUpdateReferralMutation();
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} referral`);
+  const notifyError = (error: string) => toast.error(error);
 
   useEffect(() => {
     if (props.isEdit) {
       if (isUpdateReferralSuccess) {
-        notify('updated');
         navigate(-1);
+        notifySuccess('updated');
+      } else if (isUpdateReferralError) {
+        notifyError(updateReferralError['data'].errors.error);
       }
     } else {
       if (isCreateReferralSuccess) {
-        notify('submitted');
         navigate(-1);
+        notifySuccess('submitted');
+      } else if (isCreateReferralError) {
+        notifyError(createReferralError['data'].errors.error);
       }
     }
-  }, [isCreateReferralSuccess, isUpdateReferralSuccess]);
+  }, [
+    isCreateReferralSuccess,
+    isUpdateReferralSuccess,
+    isCreateReferralError,
+    isUpdateReferralError
+  ]);
 
   return (
     <div className='form-container'>
@@ -271,7 +300,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         onChange={onChangeExperience}
         showError={experienceError}
       />
-      <FileUpload label='Resume' onChange={onChangeResume} showError={resumeError} />
+      <FileUpload label='Resume' onChange={onChangeResume} showError={resumeError} value={resume} />
       <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
         <FormField
           type='text'

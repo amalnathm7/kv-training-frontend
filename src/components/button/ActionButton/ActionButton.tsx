@@ -10,7 +10,7 @@ const ActionButton: React.FC<ActionButtonPropsType> = (props) => {
   return (
     <img
       className='action-button-icon'
-      src={`assets/icons/${props.icon}`}
+      src={`/assets/icons/${props.icon}`}
       onClick={(event) => {
         event.stopPropagation();
         props.onClick();
