@@ -19,7 +19,6 @@ const MyReferralListingPage: React.FC = () => {
 
   useEffect(() => {
     if (isSuperAuthorized) {
-      labelArray.push('Actions');
       labelArray.unshift('Referral ID');
       setLabels(labelArray);
     }

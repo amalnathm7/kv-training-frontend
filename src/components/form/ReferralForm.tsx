@@ -13,6 +13,8 @@ import { useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
+import { PermissionLevel } from '../../utils/PermissionLevel';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -36,6 +38,14 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [referredById, setReferredById] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
+
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
     if (props.referral) {
@@ -213,6 +223,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         openingId,
         resume: fileData.data.file,
         roleId,
+        referralId: props.referral?.referralId,
         address: {
           line1: line1.trim(),
           line2: line2.trim(),
@@ -366,6 +377,18 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
+          value={props.referral?.referralId}
+          onChange={() => {}}
+          label={'Referral Code'}
+          placeholder={'Referral Code'}
+          type={'text'}
+          showError={false}
+        />
+      )}
+
+      {props.isEdit && isSuperAuthorized ? (
+        <FormField
+          disabled={true}
           value={props.referral?.id}
           onChange={() => {}}
           label={'Referral ID'}
@@ -373,7 +396,10 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
           type={'text'}
           showError={false}
         />
+      ) : (
+        ''
       )}
+
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />
