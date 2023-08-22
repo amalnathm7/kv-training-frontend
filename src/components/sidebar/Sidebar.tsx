@@ -49,13 +49,13 @@ const Sidebar: React.FC = () => {
           isSelected={selectedTabIndex === 2}
           onClick={onMyReferralsSelected}
           imgIcon='/assets/icons/my_referrals.png'
-          headerText='My Referrals'
+          headerText='Applications'
         />
         <SideBarButton
           isSelected={selectedTabIndex === 3}
           onClick={onReferralsListSelected}
           imgIcon='/assets/icons/all_referrals.png'
-          headerText='All Referrals'
+          headerText='Referrals'
         />
       </div>
     </div>

@@ -11,7 +11,7 @@ import { useDeleteReferralMutation } from '../../services/referralApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
-        
+
 type ReferralListItemPropsType = {
   referral: ReferralType;
   selection: 'my' | 'all';
