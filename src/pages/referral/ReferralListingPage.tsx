@@ -6,8 +6,8 @@ import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
 
 const ReferralListingPage: React.FC = () => {
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
@@ -27,15 +27,14 @@ const ReferralListingPage: React.FC = () => {
 
   useEffect(() => {
     if (
-      isSuccess &&
+      isMyProfileFetchSuccess &&
       myProfile.data.role &&
-      myProfile.data.role.permissionLevel !== PermissionLevel.BASIC
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
     )
-      setIsAuthorized(true);
-  }, [isSuccess]);
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
 
   const labelArray = [
-    'Referral ID',
     'Candidate Name',
     'Email',
     'Experience',
@@ -46,11 +45,12 @@ const ReferralListingPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    if (isAuthorized) {
+    if (isSuperAuthorized) {
       labelArray.push('Actions');
+      labelArray.unshift('Referral ID');
       setLabels(labelArray);
     }
-  }, [isAuthorized]);
+  }, [isSuperAuthorized]);
 
   useEffect(() => {
     setLabels(labelArray);
@@ -73,8 +73,8 @@ const ReferralListingPage: React.FC = () => {
       subHeaderPrimaryActionFilterOptions={roles}
       subHeaderSecondaryAction={onChangeRole}
       subHeaderSecondaryActionPlaceholder='Filter by role'
-      subHeaderPrimaryActionLabel={isAuthorized ? 'Search' : ''}
-      subHeaderPrimaryActionIcon={isAuthorized ? 'search.png' : ''}
+      subHeaderPrimaryActionLabel={'Search'}
+      subHeaderPrimaryActionIcon={'search.png'}
     >
       <ReferralListing
         emailValue={emailValue}

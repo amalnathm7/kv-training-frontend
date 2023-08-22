@@ -59,7 +59,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
-      <td>{props.employee.id}</td>
+      {isSuperAuthorized && <td>{props.employee.id}</td>}
       <td>{props.employee.name}</td>
       <td>{props.employee.email}</td>
       <td>{props.employee.phone}</td>

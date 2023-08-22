@@ -24,12 +24,12 @@ const OpeningListingPage: React.FC = () => {
   useEffect(() => {
     if (isSuperAuthorized) {
       labelArray.push('Actions');
+      labelArray.unshift('Opening ID');
       setLabels(labelArray);
     }
   }, [isSuperAuthorized]);
 
   const labelArray = [
-    'Opening ID',
     'Title',
     'Description',
     'Skills',
