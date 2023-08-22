@@ -72,6 +72,7 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
           />
         </div>
       )}
+      <div className='listing-spacing'></div>
       <div className='listing'>
         <table>
           <thead>

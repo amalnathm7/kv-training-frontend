@@ -10,6 +10,7 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import { useGetDepartmentListQuery } from '../../services/departmentApi';
 import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../services/employeeApi';
 import { validateEmail, validatePhoneNo } from '../../utils/validation';
+import { toast } from 'react-toastify';
 
 export type EmployeeFormPropsType = {
   employee: EmployeeType;
@@ -219,6 +220,8 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
       props.isEdit
         ? updateEmployee({ id: props.employee.id, employee: employee })
         : createEmployee(employee);
+    } else {
+      notifyError('FIll all required fields');
     }
   };
 
@@ -232,16 +235,52 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
     if (isRoleFetchSuccess) setRoles(rolesData.data.map((role) => role.role));
   }, [isDeptFetchSuccess, isRoleFetchSuccess]);
 
-  const [createEmployee, { isSuccess: isCreateEmployeeSuccess }] = useCreateEmployeeMutation();
-  const [updateEmployee, { isSuccess: isUpdateEmployeeSuccess }] = useUpdateEmployeeMutation();
+  const [
+    createEmployee,
+    {
+      isSuccess: isCreateEmployeeSuccess,
+      isError: isCreateEmployeeError,
+      error: createEmployeeError
+    }
+  ] = useCreateEmployeeMutation();
+  const [
+    updateEmployee,
+    {
+      isSuccess: isUpdateEmployeeSuccess,
+      isError: isUpdateEmployeeError,
+      error: updateEmployeeError
+    }
+  ] = useUpdateEmployeeMutation();
+
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} opening`);
+  const notifyError = (error: string) => toast.error(error);
 
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateEmployeeSuccess) navigate(-1);
+      if (isUpdateEmployeeSuccess) {
+        navigate(-1);
+        setTimeout(() => {
+          notifySuccess('updated');
+        }, 100);
+      } else if (isUpdateEmployeeError) {
+        notifyError(updateEmployeeError['data'].errors.error);
+      }
     } else {
-      if (isCreateEmployeeSuccess) navigate(-1);
+      if (isCreateEmployeeSuccess) {
+        navigate(-1);
+        setTimeout(() => {
+          notifySuccess('created');
+        }, 100);
+      } else if (isCreateEmployeeError) {
+        notifyError(createEmployeeError['data'].errors.error);
+      }
     }
-  }, [isCreateEmployeeSuccess, isUpdateEmployeeSuccess]);
+  }, [
+    isCreateEmployeeSuccess,
+    isUpdateEmployeeSuccess,
+    isCreateEmployeeError,
+    isUpdateEmployeeError
+  ]);
 
   const primaryButtonLabel = props.isEdit ? 'Save' : 'Create';
 
