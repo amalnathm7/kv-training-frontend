@@ -4,6 +4,7 @@ import './LoginField.css';
 export type LoginFieldPropsType = {
   value: string;
   onChange: (event) => void;
+  onKeyUp: (event) => void;
   label: string;
   type: 'text' | 'password';
   showError: boolean;
@@ -15,6 +16,7 @@ const LoginField: React.FC<LoginFieldPropsType> = (props) => {
       <input
         className='login-field'
         onChange={props.onChange}
+        onKeyUp={props.onKeyUp}
         type={props.type}
         value={props.value}
         required

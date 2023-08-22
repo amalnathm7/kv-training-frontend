@@ -50,14 +50,17 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>{props.referral.id}</td>
       <td>{props.referral.name}</td>
       <td>{props.referral.email}</td>
-      <td>{props.referral.experience}</td>
+      <td>
+        {props.referral.experience == 1
+          ? props.referral.experience + ' year'
+          : props.referral.experience + ' years'}
+      </td>
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
       <td>{props.referral.opening.title}</td>
       <td>{props.referral.role.role}</td>
       {props.selection !== 'my' && <td>{props.referral.referredBy.name}</td>}
-
       <td>
         <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
         <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>

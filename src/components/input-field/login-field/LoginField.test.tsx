@@ -7,6 +7,7 @@ describe('LoginField Props Test', () => {
     const props: LoginFieldPropsType = {
       value: 'LoginField-value',
       onChange: () => {},
+      onKeyUp: () => {},
       label: 'LoginField-label',
       showError: false,
       type: 'text'
@@ -21,6 +22,7 @@ describe('LoginField Props Test', () => {
     const props: LoginFieldPropsType = {
       value: 'LoginField-value',
       onChange: () => {},
+      onKeyUp: () => {},
       label: 'LoginField-label',
       showError: false,
       type: 'password'
@@ -35,6 +37,7 @@ describe('LoginField Props Test', () => {
     const props: LoginFieldPropsType = {
       value: 'LoginField-value',
       onChange: () => {},
+      onKeyUp: () => {},
       label: 'LoginField-label',
       showError: true,
       type: 'text'
@@ -49,6 +52,7 @@ describe('LoginField Props Test', () => {
     const props: LoginFieldPropsType = {
       value: 'LoginField-value',
       onChange: () => {},
+      onKeyUp: () => {},
       label: 'LoginField-label',
       showError: true,
       type: 'password'

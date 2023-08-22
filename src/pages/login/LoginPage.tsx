@@ -25,7 +25,7 @@ const LoginPage: React.FC = () => {
 
   const [login, { data, isSuccess, isError, error }] = useLoginMutation();
 
-  const onClick = () => {
+  const validateAndLogin = () => {
     if (email.trim().length === 0) setEmailError(true);
     if (password.trim().length === 0) setPasswordError(true);
     if (email.trim().length > 0 && password.trim().length > 0)
@@ -33,6 +33,11 @@ const LoginPage: React.FC = () => {
         email,
         password
       });
+  };
+
+  const onKeyUp = (event) => {
+    console.log(event);
+    if (event.code === 'Enter') validateAndLogin();
   };
 
   useEffect(() => {
@@ -61,6 +66,7 @@ const LoginPage: React.FC = () => {
             onChange={changeEmail}
             showError={emailError}
             value={email}
+            onKeyUp={onKeyUp}
             type='text'
           />
           <LoginField
@@ -68,13 +74,14 @@ const LoginPage: React.FC = () => {
             onChange={changePassword}
             showError={passwordError}
             value={password}
+            onKeyUp={onKeyUp}
             type='password'
           />
           <PrimaryButton
             style={{ height: '50px', marginBottom: '0px' }}
             type='submit'
             label='Log in'
-            onClick={onClick}
+            onClick={validateAndLogin}
           />
           {isError && (
             <div className='login-error'>

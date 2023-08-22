@@ -1,5 +1,5 @@
 import react, { useEffect } from 'react';
-import './index.css';
+import './SplashPage.css';
 import Header from '../../components/header/Header';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
