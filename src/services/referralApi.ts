@@ -3,6 +3,7 @@ import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
 import { ReferralType } from '../types/ReferralType';
+
 export const referralApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllReferralsList: builder.query<
@@ -60,6 +61,7 @@ export const referralApi = baseApi.injectEndpoints({
     })
   })
 });
+
 export const {
   useCreateReferralMutation,
   useUpdateReferralMutation,

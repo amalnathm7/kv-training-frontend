@@ -13,20 +13,31 @@ export type SubHeaderPropsType = {
   secondaryActionIcon?: string;
   secondaryActionPlaceholder?: string;
   secondaryAction?: (() => void) | ((string) => void);
+  routeOptions?: string[];
+  onRouteChanged?: (event) => void;
 };
 
 const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
-  const options = props.primaryActionFilterOptions?.map((option) => (
+  const filterOptions = props.primaryActionFilterOptions?.map((option) => (
     <option key={option} value={option}>
       {option}
     </option>
   ));
 
-  console.log(props);
+  const routeOptions = props.routeOptions?.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
 
   return (
     <div className='sub-header'>
-      <label className='sub-header-label'>{props.label}</label>
+      {routeOptions && (
+        <select className='sub-header-label' onChange={props.onRouteChanged}>
+          {routeOptions}
+        </select>
+      )}
+      {!routeOptions && <label className='sub-header-label'>{props.label}</label>}
       <div className='sub-header-actions'>
         {props.primaryActionLabel === 'Search' && (
           <>
@@ -35,7 +46,7 @@ const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
                 <option style={{ color: 'var(--hint-color)' }} hidden>
                   {props.secondaryActionPlaceholder}
                 </option>
-                {options}
+                {filterOptions}
               </select>
             </div>
             <div className='action-button'>

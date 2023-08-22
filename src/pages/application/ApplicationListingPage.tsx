@@ -2,10 +2,10 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
-import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
+import ApplicationListing from '../../components/listing/ApplicationListing';
 
-const ReferralListingPage: React.FC = () => {
+const ApplicationListingPage: React.FC = () => {
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
@@ -35,14 +35,13 @@ const ReferralListingPage: React.FC = () => {
   }, [isSuccess]);
 
   const labelArray = [
-    'Referral ID',
+    'Application ID',
     'Candidate Name',
     'Email',
     'Experience',
     'Status',
     'Opening',
-    'Role',
-    'Referred By'
+    'Role'
   ];
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const ReferralListingPage: React.FC = () => {
   return (
     <HomeLayout
       subHeaderPrimaryAction={onChangeSearch}
-      subHeaderLabel='Referral List'
+      subHeaderLabel='Applications List'
       subHeaderPrimaryActionValue={emailValue}
       subHeaderPrimaryActionPlaceholder={'Search by email'}
       subHeaderPrimaryActionFilterOptions={roles}
@@ -76,15 +75,14 @@ const ReferralListingPage: React.FC = () => {
       subHeaderPrimaryActionLabel={isAuthorized ? 'Search' : ''}
       subHeaderPrimaryActionIcon={isAuthorized ? 'search.png' : ''}
     >
-      <ReferralListing
+      <ApplicationListing
         emailValue={emailValue}
         roleValue={roleValue}
         labels={labels}
         searchLabel='Search'
-        selection='all'
       />
     </HomeLayout>
   );
 };
 
-export default ReferralListingPage;
+export default ApplicationListingPage;

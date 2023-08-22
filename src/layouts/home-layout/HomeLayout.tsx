@@ -20,27 +20,38 @@ type HomeLayoutPropsType = {
   subHeaderSecondaryActionIcon?: string;
   subHeaderSecondaryActionPlaceholder?: string;
   subHeaderSecondaryAction?: (e) => void;
+  subHeaderRouteOptions?: string[];
+  subHeaderOnRouteChanged?: (event) => void;
 };
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setSelectedTabIndex } = useContext(SelectedContext);
+  const { selectedTabIndex, setSelectedTabIndex, isMyReferralsSelected } =
+    useContext(SelectedContext);
 
   useEffect(() => {
     if (!localStorage.getItem('token')) navigate(RouteConstants.login, { replace: true });
 
     if (location.pathname.includes(RouteConstants.employee)) setSelectedTabIndex(0);
     else if (location.pathname.includes(RouteConstants.opening)) setSelectedTabIndex(1);
-    else if (location.pathname.includes(RouteConstants.myReferral)) setSelectedTabIndex(2);
+    else if (location.pathname.includes(RouteConstants.application)) setSelectedTabIndex(2);
     else if (location.pathname.includes(RouteConstants.referral)) setSelectedTabIndex(3);
     else setSelectedTabIndex(0);
   }, []);
+
+  useEffect(() => {
+    if (selectedTabIndex === 3)
+      if (isMyReferralsSelected) navigate(RouteConstants.myReferral);
+      else navigate(RouteConstants.referral);
+  }, [isMyReferralsSelected]);
 
   return (
     <div className='home'>
       {props.children}
       <SubHeader
+        routeOptions={props.subHeaderRouteOptions}
+        onRouteChanged={props.subHeaderOnRouteChanged}
         label={props.subHeaderLabel}
         primaryAction={props.subHeaderPrimaryAction}
         primaryActionLabel={props.subHeaderPrimaryActionLabel}
