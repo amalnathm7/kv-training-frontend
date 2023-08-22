@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {
-  useGetAllApplicationsListQuery,
-  useGetMyApplicationsQuery
-} from '../../services/applicationApi';
+import { useGetApplicationsQuery } from '../../services/applicationApi';
 import ApplicationListItem from '../list-item/ApplicationListItem';
 
 type ApplicationsListingPropsType = {
@@ -10,27 +7,19 @@ type ApplicationsListingPropsType = {
   searchLabel?: string;
   emailValue?: string;
   roleValue?: string;
-  selection: 'my' | 'all';
 };
 
 const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
   const [applications, setApplications] = useState([]);
-  const { data, isSuccess } =
-    props.selection === 'my'
-      ? useGetMyApplicationsQuery()
-      : useGetAllApplicationsListQuery({
-          email: props.emailValue,
-          role: props.roleValue === 'All' ? '' : props.roleValue
-        });
+  const { data, isSuccess } = useGetApplicationsQuery({
+    email: props.emailValue,
+    role: props.roleValue === 'All' ? '' : props.roleValue
+  });
 
   useEffect(() => {
     setApplications(
       data?.data.map((application) => (
-        <ApplicationListItem
-          key={application.id}
-          application={application}
-          selection={props.selection}
-        ></ApplicationListItem>
+        <ApplicationListItem key={application.id} application={application}></ApplicationListItem>
       ))
     );
   }, [isSuccess, data]);

@@ -1,4 +1,4 @@
-import { GET_MY_REFERRAL_LIST, GET_REFERRAL_LIST } from '../constants/apiConstants';
+import { GET_APPLICATION_LIST } from '../constants/apiConstants';
 import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
@@ -6,7 +6,7 @@ import { ApplicationType } from '../types/ApplicationType';
 
 export const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllApplicationsList: builder.query<
+    getApplications: builder.query<
       ResponseType<ApplicationType[]>,
       { email?: string; role?: string; openingId?: string }
     >({
@@ -21,7 +21,7 @@ export const applicationApi = baseApi.injectEndpoints({
 
         return endpoint;
       },
-      providesTags: [GET_REFERRAL_LIST]
+      providesTags: [GET_APPLICATION_LIST]
     }),
     getApplicationById: builder.query<ResponseType<ApplicationType>, string>({
       query: (id) => ({
@@ -35,7 +35,7 @@ export const applicationApi = baseApi.injectEndpoints({
         method: 'POST',
         body
       }),
-      invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
+      invalidatesTags: [GET_APPLICATION_LIST]
     }),
     updateApplication: builder.mutation<Object, { id: string; application: ApplicationType }>({
       query: (params) => ({
@@ -43,21 +43,14 @@ export const applicationApi = baseApi.injectEndpoints({
         method: 'PATCH',
         body: params.application
       }),
-      invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
-    }),
-    getMyApplications: builder.query<ResponseType<ApplicationType[]>, void>({
-      query: () => ({
-        url: `${RouteConstants.applicationApi}/me`,
-        method: 'GET'
-      }),
-      providesTags: [GET_MY_REFERRAL_LIST]
+      invalidatesTags: [GET_APPLICATION_LIST]
     }),
     deleteApplication: builder.mutation<Object, string>({
       query: (id) => ({
         url: `${RouteConstants.applicationApi}/${id}`,
         method: 'DELETE'
       }),
-      invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
+      invalidatesTags: [GET_APPLICATION_LIST]
     })
   })
 });
@@ -65,9 +58,9 @@ export const applicationApi = baseApi.injectEndpoints({
 export const {
   useCreateApplicationMutation,
   useUpdateApplicationMutation,
-  useGetApplicationByIdQuery,
-  useGetMyApplicationsQuery,
-  useGetAllApplicationsListQuery,
   useDeleteApplicationMutation,
-  useLazyGetAllApplicationsListQuery
+  useGetApplicationsQuery,
+  useGetApplicationByIdQuery,
+  useLazyGetApplicationsQuery,
+  useLazyGetApplicationByIdQuery
 } = applicationApi;
