@@ -30,7 +30,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   };
 
   const onClick = () => {
-    navigate(`${RouteConstants.referral}/${props.referral.id}`);
+    navigate(`${RouteConstants.myReferral}/${props.referral.id}`);
   };
 
   const onConfirmDelete = () => {
