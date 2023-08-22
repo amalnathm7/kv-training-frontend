@@ -14,7 +14,6 @@ import { ApplicationType } from '../../types/ApplicationType';
 
 type ApplicationListItemPropsType = {
   application: ApplicationType;
-  selection: 'my' | 'all';
 };
 
 const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
@@ -34,11 +33,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    {
-      props.selection === 'my'
-        ? navigate(`${RouteConstants.application}/${props.application.id}/edit`)
-        : navigate(`${RouteConstants.application}/${props.application.id}/edit`);
-    }
+    navigate(`${RouteConstants.application}/${props.application.id}/edit`);
   };
 
   const handleDelete = () => {
@@ -47,11 +42,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
   };
 
   const onClick = () => {
-    {
-      props.selection === 'my'
-        ? navigate(`${RouteConstants.application}/${props.application.id}`)
-        : navigate(`${RouteConstants.application}/${props.application.id}`);
-    }
+    navigate(`${RouteConstants.application}/${props.application.id}`);
   };
 
   const [deleteError, setDeleteError] = useState(false);
@@ -88,8 +79,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       </td>
       <td>{props.application.opening.title}</td>
       <td>{props.application.role.role}</td>
-      {props.selection === 'all' && <td>{props.application.referredBy.name}</td>}
-      {(props.selection === 'my' || isSuperAuthorized) && (
+      {isSuperAuthorized && (
         <td>
           <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
           <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>

@@ -41,8 +41,7 @@ const ApplicationListingPage: React.FC = () => {
     'Experience',
     'Status',
     'Opening',
-    'Role',
-    'Referred By'
+    'Role'
   ];
 
   useEffect(() => {
@@ -67,7 +66,7 @@ const ApplicationListingPage: React.FC = () => {
   return (
     <HomeLayout
       subHeaderPrimaryAction={onChangeSearch}
-      subHeaderLabel='Application List'
+      subHeaderLabel='Applications List'
       subHeaderPrimaryActionValue={emailValue}
       subHeaderPrimaryActionPlaceholder={'Search by email'}
       subHeaderPrimaryActionFilterOptions={roles}
@@ -81,7 +80,6 @@ const ApplicationListingPage: React.FC = () => {
         roleValue={roleValue}
         labels={labels}
         searchLabel='Search'
-        selection='all'
       />
     </HomeLayout>
   );
