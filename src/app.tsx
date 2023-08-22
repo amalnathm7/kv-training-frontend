@@ -48,6 +48,7 @@ const App: FC = () => {
             <Route path={`${RouteConstants.referral}`} element={<ReferralListingPage />} />
             <Route path={`${RouteConstants.myReferral}`} element={<MyReferralListingPage />} />
             <Route path={`${RouteConstants.referral}/:id`} element={<ReferralDetailsPage />} />
+            <Route path={`${RouteConstants.myReferral}/:id`} element={<ReferralDetailsPage />} />
           </Routes>
         </BrowserRouter>
       </SelectedContext.Provider>
