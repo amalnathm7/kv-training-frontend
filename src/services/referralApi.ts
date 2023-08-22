@@ -35,6 +35,13 @@ export const referralApi = baseApi.injectEndpoints({
         url: `${RouteConstants.referralApi}/me`,
         method: 'GET'
       })
+    }),
+    deleteReferral: builder.mutation<Object, string>({
+      query: (id) => ({
+        url: `${RouteConstants.referralApi}/${id}`,
+        method: 'DELETE'
+      }),
+      invalidatesTags: [GET_REFERRAL_LIST]
     })
   })
 });
@@ -44,5 +51,6 @@ export const {
   useUpdateReferralMutation,
   useGetReferralByIdQuery,
   useGetMyReferralsQuery,
-  useGetAllReferralsListQuery
+  useGetAllReferralsListQuery,
+  useDeleteReferralMutation
 } = referralApi;
