@@ -21,14 +21,16 @@ export const employeeApi = baseApi.injectEndpoints({
         url: `${RouteConstants.employeeApi}`,
         method: 'POST',
         body
-      })
+      }),
+      invalidatesTags: [GET_EMPLOYEE_LIST]
     }),
     updateEmployee: builder.mutation<Object, { id: string; employee: EmployeeType }>({
       query: (params) => ({
         url: `${RouteConstants.employeeApi}/${params.id}`,
         method: 'PATCH',
         body: params.employee
-      })
+      }),
+      invalidatesTags: [GET_EMPLOYEE_LIST]
     }),
     deleteEmployee: builder.mutation<Object, string>({
       query: (id) => ({
