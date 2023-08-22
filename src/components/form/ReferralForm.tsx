@@ -216,7 +216,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         experience: Number(experience),
         referredById,
         openingId,
-        status:status,
+        status: status,
         resume: fileData.data.file,
         roleId,
         address: {
