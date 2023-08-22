@@ -13,8 +13,9 @@ import { useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
-import { PermissionLevel } from '../../utils/PermissionLevel';
+import DropDown from '../input-field/drop-down/DropDown';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -22,13 +23,13 @@ export type ReferralFormPropsType = {
   referral: ReferralType;
   isEdit: boolean;
 };
-
 const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [experience, setExperience] = useState(0);
   const [resume, setResume] = useState<string | File>('');
+  const [status, setStatus] = useState('');
   const [line1, setLine1] = useState('');
   const [line2, setLine2] = useState('');
   const [city, setCity] = useState('');
@@ -38,7 +39,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [referredById, setReferredById] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
-
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
@@ -48,11 +48,21 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
+    if (
+      isMyProfileFetchSuccess &&
+      myProfile.data.role &&
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
+    )
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
+
+  useEffect(() => {
     if (props.referral) {
       setName(props.referral.name);
       setEmail(props.referral.email);
       setPhone(props.referral.phone);
       setExperience(props.referral.experience);
+      setStatus(props.referral.status);
       setResume(props.referral.resume);
       setLine1(props.referral.address.line1);
       setLine2(props.referral.address.line2);
@@ -77,6 +87,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [phoneError, setPhoneError] = useState(false);
   const [experienceError, setExperienceError] = useState(false);
   const [resumeError, setResumeError] = useState(false);
+  const [statusError, setStatusError] = useState(false);
   const [line1Error, setLine1Error] = useState(false);
   const [line2Error, setLine2Error] = useState(false);
   const [cityError, setCityError] = useState(false);
@@ -134,6 +145,11 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     setStateError(false);
   };
 
+  const onChangeStatus = (event) => {
+    setStatus(event.target.value);
+    setStateError(false);
+  };
+
   const onChangeCountry = (event) => {
     setCountry(event.target.value);
     setCountryError(false);
@@ -145,7 +161,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   };
 
   const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
-
   const navigate = useNavigate();
 
   const [
@@ -176,6 +191,10 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       isValidated = false;
       setResumeError(true);
     }
+    if (props.isEdit && isSuperAuthorized && status.trim().length === 0) {
+      isValidated = false;
+      setStatusError(true);
+    }
     if (line1.trim().length === 0) {
       isValidated = false;
       setLine1Error(true);
@@ -200,7 +219,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       isValidated = false;
       setPincodeError(true);
     }
-
     if (isValidated) {
       const formData = new FormData();
 
@@ -221,6 +239,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         experience: Number(experience),
         referredById,
         openingId,
+        status: status,
         resume: fileData.data.file,
         roleId,
         referralId: props.referral?.referralId,
@@ -323,6 +342,28 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         onChange={onChangeExperience}
         showError={experienceError}
       />
+      {props.isEdit && isSuperAuthorized && (
+        <DropDown
+          options={[
+            'Received',
+            'Review',
+            'Round 1',
+            'Round 2',
+            'Round 3',
+            'Hired',
+            'Offered',
+            'Offer Accepted',
+            'Offer Declined',
+            'Rejected',
+            'Hired'
+          ]}
+          value={status}
+          label='Status'
+          placeholder='Select Status'
+          onChange={onChangeStatus}
+          showError={statusError}
+        />
+      )}
       <FileUpload label='Resume' onChange={onChangeResume} showError={resumeError} value={resume} />
       <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
         <FormField
