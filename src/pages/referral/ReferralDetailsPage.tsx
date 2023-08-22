@@ -85,7 +85,7 @@ const ReferralDetailsPage: React.FC = () => {
   }
 
   const onEditClicked = () => {
-    navigate(`${RouteConstants.referral}/${id}/edit`);
+    navigate(`${RouteConstants.opening}/${id}/refer/edit`);
   };
 
   return (
