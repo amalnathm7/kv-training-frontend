@@ -3,7 +3,6 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
-import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
 
@@ -85,7 +84,7 @@ const ReferralDetailsPage: React.FC = () => {
   }
 
   const onEditClicked = () => {
-    navigate(`${RouteConstants.referral}/${id}/edit`);
+    navigate(window.location.pathname + '/edit');
   };
 
   return (
