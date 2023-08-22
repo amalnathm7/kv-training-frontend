@@ -2,7 +2,7 @@ import { ReferralType } from '../../types/ReferralType';
 import React, { useEffect, useState } from 'react';
 import StatusIcon from '../status-icon/StatusIcon';
 import { StatusType } from '../../types/StatusType';
-import { StatusColour } from '../../utils/StatusColour';
+import { StatusColor } from '../../constants/statusColorConstants';
 import ActionButton from '../button/ActionButton/ActionButton';
 import CustomPopup from '../popup/CustomPopup';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +17,7 @@ type ReferralListItemPropsType = {
 const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   let status: StatusType = {
     label: props.referral.status,
-    color: StatusColour[props.referral.status]
+    color: StatusColor[props.referral.status]
   };
 
   const navigate = useNavigate();
@@ -59,7 +59,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>{props.referral.id}</td>
       <td>{props.referral.name}</td>
       <td>{props.referral.email}</td>
-      <td>{props.referral.experience}</td>
+      <td>
+        {props.referral.experience == 1
+          ? props.referral.experience + ' year'
+          : props.referral.experience + ' years'}
+      </td>
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>

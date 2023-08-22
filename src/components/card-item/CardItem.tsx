@@ -2,7 +2,7 @@ import React from 'react';
 import './CardItem.css';
 import StatusIcon from '../status-icon/StatusIcon';
 import { StatusType } from '../../types/StatusType';
-import { StatusColour } from '../../utils/StatusColour';
+import { StatusColor } from '../../constants/statusColorConstants';
 
 export type CardItemPropsType = {
   label: string;
@@ -16,7 +16,7 @@ const CardItem: React.FC<CardItemPropsType> = (props) => {
   if (props.isStatus)
     status = {
       label: props.value,
-      color: StatusColour[props.value.replace(/ /g, '_')]
+      color: StatusColor[props.value.replace(/ /g, '_')]
     };
 
   return (

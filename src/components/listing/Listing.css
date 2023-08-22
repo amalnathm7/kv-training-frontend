@@ -7,15 +7,24 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    background-color: #EAF9FF
-;
-    position: absolute;
+    background-color: var(--accent-color);
+    position: fixed;
+    z-index: 1;
     top: 210px;
     left: 320px;
     right: 20px;
     height: 60px;
     border-radius: 5px;
-}.listing-label {
+
+.listing-spacing {
+    z-index: 1;
+    position: fixed;
+    background-color: var(--background-color);
+    height: 280px;
+    width: 100%;
+}
+
+.listing-label {
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
@@ -24,7 +33,10 @@
     justify-content: flex-start;
     font-size: 14px;
     font-weight: bold;
-}.list-items {
+}
+
+.list-items {
+    z-index: 0;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -33,51 +45,64 @@
     right: 20px;
     font-size: 14px;
 }
+
 .search-button {
     display: flex;
     align-items: center;
     height: 50px;
-    background-color: #EAF9FF
-;
+    background-color: var(--accent-color);
     border-radius: 30px;
     cursor: pointer;
-    z-index: 1;
+    z-index: 2;
     position: absolute;
     top: 125px;
-    right: 37.5px;}.sub-header-action-icon-container {
+    right: 37.5px;
+}
+
+.sub-header-action-icon-container {
     display: flex;
     align-items: center;
     justify-content: center;
     width: 50px;
     height: 50px;
     border-radius: 100%;
+    background-color: var(--primary-color);
+    margin-right: 20px;
+}
+
+.sub-header-action-label {
+    padding: 5px;
+=======
     background-color: #03AEEE
 ;
     margin-right: 20px;
 }.sub-header-action-label {
     padding:5px;
     border-radius: 5%;
-    border :white 0px;
+    border: white 0px;
     font-size: 16px;
     margin-right: 30px;
     cursor: pointer;
 }
-.sub-header-action-label:focus{
-    outline:none;
-    border: #03AEEE
-;
+
+.sub-header-action-label:focus {
+    outline: none;
+    border: var(--primary-color);
+}
+
 }.sub-header-action-icon {
     height: 20px;
     width: 20px;
 }
+
 .roleFilter{
     position: absolute;
     z-index: 2;
     top: 137px;
     right: 440px;
-    background-color: #03AEEE
-;
+    background-color: #03AEEE;
 }
+
 option{
     background-color:transparent
 }
