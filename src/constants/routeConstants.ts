@@ -4,7 +4,7 @@ export class RouteConstants {
   static opening = '/opening';
   static referral = '/referral';
   static application = '/application';
-  static myReferral = '/myReferral';
+  static myReferral = '/referral/me';
 
   static employeeApi = '/employees';
   static departmentApi = '/departments';

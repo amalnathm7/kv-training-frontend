@@ -20,12 +20,15 @@ type HomeLayoutPropsType = {
   subHeaderSecondaryActionIcon?: string;
   subHeaderSecondaryActionPlaceholder?: string;
   subHeaderSecondaryAction?: (e) => void;
+  subHeaderRouteOptions?: string[];
+  subHeaderOnRouteChanged?: (event) => void;
 };
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { setSelectedTabIndex } = useContext(SelectedContext);
+  const { selectedTabIndex, setSelectedTabIndex, isMyReferralsSelected } =
+    useContext(SelectedContext);
 
   useEffect(() => {
     if (!localStorage.getItem('token')) navigate(RouteConstants.login, { replace: true });
@@ -37,10 +40,18 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     else setSelectedTabIndex(0);
   }, []);
 
+  useEffect(() => {
+    if (selectedTabIndex === 3)
+      if (isMyReferralsSelected) navigate(RouteConstants.myReferral);
+      else navigate(RouteConstants.referral);
+  }, [isMyReferralsSelected]);
+
   return (
     <div className='home'>
       {props.children}
       <SubHeader
+        routeOptions={props.subHeaderRouteOptions}
+        onRouteChanged={props.subHeaderOnRouteChanged}
         label={props.subHeaderLabel}
         primaryAction={props.subHeaderPrimaryAction}
         primaryActionLabel={props.subHeaderPrimaryActionLabel}
