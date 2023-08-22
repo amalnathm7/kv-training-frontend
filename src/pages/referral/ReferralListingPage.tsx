@@ -3,16 +3,35 @@ import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import ReferralListing from '../../components/listing/ReferralListing';
+import { useGetRoleListQuery } from '../../services/roleApi';
 
 const ReferralListingPage: React.FC = () => {
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const [isAuthorized, setIsAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
-  const [searchClicked, setSearchClicked] = useState(false);
+  const [emailValue, setEmailValue] = useState('');
+  const [roleValue, setRoleValue] = useState('');
+  const [roles, setRoles] = useState([]);
+
+  const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
 
   useEffect(() => {
-    if (isSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
+    if (isRoleFetchSuccess) {
+      let rolesArray = ['All'];
+
+      const additionalRoles = rolesData.data.map((role) => role.role);
+
+      setRoles(rolesArray.concat(...additionalRoles));
+    }
+  }, [isRoleFetchSuccess]);
+
+  useEffect(() => {
+    if (
+      isSuccess &&
+      myProfile.data.role &&
+      myProfile.data.role.permissionLevel !== PermissionLevel.BASIC
+    )
+      setIsAuthorized(true);
   }, [isSuccess]);
 
   const labelArray = [
@@ -27,30 +46,43 @@ const ReferralListingPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    if (isSuperAuthorized) {
+    if (isAuthorized) {
       labelArray.push('Actions');
       setLabels(labelArray);
     }
-  }, [isSuperAuthorized]);
+  }, [isAuthorized]);
 
   useEffect(() => {
     setLabels(labelArray);
   }, []);
 
-  const onSearchClicked = () => {
-    setSearchClicked(true);
+  const onChangeSearch = (event) => {
+    setEmailValue(event.target.value);
+  };
+
+  const onChangeRole = (event) => {
+    setRoleValue(event.target.value);
   };
 
   return (
     <HomeLayout
-      subHeaderPrimaryAction={isSuperAuthorized ? onSearchClicked : null}
+      subHeaderPrimaryAction={onChangeSearch}
       subHeaderLabel='Referral List'
-      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Search' : ''}
-      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'search.png' : ''}
-      searchClicked={searchClicked}
+      subHeaderPrimaryActionValue={emailValue}
+      subHeaderPrimaryActionPlaceholder={'Search by email'}
+      subHeaderPrimaryActionFilterOptions={roles}
+      subHeaderSecondaryAction={onChangeRole}
+      subHeaderSecondaryActionPlaceholder='Filter by role'
+      subHeaderPrimaryActionLabel={isAuthorized ? 'Search' : ''}
+      subHeaderPrimaryActionIcon={isAuthorized ? 'search.png' : ''}
     >
-      <ReferralListing labels={labels} searchLabel='Search' selection='all' />
-      {/* {searchClicked && <input type='text' placeholder='Search' />} */}
+      <ReferralListing
+        emailValue={emailValue}
+        roleValue={roleValue}
+        labels={labels}
+        searchLabel='Search'
+        selection='all'
+      />
     </HomeLayout>
   );
 };

@@ -137,7 +137,7 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
 
       props.isEdit ? updateOpening({ id: props.opening.id, opening }) : createOpening(opening);
     } else {
-      notifyError('FIll all required fields');
+      notifyError('Fill all required fields');
     }
   };
 

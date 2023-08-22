@@ -19,11 +19,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (isSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
   }, [isSuccess]);
 

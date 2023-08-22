@@ -9,14 +9,23 @@ import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteReferralMutation } from '../../services/referralApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
-
+        
 type ReferralListItemPropsType = {
   referral: ReferralType;
   selection: 'my' | 'all';
 };
 
 const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
+
   let status: StatusType = {
     label: props.referral.status,
     color: StatusColor[props.referral.status]
@@ -80,8 +89,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>{props.referral.opening.title}</td>
       <td>{props.referral.role.role}</td>
       {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
-      {(props.selection === 'my' ||
-        props.referral.role.permissionLevel === PermissionLevel.SUPER) && (
+      {(props.selection === 'my' || isSuperAuthorized) && (
         <td>
           <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
           <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
