@@ -25,7 +25,7 @@ const MyReferralListingPage: React.FC = () => {
     'Status',
     'Opening',
     'Role',
-    'Action'
+    'Actions'
   ];
 
   useEffect(() => {

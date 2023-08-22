@@ -221,7 +221,7 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         ? updateEmployee({ id: props.employee.id, employee: employee })
         : createEmployee(employee);
     } else {
-      notifyError('FIll all required fields');
+      notifyError('Fill all required fields');
     }
   };
 

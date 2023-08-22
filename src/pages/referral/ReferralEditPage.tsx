@@ -16,14 +16,15 @@ const ReferralEditPage: React.FC = () => {
   const [referral, setReferral] = useState<ReferralType>(null);
 
   useEffect(() => {
-    if (
-      isMyProfileFetchSuccess &&
-      (!myProfile.data.role ||
+    if (isMyProfileFetchSuccess && isReferralByIdFetchSuccess) {
+      const isNotAuthorized =
+        !myProfile.data.role ||
         (myProfile.data.role.permissionLevel !== PermissionLevel.SUPER &&
-          myProfile?.data.id !== referralData?.data.referredById))
-    )
-      navigate(-1);
-  }, [isMyProfileFetchSuccess]);
+          myProfile.data.id !== referralData.data.referredBy?.id);
+
+      if (isNotAuthorized) navigate(-1);
+    }
+  }, [isMyProfileFetchSuccess, isReferralByIdFetchSuccess]);
 
   useEffect(() => {
     if (isReferralByIdFetchSuccess) setReferral(referralData.data);
