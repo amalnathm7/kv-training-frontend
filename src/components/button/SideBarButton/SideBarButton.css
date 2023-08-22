@@ -1,27 +1,36 @@
 .item.container {
     font-size: 14px;
-    color: white;
     display: flex;
     justify-content: flex-start;
     align-items: center;
     height: 60px;
     border-top-left-radius: 30px;
     border-bottom-left-radius: 30px;
-    background-color: #03AEEE;
+    color: #03AEEE;
+    background-color: #EAF9FF;
     margin-top: 20px;
     margin-bottom: 30px;
     cursor: pointer;
 }
 
+.item.container.selected {
+    color: white;
+    background-color: #03AEEE;
+}
+
 .icon.container {
     margin-left: 15px;
     margin-right: 15px;
-    background-color: white;
+    background-color: #EAF9FF;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
     border-radius: 100%;
+}
+
+.icon.container.selected {
+    background-color: white;
 }
 
 img.filtered {
