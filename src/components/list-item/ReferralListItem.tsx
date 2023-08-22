@@ -56,12 +56,13 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       </td>
       <td>{props.referral.opening.title}</td>
       <td>{props.referral.role.role}</td>
-      {props.selection !== 'my' && <td>{props.referral.referredBy.name}</td>}
-
-      <td>
-        <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
-        <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
-      </td>
+      {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
+      {props.selection === 'my' && (
+        <td>
+          <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
+          <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+        </td>
+      )}
       {showDeletePopup && (
         <CustomPopup
           onConfirm={onConfirmDelete}

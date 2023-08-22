@@ -17,13 +17,6 @@ const MyReferralListingPage: React.FC = () => {
       setIsSuperAuthorized(true);
   }, [isMyProfileFetchSuccess]);
 
-  useEffect(() => {
-    if (isSuperAuthorized) {
-      labelArray.push('Actions');
-      setLabels(labelArray);
-    }
-  }, [isSuperAuthorized]);
-
   const labelArray = [
     'Referral ID',
     'Candidate Name',
@@ -31,7 +24,8 @@ const MyReferralListingPage: React.FC = () => {
     'Experience',
     'Status',
     'Opening',
-    'Role'
+    'Role',
+    'Action'
   ];
 
   useEffect(() => {
