@@ -22,7 +22,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    navigate(`${RouteConstants.opening}/${props.referral.id}/refer/edit`);
+    navigate(`${RouteConstants.referral}/${props.referral.id}/edit`);
   };
 
   const handleDelete = () => {

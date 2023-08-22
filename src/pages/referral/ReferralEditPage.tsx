@@ -4,24 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
-import { useGetOpeningByIdQuery } from '../../services/openingApi';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
+import { ReferralType } from '../../types/ReferralType';
 
 const ReferralEditPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const navigate = useNavigate();
 
   const { id } = useParams();
-  const { data: openingData, isSuccess: isOpeningFetchSucces } = useGetOpeningByIdQuery(id);
-  const [opening, setOpening] = useState(null);
-
   const { data: referralData, isSuccess: isReferralByIdFetchSuccess } = useGetReferralByIdQuery(id);
-  const [referral, setReferral] = useState(null);
-
-  useEffect(() => {
-    if (isOpeningFetchSucces) setOpening(openingData.data);
-  }, [isOpeningFetchSucces]);
+  const [referral, setReferral] = useState<ReferralType>(null);
 
   useEffect(() => {
     if (
@@ -44,8 +37,8 @@ const ReferralEditPage: React.FC = () => {
     >
       <ReferralForm
         referredBy={myProfile?.data}
-        opening={opening}
-        referral={referral?.data}
+        opening={referral?.opening}
+        referral={referral}
         isEdit={true}
       />
     </HomeLayout>
