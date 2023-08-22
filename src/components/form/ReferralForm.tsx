@@ -13,20 +13,22 @@ import { useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
-
+import DropDown from '../input-field/drop-down/DropDown';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
   opening: OpeningType;
   referral: ReferralType;
   isEdit: boolean;
 };
-
 const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [experience, setExperience] = useState(0);
   const [resume, setResume] = useState<string | File>('');
+  const [status, setStatus] = useState('');
   const [line1, setLine1] = useState('');
   const [line2, setLine2] = useState('');
   const [city, setCity] = useState('');
@@ -36,13 +38,24 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [referredById, setReferredById] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
+  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
+  useEffect(() => {
+    if (
+      isSuccess &&
+      myProfile.data.role &&
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
+    )
+      setIsSuperAuthorized(true);
+  }, [isSuccess]);
   useEffect(() => {
     if (props.referral) {
       setName(props.referral.name);
       setEmail(props.referral.email);
       setPhone(props.referral.phone);
       setExperience(props.referral.experience);
+      setStatus(props.referral.status);
       setResume(props.referral.resume);
       setLine1(props.referral.address.line1);
       setLine2(props.referral.address.line2);
@@ -52,48 +65,41 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       setPincode(props.referral.address.pincode);
     }
   }, [props.referral]);
-
   useEffect(() => {
     setReferredById(props.referredBy?.id.toString());
   }, [props.referredBy]);
-
   useEffect(() => {
     setRoleId(props.opening?.role?.id.toString());
     setOpeningId(props.opening?.id.toString());
   }, [props.opening]);
-
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [experienceError, setExperienceError] = useState(false);
   const [resumeError, setResumeError] = useState(false);
+  const [statusError, setStatusError] = useState(false);
   const [line1Error, setLine1Error] = useState(false);
   const [line2Error, setLine2Error] = useState(false);
   const [cityError, setCityError] = useState(false);
   const [stateError, setStateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [pincodeError, setPincodeError] = useState(false);
-
   const onChangeName = (event) => {
     setName(event.target.value);
     setNameError(false);
   };
-
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
     setEmailError(false);
   };
-
   const onChangePhone = (event) => {
     setPhone(event.target.value);
     setPhoneError(false);
   };
-
   const onChangeExperience = (event) => {
     setExperience(event.target.value);
     setExperienceError(false);
   };
-
   const onChangeResume = (event) => {
     if (event.target.files[0])
       if (validateResume(event.target.files[0])) {
@@ -103,39 +109,35 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         setResumeError(true);
       }
   };
-
   const onChangeLine1 = (event) => {
     setLine1(event.target.value);
     setLine1Error(false);
   };
-
   const onChangeLine2 = (event) => {
     setLine2(event.target.value);
     setLine2Error(false);
   };
-
   const onChangeCity = (event) => {
     setCity(event.target.value);
     setCityError(false);
   };
-
   const onChangeState = (event) => {
     setState(event.target.value);
     setStateError(false);
   };
-
+  const onChangeStatus = (event) => {
+    setStatus(event.target.value);
+    setStateError(false);
+  };
   const onChangeCountry = (event) => {
     setCountry(event.target.value);
     setCountryError(false);
   };
-
   const onChangePincode = (event) => {
     setPincode(event.target.value);
     setPincodeError(false);
   };
-
   const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
-
   const navigate = useNavigate();
 
   const [
@@ -166,6 +168,10 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       isValidated = false;
       setResumeError(true);
     }
+    if (props.isEdit && isSuperAuthorized && status.trim().length === 0) {
+      isValidated = false;
+      setStatusError(true);
+    }
     if (line1.trim().length === 0) {
       isValidated = false;
       setLine1Error(true);
@@ -190,7 +196,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       isValidated = false;
       setPincodeError(true);
     }
-
     if (isValidated) {
       const formData = new FormData();
 
@@ -211,6 +216,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         experience: Number(experience),
         referredById,
         openingId,
+        status:status,
         resume: fileData.data.file,
         roleId,
         address: {
@@ -312,6 +318,28 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         onChange={onChangeExperience}
         showError={experienceError}
       />
+      {props.isEdit && isSuperAuthorized && (
+        <DropDown
+          options={[
+            'Received',
+            'Review',
+            'Round 1',
+            'Round 2',
+            'Round 3',
+            'Hired',
+            'Offered',
+            'Offer Accepted',
+            'Offer Declined',
+            'Rejected',
+            'Hired'
+          ]}
+          value={status}
+          label='Status'
+          placeholder='Select Status'
+          onChange={onChangeStatus}
+          showError={statusError}
+        />
+      )}
       <FileUpload label='Resume' onChange={onChangeResume} showError={resumeError} value={resume} />
       <div style={{ width: '100%', display: 'flex', flexWrap: 'wrap' }}>
         <FormField
