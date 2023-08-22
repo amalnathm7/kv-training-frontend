@@ -10,6 +10,8 @@ import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteReferralMutation } from '../../services/referralApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
+import { toast } from 'react-toastify';
+        
 type ReferralListItemPropsType = {
   referral: ReferralType;
   selection: 'my' | 'all';
@@ -40,7 +42,8 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   };
 
   const handleDelete = () => {
-    setShowDeletePopup(true);
+    if (deleteError) toast.error('Candidate has been moved to further stages');
+    else setShowDeletePopup(true);
   };
 
   const onClick = () => {
@@ -51,6 +54,8 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
     }
   };
 
+  const [deleteError, setDeleteError] = useState(false);
+
   const onConfirmDelete = () => {
     deleteReferral(props.referral.id);
   };
@@ -58,6 +63,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
 
   const [deleteReferral, { isSuccess: isDeleteSuccess }] = useDeleteReferralMutation();
+
+  useEffect(() => {
+    if (props.referral.status !== 'Received') setDeleteError(true);
+    else setDeleteError(false);
+  }, [props.referral.status]);
 
   useEffect(() => {
     setShowDeletePopup(false);
