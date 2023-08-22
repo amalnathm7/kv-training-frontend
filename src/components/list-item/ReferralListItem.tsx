@@ -22,7 +22,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    navigate(`${RouteConstants.referral}/${props.referral.id}/edit`);
+    {
+      props.selection === 'my'
+        ? navigate(`${RouteConstants.myReferral}/${props.referral.id}/edit`)
+        : navigate(`${RouteConstants.referral}/${props.referral.id}/edit`);
+    }
   };
 
   const handleDelete = () => {
@@ -30,7 +34,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   };
 
   const onClick = () => {
-    navigate(`${RouteConstants.myReferral}/${props.referral.id}`);
+    {
+      props.selection === 'my'
+        ? navigate(`${RouteConstants.myReferral}/${props.referral.id}`)
+        : navigate(`${RouteConstants.referral}/${props.referral.id}`);
+    }
   };
 
   const onConfirmDelete = () => {
