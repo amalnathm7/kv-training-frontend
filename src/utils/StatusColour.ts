@@ -1,6 +1,7 @@
 export const StatusColour = {
   Active: '#FFBFBF',
   Inactive: '#FFBFBF',
+  Probation: '#F5ECB8',
   Received: '#F5ECB8',
   Review: '#F5ECB8',
   Round_1: '#EAF9FF',
