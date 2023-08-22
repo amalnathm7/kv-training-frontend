@@ -16,7 +16,7 @@
 }
 
 .split.left {
-    background-color: #e6f7fd;
+    background-color: #E6F7FD;
 }
 
 .circle {
@@ -66,8 +66,4 @@
     .split {
         width: 100%;
     }
-}
-
-.login-error {
-    text-align: center;
 }

@@ -9,6 +9,7 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import { useGetDepartmentListQuery } from '../../services/departmentApi';
 import { OpeningType } from '../../types/OpeningType';
 import { useCreateOpeningMutation, useUpdateOpeningMutation } from '../../services/openingApi';
+import { toast } from 'react-toastify';
 
 export type OpeningnFormPropsType = {
   opening: OpeningType;
@@ -135,21 +136,46 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
       };
 
       props.isEdit ? updateOpening({ id: props.opening.id, opening }) : createOpening(opening);
+    } else {
+      notifyError('Fill all required fields');
     }
   };
 
-  const [createOpening, { isSuccess: isCreateOpeningSuccess }] = useCreateOpeningMutation();
-  const [updateOpening, { isSuccess: isUpdateOpeningSuccess }] = useUpdateOpeningMutation();
+  const [
+    createOpening,
+    { isSuccess: isCreateOpeningSuccess, isError: isCreateOpeningError, error: createOpeningError }
+  ] = useCreateOpeningMutation();
+  const [
+    updateOpening,
+    { isSuccess: isUpdateOpeningSuccess, isError: isUpdateOpeningError, error: updateOpeningError }
+  ] = useUpdateOpeningMutation();
   const { data: departmentData, isSuccess: isDeptFetchSuccess } = useGetDepartmentListQuery();
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
 
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} opening`);
+  const notifyError = (error: string) => toast.error(error);
+
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateOpeningSuccess) navigate(-1);
+      if (isUpdateOpeningSuccess) {
+        navigate(-1);
+        setTimeout(() => {
+          notifySuccess('updated');
+        }, 100);
+      } else if (isUpdateOpeningError) {
+        notifyError(updateOpeningError['data'].errors.error);
+      }
     } else {
-      if (isCreateOpeningSuccess) navigate(-1);
+      if (isCreateOpeningSuccess) {
+        navigate(-1);
+        setTimeout(() => {
+          notifySuccess('created');
+        }, 100);
+      } else if (isCreateOpeningError) {
+        notifyError(createOpeningError['data'].errors.error);
+      }
     }
-  }, [isCreateOpeningSuccess, isUpdateOpeningSuccess]);
+  }, [isCreateOpeningSuccess, isUpdateOpeningSuccess, isCreateOpeningError, isUpdateOpeningError]);
 
   useEffect(() => {
     if (isDeptFetchSuccess)

@@ -10,13 +10,16 @@ import { ToastContainer, toast } from 'react-toastify';
 
 type HomeLayoutPropsType = {
   subHeaderLabel: string;
-  searchClicked?: boolean;
   subHeaderPrimaryActionLabel: string;
   subHeaderPrimaryActionIcon: string;
-  subHeaderPrimaryAction: () => void;
+  subHeaderPrimaryActionValue?: string;
+  subHeaderPrimaryActionPlaceholder?: string;
+  subHeaderPrimaryActionFilterOptions?: string[];
+  subHeaderPrimaryAction: (e) => void;
   subHeaderSecondaryActionLabel?: string;
   subHeaderSecondaryActionIcon?: string;
-  subHeaderSecondaryAction?: () => void;
+  subHeaderSecondaryActionPlaceholder?: string;
+  subHeaderSecondaryAction?: (e) => void;
 };
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
@@ -38,14 +41,17 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     <div className='home'>
       {props.children}
       <SubHeader
-        searchClicked={props.searchClicked}
         label={props.subHeaderLabel}
         primaryAction={props.subHeaderPrimaryAction}
         primaryActionLabel={props.subHeaderPrimaryActionLabel}
         primaryActionIcon={props.subHeaderPrimaryActionIcon}
+        primaryActionValue={props.subHeaderPrimaryActionValue}
+        primaryActionPlaceholder={props.subHeaderPrimaryActionPlaceholder}
+        primaryActionFilterOptions={props.subHeaderPrimaryActionFilterOptions}
         secondaryAction={props.subHeaderSecondaryAction}
         secondaryActionLabel={props.subHeaderSecondaryActionLabel}
         secondaryActionIcon={props.subHeaderSecondaryActionIcon}
+        secondaryActionPlaceholder={props.subHeaderSecondaryActionPlaceholder}
       />
       <Sidebar />
       <Header />

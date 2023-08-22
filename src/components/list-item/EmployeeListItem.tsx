@@ -19,11 +19,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (isSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
   }, [isSuccess]);
 
@@ -73,7 +69,11 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.employee.experience + ' years'}</td>
+      <td>
+        {props.employee.experience == 1
+          ? props.employee.experience + ' year'
+          : props.employee.experience + ' years'}
+      </td>
       <td className='address-td'>
         {props.employee.address.line1 +
           ', ' +

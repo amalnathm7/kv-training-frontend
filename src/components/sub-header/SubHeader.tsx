@@ -4,20 +4,54 @@ import './SubHeader.css';
 export type SubHeaderPropsType = {
   label: string;
   primaryActionLabel: string;
+  primaryActionValue?: string;
+  primaryActionPlaceholder?: string;
+  primaryActionFilterOptions?: string[];
   primaryActionIcon: string;
-  primaryAction: () => void;
+  primaryAction: (e) => void;
   secondaryActionLabel?: string;
   secondaryActionIcon?: string;
-  secondaryAction?: () => void;
-  searchClicked?: boolean;
+  secondaryActionPlaceholder?: string;
+  secondaryAction?: (() => void) | ((string) => void);
 };
 
 const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
+  const options = props.primaryActionFilterOptions?.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
+
+  console.log(props);
+
   return (
     <div className='sub-header'>
       <label className='sub-header-label'>{props.label}</label>
-      {/* {props.searchClicked && <input type='text' placeholder='Search by email / referral Id' onChange={handleSearch}/>} */}
       <div className='sub-header-actions'>
+        {props.primaryActionLabel === 'Search' && (
+          <>
+            <div className='filter'>
+              <select className='filter-dropdown' onChange={props.secondaryAction}>
+                <option style={{ color: 'var(--hint-color)' }} hidden>
+                  {props.secondaryActionPlaceholder}
+                </option>
+                {options}
+              </select>
+            </div>
+            <div className='action-button'>
+              <div className='sub-header-action-icon-container'>
+                <img className='sub-header-action-icon' src={'/assets/icons/' + 'search.png'}></img>
+              </div>
+              <input
+                className='sub-header-action-label'
+                style={{ fontSize: '14px', cursor: 'text' }}
+                value={props.primaryActionValue}
+                placeholder={props.primaryActionPlaceholder}
+                onChange={props.primaryAction}
+              />
+            </div>
+          </>
+        )}
         {props.primaryActionLabel.length > 0 && props.primaryActionLabel != 'Search' && (
           <div className='action-button' onClick={props.primaryAction}>
             <div className='sub-header-action-icon-container'>

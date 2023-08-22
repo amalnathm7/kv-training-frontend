@@ -139,7 +139,12 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   };
   const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
   const navigate = useNavigate();
-  const [uploadFile, { data: fileData, isSuccess: isFileUploadSuccess }] = useUploadFileMutation();
+
+  const [
+    uploadFile,
+    { data: fileData, isSuccess: isFileUploadSuccess, isError: isFileUploadError }
+  ] = useUploadFileMutation();
+
   const saveReferral = () => {
     let isValidated = true;
 
@@ -197,7 +202,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       formData.append('file', resume);
       uploadFile(formData);
     } else {
-      notifyError('FIll all required fields');
+      notifyError('Fill all required fields');
     }
   };
 
@@ -227,10 +232,11 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       props.isEdit
         ? updateReferral({ id: props.referral.id, referral: referral })
         : createReferral(referral);
-    } else {
+    } else if (isFileUploadError) {
       notifyError('Resume upload error');
     }
-  }, [isFileUploadSuccess]);
+  }, [isFileUploadSuccess, isFileUploadError]);
+
   const [
     createReferral,
     {
@@ -247,6 +253,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       error: updateReferralError
     }
   ] = useUpdateReferralMutation();
+
   const notifySuccess = (action: string) => toast.success(`Successfully ${action} referral`);
   const notifyError = (error: string) => toast.error(error);
 
