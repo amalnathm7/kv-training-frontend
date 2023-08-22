@@ -1,5 +1,11 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { API_BASE_URL } from '../constants/apiConstants';
+import {
+  API_BASE_URL,
+  GET_EMPLOYEE_LIST,
+  GET_MY_REFERRAL_LIST,
+  GET_OPENING_LIST,
+  GET_REFERRAL_LIST
+} from '../constants/apiConstants';
 
 export const baseApi = createApi({
   baseQuery: fetchBaseQuery({
@@ -18,5 +24,5 @@ export const baseApi = createApi({
   refetchOnMountOrArgChange: true,
   refetchOnReconnect: true,
   endpoints: () => ({}),
-  tagTypes: []
+  tagTypes: [GET_EMPLOYEE_LIST, GET_OPENING_LIST, GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
 });
