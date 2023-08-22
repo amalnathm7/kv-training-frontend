@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import ReferralListItem from '../list-item/ReferralListItem';
 import { useGetAllReferralsListQuery, useGetMyReferralsQuery } from '../../services/referralApi';
-
 type ReferralsListingPropsType = {
   labels: string[];
   searchLabel?: string;
   selection: 'my' | 'all';
 };
-
 const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   const [referrals, setReferrals] = useState([]);
-  const [inputValue, setInputValue] = useState('');
-
+  const [emailValue, setEmailValue] = useState('');
+  const [roleValue, setRoleValue] = useState('');
   const { data, isSuccess } =
-    props.selection === 'my' ? useGetMyReferralsQuery() : useGetAllReferralsListQuery();
+    props.selection === 'my'
+      ? useGetMyReferralsQuery()
+      : useGetAllReferralsListQuery({ email: emailValue, role: roleValue });
 
   useEffect(() => {
     setReferrals(
@@ -25,52 +25,42 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
         ></ReferralListItem>
       ))
     );
-  }, [isSuccess]);
-
+  }, [isSuccess, data]);
   const labels = props.labels.map((label) => (
     <td className='listing-label' key={label}>
       <label>{label}</label>
     </td>
   ));
-
   const handleSearch = (e) => {
-    setInputValue(e.target.value);
-    const newreferrals = data?.data.filter(
-      (referral) =>
-        String(referral.id).includes(e.target.value) ||
-        String(referral.email).includes(e.target.value) ||
-        String(referral.opening.title).includes(e.target.value) ||
-        String(referral.role.role).includes(e.target.value) ||
-        String(referral.name).includes(e.target.value)
-    );
-
-    setReferrals(
-      newreferrals.map((newReferral) => (
-        <ReferralListItem
-          key={newReferral.id}
-          referral={newReferral}
-          selection={props.selection}
-        ></ReferralListItem>
-      ))
-    );
+    setEmailValue(e.target.value);
   };
 
   return (
     <>
       {props.searchLabel === 'Search' && (
-        <div className='search-button'>
-          <div className='sub-header-action-icon-container'>
-            <img className='sub-header-action-icon' src={'/assets/icons/' + 'search.png'}></img>
+        <>
+          <div className='search-button'>
+            <div className='sub-header-action-icon-container'>
+              <img className='sub-header-action-icon' src={'/assets/icons/' + 'search.png'}></img>
+            </div>
+            <input
+              className='sub-header-action-label'
+              style={{ fontSize: '14px', cursor: 'text' }}
+              value={emailValue}
+              placeholder='Search referral by Email'
+              onChange={handleSearch}
+            />
           </div>
-          {/* <label className='sub-header-action-label'>Search</label> */}
-          <input
-            className='sub-header-action-label'
-            style={{ fontSize: '14px', cursor: 'text' }}
-            value={inputValue}
-            placeholder='Search referral'
-            onChange={handleSearch}
-          />
-        </div>
+          <div className='roleFilter'>
+            <select className='role-dropdown' onChange={(e) => setRoleValue(e.target.value)}>
+              <option value='' disabled selected>
+                Role
+              </option>
+              <option value='HR Manager'>HR Manager</option>
+              <option value='Front-end Developer'>Front-end Developer</option>
+            </select>
+          </div>
+        </>
       )}
       <div className='listing'>
         <table>
