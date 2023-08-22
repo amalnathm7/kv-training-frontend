@@ -32,7 +32,7 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
 
     if (location.pathname.includes(RouteConstants.employee)) setSelectedTabIndex(0);
     else if (location.pathname.includes(RouteConstants.opening)) setSelectedTabIndex(1);
-    else if (location.pathname.includes(RouteConstants.myReferral)) setSelectedTabIndex(2);
+    else if (location.pathname.includes(RouteConstants.application)) setSelectedTabIndex(2);
     else if (location.pathname.includes(RouteConstants.referral)) setSelectedTabIndex(3);
     else setSelectedTabIndex(0);
   }, []);

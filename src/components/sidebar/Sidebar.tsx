@@ -22,7 +22,7 @@ const Sidebar: React.FC = () => {
 
   const onMyReferralsSelected = () => {
     setSelectedTabIndex(2);
-    navigate(RouteConstants.myReferral);
+    navigate(RouteConstants.application);
   };
 
   const onReferralsListSelected = () => {
@@ -42,19 +42,19 @@ const Sidebar: React.FC = () => {
         <SideBarButton
           isSelected={selectedTabIndex === 1}
           onClick={onJobOpeningsSelected}
-          imgIcon='/assets/icons/job_icon.png'
+          imgIcon='/assets/icons/opening.png'
           headerText='Job Openings'
         />
         <SideBarButton
           isSelected={selectedTabIndex === 2}
           onClick={onMyReferralsSelected}
-          imgIcon='/assets/icons/my_referrals.png'
+          imgIcon='/assets/icons/application.png'
           headerText='Applications'
         />
         <SideBarButton
           isSelected={selectedTabIndex === 3}
           onClick={onReferralsListSelected}
-          imgIcon='/assets/icons/all_referrals.png'
+          imgIcon='/assets/icons/referral.png'
           headerText='Referrals'
         />
       </div>

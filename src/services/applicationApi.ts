@@ -2,16 +2,16 @@ import { GET_MY_REFERRAL_LIST, GET_REFERRAL_LIST } from '../constants/apiConstan
 import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
-import { ReferralType } from '../types/ReferralType';
+import { ApplicationType } from '../types/ApplicationType';
 
-export const referralApi = baseApi.injectEndpoints({
+export const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllReferralsList: builder.query<
-      ResponseType<ReferralType[]>,
+    getAllApplicationsList: builder.query<
+      ResponseType<ApplicationType[]>,
       { email?: string; role?: string; openingId?: string }
     >({
       query: ({ email, role, openingId }) => {
-        let endpoint = `${RouteConstants.referralApi}`;
+        let endpoint = `${RouteConstants.applicationApi}`;
         const params = [];
 
         if (email) params.push(`email=${email}`);
@@ -23,38 +23,38 @@ export const referralApi = baseApi.injectEndpoints({
       },
       providesTags: [GET_REFERRAL_LIST]
     }),
-    getReferralById: builder.query<ResponseType<ReferralType>, string>({
+    getApplicationById: builder.query<ResponseType<ApplicationType>, string>({
       query: (id) => ({
-        url: `${RouteConstants.referralApi}/${id}`,
+        url: `${RouteConstants.applicationApi}/${id}`,
         method: 'GET'
       })
     }),
-    createReferral: builder.mutation<ResponseType<ReferralType>, ReferralType>({
+    createApplication: builder.mutation<ResponseType<ApplicationType>, ApplicationType>({
       query: (body) => ({
-        url: `${RouteConstants.referralApi}`,
+        url: `${RouteConstants.applicationApi}`,
         method: 'POST',
         body
       }),
       invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
     }),
-    updateReferral: builder.mutation<Object, { id: string; referral: ReferralType }>({
+    updateApplication: builder.mutation<Object, { id: string; application: ApplicationType }>({
       query: (params) => ({
-        url: `${RouteConstants.referralApi}/${params.id}`,
+        url: `${RouteConstants.applicationApi}/${params.id}`,
         method: 'PATCH',
-        body: params.referral
+        body: params.application
       }),
       invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
     }),
-    getMyReferrals: builder.query<ResponseType<ReferralType[]>, void>({
+    getMyApplications: builder.query<ResponseType<ApplicationType[]>, void>({
       query: () => ({
-        url: `${RouteConstants.referralApi}/me`,
+        url: `${RouteConstants.applicationApi}/me`,
         method: 'GET'
       }),
       providesTags: [GET_MY_REFERRAL_LIST]
     }),
-    deleteReferral: builder.mutation<Object, string>({
+    deleteApplication: builder.mutation<Object, string>({
       query: (id) => ({
-        url: `${RouteConstants.referralApi}/${id}`,
+        url: `${RouteConstants.applicationApi}/${id}`,
         method: 'DELETE'
       }),
       invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
@@ -63,11 +63,11 @@ export const referralApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useCreateReferralMutation,
-  useUpdateReferralMutation,
-  useGetReferralByIdQuery,
-  useGetMyReferralsQuery,
-  useGetAllReferralsListQuery,
-  useDeleteReferralMutation,
-  useLazyGetAllReferralsListQuery
-} = referralApi;
+  useCreateApplicationMutation,
+  useUpdateApplicationMutation,
+  useGetApplicationByIdQuery,
+  useGetMyApplicationsQuery,
+  useGetAllApplicationsListQuery,
+  useDeleteApplicationMutation,
+  useLazyGetAllApplicationsListQuery
+} = applicationApi;
