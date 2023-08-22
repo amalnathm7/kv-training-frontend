@@ -8,30 +8,40 @@ import EmployeeCreatePage from './pages/employee/EmployeeCreatePage';
 import EmployeeEditPage from './pages/employee/EmployeeEditPage';
 import SplashPage from './pages/splash/SplashPage';
 import { RouteConstants } from './constants/routeConstants';
-import ReferralListingPage from './pages/referral/ReferralListingPage';
+import AllReferralsListingPage from './pages/referral/AllReferralsListingPage';
 import OpeningDetailsPage from './pages/opening/OpeningDetailsPage';
 import ReferralCreatePage from './pages/referral/ReferralCreatePage';
 import OpeningListingPage from './pages/opening/OpeningListPage';
 import OpeningCreatePage from './pages/opening/OpeningCreatePage';
 import OpeningEditPage from './pages/opening/OpeningEditPage';
 import ReferralEditPage from './pages/referral/ReferralEditPage';
-import MyReferralListingPage from './pages/referral/MyReferralsListPage';
+import MyReferralsListingPage from './pages/referral/MyReferralsListingPage';
 import ReferralDetailsPage from './pages/referral/ReferralDetailsPage';
 import ApplicationListingPage from './pages/application/ApplicationListingPage';
 
 export type SelectedContextType = {
   selectedTabIndex: number;
   setSelectedTabIndex: Dispatch<SetStateAction<number>>;
+  isMyReferralsSelected: boolean;
+  setIsMyReferralsSelected: Dispatch<SetStateAction<boolean>>;
 };
 
 export const SelectedContext: Context<SelectedContextType> = createContext(null);
 
 const App: FC = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(-1);
+  const [isMyReferralsSelected, setIsMyReferralsSelected] = useState(false);
 
   return (
     <div className='app'>
-      <SelectedContext.Provider value={{ selectedTabIndex, setSelectedTabIndex }}>
+      <SelectedContext.Provider
+        value={{
+          selectedTabIndex,
+          setSelectedTabIndex,
+          isMyReferralsSelected,
+          setIsMyReferralsSelected
+        }}
+      >
         <BrowserRouter>
           <Routes>
             <Route path='/' element={<SplashPage />} />
@@ -47,8 +57,8 @@ const App: FC = () => {
             <Route path={`${RouteConstants.myReferral}/:id/edit`} element={<ReferralEditPage />} />
             <Route path={`${RouteConstants.opening}/create`} element={<OpeningCreatePage />} />
             <Route path={`${RouteConstants.opening}/:id/edit`} element={<OpeningEditPage />} />
-            <Route path={`${RouteConstants.referral}`} element={<ReferralListingPage />} />
-            <Route path={`${RouteConstants.myReferral}`} element={<MyReferralListingPage />} />
+            <Route path={`${RouteConstants.referral}`} element={<AllReferralsListingPage />} />
+            <Route path={`${RouteConstants.myReferral}`} element={<MyReferralsListingPage />} />
             <Route path={`${RouteConstants.referral}/:id`} element={<ReferralDetailsPage />} />
             <Route path={`${RouteConstants.myReferral}/:id`} element={<ReferralDetailsPage />} />
             <Route path={`${RouteConstants.application}`} element={<ApplicationListingPage />} />
