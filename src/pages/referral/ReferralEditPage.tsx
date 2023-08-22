@@ -2,7 +2,6 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
-import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
@@ -19,9 +18,11 @@ const ReferralEditPage: React.FC = () => {
   useEffect(() => {
     if (
       isMyProfileFetchSuccess &&
-      (!myProfile.data.role || myProfile.data.role.permissionLevel === PermissionLevel.BASIC)
+      (!myProfile.data.role ||
+        (myProfile.data.role.permissionLevel !== PermissionLevel.SUPER &&
+          myProfile?.data.id !== referralData?.data.referredById))
     )
-      navigate(`${RouteConstants.employee}`);
+      navigate(-1);
   }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {

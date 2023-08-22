@@ -43,11 +43,13 @@ const App: FC = () => {
             <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
             <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />
             <Route path={`${RouteConstants.referral}/:id/edit`} element={<ReferralEditPage />} />
+            <Route path={`${RouteConstants.myReferral}/:id/edit`} element={<ReferralEditPage />} />
             <Route path={`${RouteConstants.opening}/create`} element={<OpeningCreatePage />} />
             <Route path={`${RouteConstants.opening}/:id/edit`} element={<OpeningEditPage />} />
             <Route path={`${RouteConstants.referral}`} element={<ReferralListingPage />} />
             <Route path={`${RouteConstants.myReferral}`} element={<MyReferralListingPage />} />
             <Route path={`${RouteConstants.referral}/:id`} element={<ReferralDetailsPage />} />
+            <Route path={`${RouteConstants.myReferral}/:id`} element={<ReferralDetailsPage />} />
           </Routes>
         </BrowserRouter>
       </SelectedContext.Provider>

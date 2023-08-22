@@ -8,6 +8,7 @@ import CustomPopup from '../popup/CustomPopup';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteReferralMutation } from '../../services/referralApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 type ReferralListItemPropsType = {
   referral: ReferralType;
   selection: 'my' | 'all';
@@ -22,7 +23,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const navigate = useNavigate();
 
   const handleEdit = () => {
-    navigate(`${RouteConstants.referral}/${props.referral.id}/edit`);
+    {
+      props.selection === 'my'
+        ? navigate(`${RouteConstants.myReferral}/${props.referral.id}/edit`)
+        : navigate(`${RouteConstants.referral}/${props.referral.id}/edit`);
+    }
   };
 
   const handleDelete = () => {
@@ -30,7 +35,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   };
 
   const onClick = () => {
-    navigate(`${RouteConstants.referral}/${props.referral.id}`);
+    {
+      props.selection === 'my'
+        ? navigate(`${RouteConstants.myReferral}/${props.referral.id}`)
+        : navigate(`${RouteConstants.referral}/${props.referral.id}`);
+    }
   };
 
   const onConfirmDelete = () => {
@@ -60,11 +69,14 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       </td>
       <td>{props.referral.opening.title}</td>
       <td>{props.referral.role.role}</td>
-      {props.selection !== 'my' && <td>{props.referral.referredBy.name}</td>}
-      <td>
-        <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
-        <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
-      </td>
+      {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
+      {(props.selection === 'my' ||
+        props.referral.role.permissionLevel === PermissionLevel.SUPER) && (
+        <td>
+          <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
+          <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+        </td>
+      )}
       {showDeletePopup && (
         <CustomPopup
           onConfirm={onConfirmDelete}
