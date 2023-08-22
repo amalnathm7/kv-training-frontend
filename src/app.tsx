@@ -17,6 +17,7 @@ import OpeningEditPage from './pages/opening/OpeningEditPage';
 import ReferralEditPage from './pages/referral/ReferralEditPage';
 import MyReferralListingPage from './pages/referral/MyReferralsListPage';
 import ReferralDetailsPage from './pages/referral/ReferralDetailsPage';
+import ApplicationListingPage from './pages/application/ApplicationListingPage';
 
 export type SelectedContextType = {
   selectedTabIndex: number;
@@ -50,6 +51,7 @@ const App: FC = () => {
             <Route path={`${RouteConstants.myReferral}`} element={<MyReferralListingPage />} />
             <Route path={`${RouteConstants.referral}/:id`} element={<ReferralDetailsPage />} />
             <Route path={`${RouteConstants.myReferral}/:id`} element={<ReferralDetailsPage />} />
+            <Route path={`${RouteConstants.application}`} element={<ApplicationListingPage />} />
           </Routes>
         </BrowserRouter>
       </SelectedContext.Provider>

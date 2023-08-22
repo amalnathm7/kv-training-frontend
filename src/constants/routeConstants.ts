@@ -3,6 +3,7 @@ export class RouteConstants {
   static employee = '/employee';
   static opening = '/opening';
   static referral = '/referral';
+  static application = '/application';
   static myReferral = '/myReferral';
 
   static employeeApi = '/employees';
@@ -10,6 +11,7 @@ export class RouteConstants {
   static roleApi = '/roles';
   static loginApi = '/employees/login';
   static openingApi = '/openings';
+  static applicationApi = '/applications';
   static referralApi = '/referrals';
   static fileUploadApi = '/files/upload';
 }
