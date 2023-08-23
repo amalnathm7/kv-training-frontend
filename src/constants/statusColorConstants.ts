@@ -4,12 +4,12 @@ export const StatusColor = {
   Inactive: '#FFBFBF',
   Received: '#F5ECB8',
   Review: '#F5ECB8',
-  Round_1: '#EAF9FF',
-  Round_2: '#EAF9FF',
-  Round_3: '#EAF9FF',
-  Offered: '#FFBFBF',
-  Offer_Accepted: '#FFBFBF',
+  Round_1: '#F5ECB8',
+  Round_2: '#F5ECB8',
+  Round_3: '#F5ECB8',
+  Offered: '#D3F4BE',
+  Offer_Accepted: '#D3F4BE',
   Offer_Declined: '#FFBFBF',
   Rejected: '#FFBFBF',
-  Hired: '#FFBFBF'
+  Hired: '#D3F4BE'
 };

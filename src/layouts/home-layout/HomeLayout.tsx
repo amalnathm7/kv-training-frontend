@@ -27,8 +27,7 @@ type HomeLayoutPropsType = {
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { selectedTabIndex, setSelectedTabIndex, isMyReferralsSelected } =
-    useContext(SelectedContext);
+  const { setSelectedTabIndex, isMyReferralsSelected } = useContext(SelectedContext);
 
   useEffect(() => {
     if (!localStorage.getItem('token')) navigate(RouteConstants.login, { replace: true });
@@ -41,7 +40,10 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (selectedTabIndex === 3)
+    if (
+      location.pathname === RouteConstants.referral ||
+      location.pathname === RouteConstants.myReferral
+    )
       if (isMyReferralsSelected) navigate(RouteConstants.myReferral);
       else navigate(RouteConstants.referral);
   }, [isMyReferralsSelected]);
