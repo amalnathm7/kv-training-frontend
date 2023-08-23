@@ -14,4 +14,5 @@ export class RouteConstants {
   static applicationApi = '/applications';
   static referralApi = '/referrals';
   static fileUploadApi = '/files/upload';
+  static fileCheckApi = '/files/check';
 }
