@@ -40,6 +40,10 @@ const LoginPage: React.FC = () => {
     if (event.code === 'Enter') validateAndLogin();
   };
 
+  const onCareersClicked = () => {
+    navigate(`${RouteConstants.opening}`);
+  };
+
   useEffect(() => {
     if (isSuccess && data) {
       localStorage.setItem('token', data.data.token);
