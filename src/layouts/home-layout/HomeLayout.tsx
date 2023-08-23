@@ -30,7 +30,12 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const { setSelectedTabIndex, isMyReferralsSelected } = useContext(SelectedContext);
 
   useEffect(() => {
-    if (!localStorage.getItem('token')) navigate(RouteConstants.login, { replace: true });
+    if (
+      !localStorage.getItem('token') &&
+      !window.location.pathname.includes(`${RouteConstants.opening}`)
+    )
+      // navigate(RouteConstants.login, { replace: true });
+      navigate(-1);
 
     if (location.pathname.includes(RouteConstants.employee)) setSelectedTabIndex(0);
     else if (location.pathname.includes(RouteConstants.opening)) setSelectedTabIndex(1);
