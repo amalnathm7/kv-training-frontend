@@ -57,6 +57,17 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
           <thead>
             <tr className='list-header'>{labels}</tr>
           </thead>
+          {applications?.length === 0 && (
+            <tbody>
+              <tr>
+                <td>
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    No Applications
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          )}
           <tbody className='list-items'>{applications}</tbody>
         </table>
       </div>

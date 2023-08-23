@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralListing from '../../components/listing/ReferralListing';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
@@ -20,6 +20,8 @@ const MyReferralsListingPage: React.FC = () => {
     if (location.pathname.includes('opening')) setIsRoutedFromOpening(true);
   }, []);
 
+  const { id } = useParams();
+
   useEffect(() => {
     setRoutes(isRoutedFromOpening ? null : ['My Referrals', 'All Referrals']);
   }, [isRoutedFromOpening]);
@@ -30,25 +32,20 @@ const MyReferralsListingPage: React.FC = () => {
   }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
-    if (isSuperAuthorized) {
-      labelArray.unshift('Referral ID');
-      setLabels(labelArray);
-    }
+    if (isSuperAuthorized) setLabels(labelArray);
   }, [isSuperAuthorized]);
 
   const labelArray = [
+    'Referral Code',
     'Candidate Name',
     'Email',
+    'Phone',
     'Experience',
     'Status',
     'Opening',
     'Role',
     'Actions'
   ];
-
-  useEffect(() => {
-    setLabels(labelArray);
-  }, []);
 
   const onCreateClicked = () => {
     navigate(`${RouteConstants.referral}/:id/refer`);
@@ -69,7 +66,7 @@ const MyReferralsListingPage: React.FC = () => {
       subHeaderPrimaryActionIcon={''}
       subHeaderPrimaryActionLabel={''}
     >
-      <ReferralListing labels={labels} selection='my' searchLabel='' />
+      <ReferralListing openingId={id} labels={labels} selection='my' searchLabel='' />
     </HomeLayout>
   );
 };

@@ -27,8 +27,8 @@ const ReferralDetailsPage: React.FC = () => {
 
     items = [
       {
-        label: 'Referral ID',
-        value: referral.id
+        label: 'Referral Code',
+        value: referral.candidateCode
       },
       {
         label: 'Name',

@@ -15,5 +15,5 @@ export type ApplicationType = {
   roleId: string;
   opening?: OpeningType;
   openingId: string;
-  applicationCode: string;
+  candidateCode: string;
 };

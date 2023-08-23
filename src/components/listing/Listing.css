@@ -5,13 +5,13 @@
 }
 
 .list-header {
+    z-index: 2;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
     background-color: var(--accent-color);
     position: fixed;
-    z-index: 1;
     top: 210px;
     left: 320px;
     right: 20px;
@@ -39,7 +39,6 @@
 }
 
 .list-items {
-    z-index: 0;
     display: flex;
     flex-direction: column;
     position: absolute;

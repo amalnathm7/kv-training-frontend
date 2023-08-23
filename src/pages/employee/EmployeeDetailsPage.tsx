@@ -27,11 +27,11 @@ const EmployeeDetailsPage: React.FC = () => {
 
     items = [
       {
-        label: 'Employee ID',
-        value: employee.id
+        label: 'Employee Code',
+        value: employee.employeeCode
       },
       {
-        label: 'Employee Name',
+        label: 'Name',
         value: employee.name
       },
       {

@@ -16,4 +16,5 @@ export type EmployeeType = {
   address: AddressType;
   department?: DepartmentType;
   departmentId?: string;
+  employeeCode: string;
 };

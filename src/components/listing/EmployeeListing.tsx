@@ -25,17 +25,31 @@ const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
           <EmployeeListItem key={employee.id} employee={employee}></EmployeeListItem>
         ))
       );
-  }, [isEmployeesFetchSuccess]);
+  }, [isEmployeesFetchSuccess, employeesData]);
 
   return (
-    <div className='listing'>
-      <table>
-        <thead>
-          <tr className='list-header'>{labels}</tr>
-        </thead>
-        <tbody className='list-items'>{employees}</tbody>
-      </table>
-    </div>
+    <>
+      <div className='listing-spacing'></div>
+      <div className='listing'>
+        <table>
+          <thead>
+            <tr className='list-header'>{labels}</tr>
+          </thead>
+          {employees?.length === 0 && (
+            <tbody>
+              <tr>
+                <td>
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    No Employees
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          )}
+          <tbody className='list-items'>{employees}</tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

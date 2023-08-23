@@ -70,14 +70,18 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   }, [props.referral.status]);
 
   useEffect(() => {
-    setShowDeletePopup(false);
+    if (isDeleteSuccess) {
+      setShowDeletePopup(false);
+      toast.success('Successfully deleted referral');
+    }
   }, [isDeleteSuccess]);
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.referral.id}</td>}
+      {isSuperAuthorized && <td>{props.referral.candidateCode}</td>}
       <td>{props.referral.name}</td>
       <td>{props.referral.email}</td>
+      <td>{props.referral.phone}</td>
       <td>
         {props.referral.experience == 1
           ? props.referral.experience + ' year'
@@ -86,7 +90,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.referral.opening.title}</td>
+      <td>{props.referral.opening?.title}</td>
       <td>{props.referral.role.role}</td>
       {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
       {(props.selection === 'my' || isSuperAuthorized) && (

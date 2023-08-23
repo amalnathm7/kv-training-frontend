@@ -251,7 +251,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         status: status,
         resume: '',
         roleId,
-        referralCode: props.referral?.referralCode,
+        candidateCode: props.referral?.candidateCode,
         address: {
           line1: line1.trim(),
           line2: line2.trim(),
@@ -434,7 +434,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
-          value={props.referral?.referralCode}
+          value={props.referral?.candidateCode}
           onChange={() => {}}
           label={'Referral Code'}
           placeholder={'Referral Code'}

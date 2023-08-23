@@ -20,21 +20,35 @@ const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
 
   useEffect(() => {
     if (isSuccess) setOpenings(openingData.data);
-  }, [isSuccess]);
+  }, [isSuccess, openingData]);
 
   return (
-    <div className='listing'>
-      <table>
-        <thead>
-          <tr className='list-header'>{labels}</tr>
-        </thead>
-        <tbody className='list-items'>
-          {openings.map((opening) => (
-            <OpeningListItem key={opening.id} opening={opening}></OpeningListItem>
-          ))}
-        </tbody>
-      </table>
-    </div>
+    <>
+      <div className='listing-spacing'></div>
+      <div className='listing'>
+        <table>
+          <thead>
+            <tr className='list-header'>{labels}</tr>
+          </thead>
+          {openings?.length === 0 && (
+            <tbody>
+              <tr>
+                <td>
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    No Openings
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          )}
+          <tbody className='list-items'>
+            {openings.map((opening) => (
+              <OpeningListItem key={opening.id} opening={opening}></OpeningListItem>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

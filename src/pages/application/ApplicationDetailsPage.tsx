@@ -27,8 +27,8 @@ const ApplicationDetailsPage: React.FC = () => {
 
     items = [
       {
-        label: 'Application ID',
-        value: application.id
+        label: 'Application Code',
+        value: application.candidateCode
       },
       {
         label: 'Name',

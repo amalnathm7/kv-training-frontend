@@ -11,7 +11,7 @@ import { RouteConstants } from './constants/routeConstants';
 import AllReferralsListingPage from './pages/referral/AllReferralsListingPage';
 import OpeningDetailsPage from './pages/opening/OpeningDetailsPage';
 import ReferralCreatePage from './pages/referral/ReferralCreatePage';
-import OpeningListingPage from './pages/opening/OpeningListPage';
+import OpeningListingPage from './pages/opening/OpeningListingPage';
 import OpeningCreatePage from './pages/opening/OpeningCreatePage';
 import OpeningEditPage from './pages/opening/OpeningEditPage';
 import ReferralEditPage from './pages/referral/ReferralEditPage';

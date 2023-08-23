@@ -8,6 +8,7 @@ import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { OpeningType } from '../../types/OpeningType';
 import { useDeleteOpeningMutation } from '../../services/openingApi';
+import { toast } from 'react-toastify';
 
 type OpeningListItemPropsType = {
   opening: OpeningType;
@@ -48,12 +49,14 @@ const OpeningListItem: React.FC<OpeningListItemPropsType> = (props) => {
   const [deleteOpening, { isSuccess: isDeleteSuccess }] = useDeleteOpeningMutation();
 
   useEffect(() => {
-    setShowDeletePopup(false);
+    if (isDeleteSuccess) {
+      setShowDeletePopup(false);
+      toast.success('Successfully deleted opening');
+    }
   }, [isDeleteSuccess]);
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.opening.id}</td>}
       <td>{props.opening.title}</td>
       <td>{props.opening.description}</td>
       <td>{props.opening.skills}</td>
