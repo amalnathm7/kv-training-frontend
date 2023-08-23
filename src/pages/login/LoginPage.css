@@ -67,3 +67,10 @@
         width: 100%;
     }
 }
+
+.guest-login {
+    margin-top: 5px;
+    margin-left: auto;
+    font-weight: 100;
+    cursor: pointer;
+}
