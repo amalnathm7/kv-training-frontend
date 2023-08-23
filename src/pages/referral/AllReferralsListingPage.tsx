@@ -7,7 +7,7 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import { SelectedContext } from '../../app';
 
 const AllReferralsListingPage: React.FC = () => {
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
@@ -28,15 +28,14 @@ const AllReferralsListingPage: React.FC = () => {
 
   useEffect(() => {
     if (
-      isSuccess &&
+      isMyProfileFetchSuccess &&
       myProfile.data.role &&
-      myProfile.data.role.permissionLevel !== PermissionLevel.BASIC
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
     )
       setIsAuthorized(true);
-  }, [isSuccess]);
+  }, [isMyProfileFetchSuccess]);
 
   const labelArray = [
-    'Referral ID',
     'Candidate Name',
     'Email',
     'Experience',
@@ -49,6 +48,7 @@ const AllReferralsListingPage: React.FC = () => {
   useEffect(() => {
     if (isAuthorized) {
       labelArray.push('Actions');
+      labelArray.unshift('Referral ID');
       setLabels(labelArray);
     }
   }, [isAuthorized]);
@@ -84,8 +84,8 @@ const AllReferralsListingPage: React.FC = () => {
       subHeaderPrimaryActionFilterOptions={roles}
       subHeaderSecondaryAction={onChangeRole}
       subHeaderSecondaryActionPlaceholder='Filter by role'
-      subHeaderPrimaryActionLabel={isAuthorized ? 'Search' : ''}
-      subHeaderPrimaryActionIcon={isAuthorized ? 'search.png' : ''}
+      subHeaderPrimaryActionLabel={'Search'}
+      subHeaderPrimaryActionIcon={'search.png'}
     >
       <ReferralListing
         emailValue={emailValue}

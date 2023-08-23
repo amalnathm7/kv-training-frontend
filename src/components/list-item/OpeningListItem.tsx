@@ -53,7 +53,7 @@ const OpeningListItem: React.FC<OpeningListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
-      <td>{props.opening.id}</td>
+      {isSuperAuthorized && <td>{props.opening.id}</td>}
       <td>{props.opening.title}</td>
       <td>{props.opening.description}</td>
       <td>{props.opening.skills}</td>

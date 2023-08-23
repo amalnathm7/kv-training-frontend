@@ -16,12 +16,14 @@ import { validateEmail, validatePhoneNo, validateResume } from '../../utils/vali
 import DropDown from '../input-field/drop-down/DropDown';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
   opening: OpeningType;
   referral: ReferralType;
   isEdit: boolean;
 };
+
 const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -38,6 +40,24 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [referredById, setReferredById] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
+
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+
+  useEffect(() => {
+    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
+
+  useEffect(() => {
+    if (
+      isMyProfileFetchSuccess &&
+      myProfile.data.role &&
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
+    )
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
+
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
@@ -49,6 +69,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     )
       setIsSuperAuthorized(true);
   }, [isSuccess]);
+  
   useEffect(() => {
     if (props.referral) {
       setName(props.referral.name);
@@ -65,13 +86,16 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       setPincode(props.referral.address.pincode);
     }
   }, [props.referral]);
+  
   useEffect(() => {
     setReferredById(props.referredBy?.id.toString());
   }, [props.referredBy]);
+  
   useEffect(() => {
     setRoleId(props.opening?.role?.id.toString());
     setOpeningId(props.opening?.id.toString());
   }, [props.opening]);
+  
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
@@ -84,22 +108,27 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [stateError, setStateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [pincodeError, setPincodeError] = useState(false);
+  
   const onChangeName = (event) => {
     setName(event.target.value);
     setNameError(false);
   };
+  
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
     setEmailError(false);
   };
+  
   const onChangePhone = (event) => {
     setPhone(event.target.value);
     setPhoneError(false);
   };
+  
   const onChangeExperience = (event) => {
     setExperience(event.target.value);
     setExperienceError(false);
   };
+  
   const onChangeResume = (event) => {
     if (event.target.files[0])
       if (validateResume(event.target.files[0])) {
@@ -109,34 +138,42 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         setResumeError(true);
       }
   };
+  
   const onChangeLine1 = (event) => {
     setLine1(event.target.value);
     setLine1Error(false);
   };
+  
   const onChangeLine2 = (event) => {
     setLine2(event.target.value);
     setLine2Error(false);
   };
+  
   const onChangeCity = (event) => {
     setCity(event.target.value);
     setCityError(false);
   };
+  
   const onChangeState = (event) => {
     setState(event.target.value);
     setStateError(false);
   };
+
   const onChangeStatus = (event) => {
     setStatus(event.target.value);
     setStateError(false);
   };
+  
   const onChangeCountry = (event) => {
     setCountry(event.target.value);
     setCountryError(false);
   };
+  
   const onChangePincode = (event) => {
     setPincode(event.target.value);
     setPincodeError(false);
   };
+  
   const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
   const navigate = useNavigate();
 
@@ -219,6 +256,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         status: status,
         resume: fileData.data.file,
         roleId,
+        referralId: props.referral?.referralId,
         address: {
           line1: line1.trim(),
           line2: line2.trim(),
@@ -394,6 +432,18 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
+          value={props.referral?.referralId}
+          onChange={() => {}}
+          label={'Referral Code'}
+          placeholder={'Referral Code'}
+          type={'text'}
+          showError={false}
+        />
+      )}
+
+      {props.isEdit && isSuperAuthorized ? (
+        <FormField
+          disabled={true}
           value={props.referral?.id}
           onChange={() => {}}
           label={'Referral ID'}
@@ -401,7 +451,10 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
           type={'text'}
           showError={false}
         />
+      ) : (
+        ''
       )}
+
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />

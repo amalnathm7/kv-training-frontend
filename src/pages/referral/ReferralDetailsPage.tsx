@@ -89,10 +89,20 @@ const ReferralDetailsPage: React.FC = () => {
 
   return (
     <HomeLayout
-      subHeaderPrimaryAction={isSuperAuthorized ? onEditClicked : null}
+      subHeaderPrimaryAction={
+        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id
+          ? onEditClicked
+          : null
+      }
       subHeaderLabel='Referral Details'
-      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
-      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}
+      subHeaderPrimaryActionLabel={
+        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id ? 'Edit' : ''
+      }
+      subHeaderPrimaryActionIcon={
+        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id
+          ? 'edit.svg'
+          : ''
+      }
     >
       <Card items={items}></Card>
     </HomeLayout>

@@ -75,7 +75,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
-      <td>{props.referral.id}</td>
+      {isSuperAuthorized && <td>{props.referral.id}</td>}
       <td>{props.referral.name}</td>
       <td>{props.referral.email}</td>
       <td>
