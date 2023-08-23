@@ -11,6 +11,7 @@ import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
 import { ApplicationType } from '../../types/ApplicationType';
+import viewFile from '../../utils/viewFile';
 
 type ApplicationListItemPropsType = {
   application: ApplicationType;
@@ -69,6 +70,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
+      {isSuperAuthorized && <td>{props.application.candidateCode}</td>}
       <td>{props.application.name}</td>
       <td>{props.application.email}</td>
       <td>{props.application.phone}</td>
@@ -82,6 +84,14 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       </td>
       <td>{props.application.opening?.title}</td>
       <td>{props.application.role.role}</td>
+      <td
+        onClick={(event) => {
+          event.stopPropagation();
+          viewFile(props.application.resume);
+        }}
+      >
+        <u>View Resume</u>
+      </td>
       {isSuperAuthorized && (
         <td>
           <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>

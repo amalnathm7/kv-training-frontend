@@ -44,6 +44,7 @@ const MyReferralsListingPage: React.FC = () => {
     'Status',
     'Opening',
     'Role',
+    'Resume',
     'Actions'
   ];
 

@@ -11,6 +11,7 @@ import { useDeleteReferralMutation } from '../../services/referralApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
+import viewFile from '../../utils/viewFile';
 
 type ReferralListItemPropsType = {
   referral: ReferralType;
@@ -92,6 +93,14 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       </td>
       <td>{props.referral.opening?.title}</td>
       <td>{props.referral.role.role}</td>
+      <td
+        onClick={(event) => {
+          event.stopPropagation();
+          viewFile(props.referral.resume);
+        }}
+      >
+        <u>View Resume</u>
+      </td>
       {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
       {(props.selection === 'my' || isSuperAuthorized) && (
         <td>

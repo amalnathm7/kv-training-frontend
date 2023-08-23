@@ -46,7 +46,17 @@ const ApplicationListingPage: React.FC = () => {
       setIsAuthorized(true);
   }, [isSuccess]);
 
-  const labelArray = ['Name', 'Email', 'Phone', 'Experience', 'Status', 'Opening', 'Role'];
+  const labelArray = [
+    'Application Code',
+    'Name',
+    'Email',
+    'Phone',
+    'Experience',
+    'Status',
+    'Opening',
+    'Role',
+    'Resume'
+  ];
 
   useEffect(() => {
     if (isAuthorized) {
