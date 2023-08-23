@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
+import { CardItemPropsType } from '../../components/card-item/CardItem';
 
 const ApplicationDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
@@ -20,7 +21,7 @@ const ApplicationDetailsPage: React.FC = () => {
 
   const { data: applicationData, isSuccess } = useGetApplicationByIdQuery(id);
 
-  let items = [];
+  let items: CardItemPropsType[] = [];
 
   if (isSuccess) {
     const application = applicationData.data;
@@ -75,6 +76,11 @@ const ApplicationDetailsPage: React.FC = () => {
           application.address.country +
           ', ' +
           application.address.pincode
+      },
+      {
+        label: 'Resume',
+        value: 'View Resume',
+        filePath: application.resume
       }
     ];
   }
