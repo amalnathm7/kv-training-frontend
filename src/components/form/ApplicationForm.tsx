@@ -4,10 +4,12 @@ import FormField from '../input-field/form-field/FormField';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
 import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
-import { ReferralType } from '../../types/ReferralType';
-import { EmployeeType } from '../../types/EmployeeType';
+import { ApplicationType } from '../../types/ApplicationType';
 import { OpeningType } from '../../types/OpeningType';
-import { useCreateReferralMutation, useUpdateReferralMutation } from '../../services/referralApi';
+import {
+  useCreateApplicationMutation,
+  useUpdateApplicationMutation
+} from '../../services/applicationApi';
 import FileUpload from '../input-field/file-upload/FileUpload';
 import { useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
@@ -17,14 +19,13 @@ import DropDown from '../input-field/drop-down/DropDown';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 
-export type ReferralFormPropsType = {
-  referredBy: EmployeeType;
+export type ApplicationFormPropsType = {
   opening: OpeningType;
-  referral: ReferralType;
+  application: ApplicationType;
   isEdit: boolean;
 };
 
-const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
+const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -37,7 +38,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
   const [pincode, setPincode] = useState('');
-  const [referredById, setReferredById] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
 
@@ -59,25 +59,21 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
-    if (props.referral) {
-      setName(props.referral.name);
-      setEmail(props.referral.email);
-      setPhone(props.referral.phone);
-      setExperience(props.referral.experience);
-      setStatus(props.referral.status);
-      setResume(props.referral.resume);
-      setLine1(props.referral.address.line1);
-      setLine2(props.referral.address.line2);
-      setCity(props.referral.address.city);
-      setState(props.referral.address.state);
-      setCountry(props.referral.address.country);
-      setPincode(props.referral.address.pincode);
+    if (props.application) {
+      setName(props.application.name);
+      setEmail(props.application.email);
+      setPhone(props.application.phone);
+      setExperience(props.application.experience);
+      setStatus(props.application.status);
+      setResume(props.application.resume);
+      setLine1(props.application.address.line1);
+      setLine2(props.application.address.line2);
+      setCity(props.application.address.city);
+      setState(props.application.address.state);
+      setCountry(props.application.address.country);
+      setPincode(props.application.address.pincode);
     }
-  }, [props.referral]);
-
-  useEffect(() => {
-    setReferredById(props.referredBy?.id.toString());
-  }, [props.referredBy]);
+  }, [props.application]);
 
   useEffect(() => {
     setRoleId(props.opening?.role?.id.toString());
@@ -162,7 +158,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     setPincodeError(false);
   };
 
-  const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
+  const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Application';
   const navigate = useNavigate();
 
   const [
@@ -170,7 +166,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     { data: fileData, isSuccess: isFileUploadSuccess, isError: isFileUploadError }
   ] = useUploadFileMutation();
 
-  const saveReferral = () => {
+  const saveApplication = () => {
     let isValidated = true;
 
     if (name.trim().length === 0) {
@@ -233,18 +229,17 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
   useEffect(() => {
     if (isFileUploadSuccess) {
-      const referral = {
-        id: props.referral?.id,
+      const application = {
+        id: props.application?.id,
         name: name.trim(),
         email: email.trim(),
         phone: phone.trim(),
         experience: Number(experience),
-        referredById,
         openingId,
         status: status,
         resume: fileData.data.file,
         roleId,
-        referralCode: props.referral?.referralCode,
+        applicationCode: props.application?.applicationCode,
         address: {
           line1: line1.trim(),
           line2: line2.trim(),
@@ -256,58 +251,58 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       };
 
       props.isEdit
-        ? updateReferral({ id: props.referral.id, referral: referral })
-        : createReferral(referral);
+        ? updateApplication({ id: props.application.id, application: application })
+        : createApplication(application);
     } else if (isFileUploadError) {
       notifyError('Resume upload error');
     }
   }, [isFileUploadSuccess, isFileUploadError]);
 
   const [
-    createReferral,
+    createApplication,
     {
-      isSuccess: isCreateReferralSuccess,
-      isError: isCreateReferralError,
-      error: createReferralError
+      isSuccess: isCreateApplicationSuccess,
+      isError: isCreateApplicationError,
+      error: createApplicationError
     }
-  ] = useCreateReferralMutation();
+  ] = useCreateApplicationMutation();
   const [
-    updateReferral,
+    updateApplication,
     {
-      isSuccess: isUpdateReferralSuccess,
-      isError: isUpdateReferralError,
-      error: updateReferralError
+      isSuccess: isUpdateApplicationSuccess,
+      isError: isUpdateApplicationError,
+      error: updateApplicationError
     }
-  ] = useUpdateReferralMutation();
+  ] = useUpdateApplicationMutation();
 
-  const notifySuccess = (action: string) => toast.success(`Successfully ${action} referral`);
+  const notifySuccess = (action: string) => toast.success(`Successfully ${action} application`);
   const notifyError = (error: string) => toast.error(error);
 
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateReferralSuccess) {
+      if (isUpdateApplicationSuccess) {
         navigate(-1);
         setTimeout(() => {
           notifySuccess('updated');
         }, 100);
-      } else if (isUpdateReferralError) {
-        notifyError(updateReferralError['data'].errors.error);
+      } else if (isUpdateApplicationError) {
+        notifyError(updateApplicationError['data'].errors.error);
       }
     } else {
-      if (isCreateReferralSuccess) {
+      if (isCreateApplicationSuccess) {
         navigate(-1);
         setTimeout(() => {
           notifySuccess('submitted');
         }, 100);
-      } else if (isCreateReferralError) {
-        notifyError(createReferralError['data'].errors.error);
+      } else if (isCreateApplicationError) {
+        notifyError(createApplicationError['data'].errors.error);
       }
     }
   }, [
-    isCreateReferralSuccess,
-    isUpdateReferralSuccess,
-    isCreateReferralError,
-    isUpdateReferralError
+    isCreateApplicationSuccess,
+    isUpdateApplicationSuccess,
+    isCreateApplicationError,
+    isUpdateApplicationError
   ]);
 
   return (
@@ -420,10 +415,10 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
-          value={props.referral?.referralCode}
+          value={props.application?.applicationCode}
           onChange={() => {}}
-          label={'Referral Code'}
-          placeholder={'Referral Code'}
+          label={'Application Code'}
+          placeholder={'Application Code'}
           type={'text'}
           showError={false}
         />
@@ -432,10 +427,10 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       {props.isEdit && isSuperAuthorized ? (
         <FormField
           disabled={true}
-          value={props.referral?.id}
+          value={props.application?.id}
           onChange={() => {}}
-          label={'Referral ID'}
-          placeholder={'Referral ID'}
+          label={'Application ID'}
+          placeholder={'Application ID'}
           type={'text'}
           showError={false}
         />
@@ -445,7 +440,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
       <div className='form-buttons'>
         <div className='form-primary-button'>
-          <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />
+          <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveApplication} />
         </div>
         <SecondaryButton
           type='button'
@@ -459,4 +454,4 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   );
 };
 
-export default ReferralForm;
+export default ApplicationForm;

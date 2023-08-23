@@ -38,14 +38,16 @@ describe('Card Props Test', () => {
           isStatus: false
         }
       ],
-      secondaryButtonProps: {
-        style: {
-          height: '30px'
-        },
-        label: 'secondary-button',
-        onClick: () => {},
-        type: 'button'
-      }
+      secondaryButtonsProps: [
+        {
+          style: {
+            height: '30px'
+          },
+          label: 'secondary-button',
+          onClick: () => {},
+          type: 'button'
+        }
+      ]
     };
 
     const element = render(<Card {...props} />);

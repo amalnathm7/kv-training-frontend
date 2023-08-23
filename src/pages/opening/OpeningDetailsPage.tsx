@@ -7,7 +7,7 @@ import { useGetOpeningByIdQuery } from '../../services/openingApi';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Card from '../../components/card/Card';
 import { RouteConstants } from '../../constants/routeConstants';
-import { toast } from 'react-toastify';
+import { OpeningType } from '../../types/OpeningType';
 
 const OpeningDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
@@ -32,9 +32,10 @@ const OpeningDetailsPage: React.FC = () => {
   const { data: openingData, isSuccess } = useGetOpeningByIdQuery(id);
 
   let items = [];
+  let opening: OpeningType;
 
   if (isSuccess) {
-    const opening = openingData.data;
+    opening = openingData.data;
 
     items = [
       {
@@ -89,7 +90,11 @@ const OpeningDetailsPage: React.FC = () => {
   };
 
   const onViewReferralsClicked = () => {
-    toast.error('NO');
+    navigate(`${RouteConstants.referral}/opening/${opening.id}`);
+  };
+
+  const onViewApplicationsClicked = () => {
+    navigate(`${RouteConstants.application}/opening/${opening.id}`);
   };
 
   return (
@@ -104,12 +109,20 @@ const OpeningDetailsPage: React.FC = () => {
     >
       <Card
         items={items}
-        secondaryButtonProps={{
-          style: { marginTop: '40px', marginBottom: '20px' },
-          type: 'button',
-          label: 'View Referrals',
-          onClick: onViewReferralsClicked
-        }}
+        secondaryButtonsProps={[
+          {
+            style: { marginTop: '40px', marginBottom: '20px' },
+            type: 'button',
+            label: 'View Applications',
+            onClick: onViewApplicationsClicked
+          },
+          {
+            style: { marginTop: '40px', marginBottom: '20px', marginLeft: '20px' },
+            type: 'button',
+            label: 'View Referrals',
+            onClick: onViewReferralsClicked
+          }
+        ]}
       ></Card>
     </HomeLayout>
   );

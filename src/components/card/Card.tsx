@@ -15,7 +15,7 @@ type CardItemType = {
 
 export type CardPropsType = {
   items: CardItemType[];
-  secondaryButtonProps?: SecondaryButtonPropsType;
+  secondaryButtonsProps?: SecondaryButtonPropsType[];
 };
 
 const Card: React.FC<CardPropsType> = (props) => {
@@ -47,20 +47,21 @@ const Card: React.FC<CardPropsType> = (props) => {
     )
   );
 
+  const secondaryButtons = props.secondaryButtonsProps?.map((secondaryButtonProps) => (
+    <SecondaryButton
+      key={secondaryButtonProps.label}
+      style={secondaryButtonProps.style}
+      type={secondaryButtonProps.type}
+      label={secondaryButtonProps.label}
+      onClick={secondaryButtonProps.onClick}
+    />
+  ));
+
   return (
     <div>
       <div className='details-card'>
         {items}
-        <div style={{ width: '100%' }}>
-          {props.secondaryButtonProps && (
-            <SecondaryButton
-              style={props.secondaryButtonProps.style}
-              type={props.secondaryButtonProps.type}
-              label={props.secondaryButtonProps.label}
-              onClick={props.secondaryButtonProps.onClick}
-            />
-          )}
-        </div>
+        <div style={{ width: '100%' }}>{secondaryButtons}</div>
       </div>
     </div>
   );
