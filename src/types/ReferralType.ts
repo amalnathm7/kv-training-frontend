@@ -18,5 +18,5 @@ export type ReferralType = {
   roleId: string;
   opening?: OpeningType;
   openingId: string;
-  referralId: string;
+  referralCode: string;
 };

@@ -1,9 +1,11 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetRoleListQuery } from '../../services/roleApi';
 import ApplicationListing from '../../components/listing/ApplicationListing';
+import { useParams } from 'react-router-dom';
+import { SelectedContext } from '../../app';
 
 const ApplicationListingPage: React.FC = () => {
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
@@ -14,6 +16,16 @@ const ApplicationListingPage: React.FC = () => {
   const [roles, setRoles] = useState([]);
 
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
+
+  const { selectedTabIndex } = useContext(SelectedContext);
+
+  useEffect(() => {
+    if (location.pathname.includes('opening')) setIsRoutedFromOpening(true);
+    else setIsRoutedFromOpening(false);
+  }, [selectedTabIndex]);
+
+  const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
+  const { id } = useParams();
 
   useEffect(() => {
     if (isRoleFetchSuccess) {
@@ -66,7 +78,7 @@ const ApplicationListingPage: React.FC = () => {
   return (
     <HomeLayout
       subHeaderPrimaryAction={onChangeSearch}
-      subHeaderLabel='Applications List'
+      subHeaderLabel={isRoutedFromOpening ? 'Applications' : 'Applications List'}
       subHeaderPrimaryActionValue={emailValue}
       subHeaderPrimaryActionPlaceholder={'Search by email'}
       subHeaderPrimaryActionFilterOptions={roles}
@@ -80,6 +92,7 @@ const ApplicationListingPage: React.FC = () => {
         roleValue={roleValue}
         labels={labels}
         searchLabel='Search'
+        openingId={id}
       />
     </HomeLayout>
   );
