@@ -9,7 +9,7 @@ import { EmployeeType } from '../../types/EmployeeType';
 import { OpeningType } from '../../types/OpeningType';
 import { useCreateReferralMutation, useUpdateReferralMutation } from '../../services/referralApi';
 import FileUpload from '../input-field/file-upload/FileUpload';
-import { useUploadFileMutation } from '../../services/fileApi';
+import { useLazyCheckFileQuery, useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
@@ -170,6 +170,11 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     { data: fileData, isSuccess: isFileUploadSuccess, isError: isFileUploadError }
   ] = useUploadFileMutation();
 
+  const [
+    checkFile,
+    { data: fileCheckData, isSuccess: isFileCheckSuccess, isError: isFileCheckError }
+  ] = useLazyCheckFileQuery();
+
   const saveReferral = () => {
     let isValidated = true;
 
@@ -221,19 +226,21 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       isValidated = false;
       setPincodeError(true);
     }
-    if (isValidated) {
-      const formData = new FormData();
+    if (isValidated)
+      if (typeof resume === 'string' && resume.length > 0 && props.isEdit) {
+        checkFile({ file: resume });
+      } else {
+        const formData = new FormData();
 
-      formData.append('file', resume);
-      uploadFile(formData);
-    } else {
-      notifyError('Fill all required fields');
-    }
+        formData.append('file', resume);
+        uploadFile(formData);
+      }
+    else notifyError('Fill all required fields');
   };
 
   useEffect(() => {
-    if (isFileUploadSuccess) {
-      const referral = {
+    if (isFileUploadSuccess || (isFileCheckSuccess && fileCheckData.data.fileExists)) {
+      const referral: ReferralType = {
         id: props.referral?.id,
         name: name.trim(),
         email: email.trim(),
@@ -242,7 +249,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         referredById,
         openingId,
         status: status,
-        resume: fileData.data.file,
+        resume: '',
         roleId,
         referralId: props.referral?.referralId,
         address: {
@@ -255,13 +262,20 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         }
       };
 
+      if (isFileCheckSuccess && typeof resume === 'string') referral.resume = resume;
+      else referral.resume = fileData.data.file;
+
       props.isEdit
         ? updateReferral({ id: props.referral.id, referral: referral })
         : createReferral(referral);
     } else if (isFileUploadError) {
       notifyError('Resume upload error');
+    } else if (isFileCheckSuccess && !fileCheckData.data.fileExists) {
+      notifyError('Re-upload Resume');
+    } else if (isFileCheckError) {
+      notifyError('Re-upload Resume');
     }
-  }, [isFileUploadSuccess, isFileUploadError]);
+  }, [isFileUploadSuccess, isFileUploadError, isFileCheckSuccess, isFileCheckError]);
 
   const [
     createReferral,

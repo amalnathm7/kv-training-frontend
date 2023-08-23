@@ -10,8 +10,14 @@ export const fileApi = baseApi.injectEndpoints({
         method: 'POST',
         body
       })
+    }),
+    checkFile: builder.query<ResponseType<{ fileExists: boolean }>, { file: string }>({
+      query: (params) => ({
+        url: `${RouteConstants.fileCheckApi}?filePath=${params.file}`,
+        method: 'GET'
+      })
     })
   })
 });
 
-export const { useUploadFileMutation } = fileApi;
+export const { useUploadFileMutation, useLazyCheckFileQuery } = fileApi;
