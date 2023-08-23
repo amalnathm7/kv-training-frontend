@@ -1,5 +1,5 @@
 import ActionButton, { ActionButtonPropsType } from './ActionButton';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 describe('Primary Button Props Test', () => {
@@ -23,7 +23,7 @@ describe('Primary Button Props Test', () => {
     render(<ActionButton {...props} />);
     const element = screen.getByTestId('action-button-test');
 
-    expect(element).toHaveAttribute('src', 'assets/icons/icon.png');
+    expect(element).toHaveAttribute('src', '/assets/icons/icon.png');
   });
 
   test('If onClick called', () => {

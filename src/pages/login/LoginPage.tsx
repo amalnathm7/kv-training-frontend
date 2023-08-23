@@ -55,12 +55,12 @@ const LoginPage: React.FC = () => {
     <div className='login-container'>
       <div className='split left'>
         <div className='circle'>
-          <img className='placeholder' src='assets/img/banner.png' alt='Login Placeholder'></img>
+          <img className='placeholder' src='/assets/img/banner.png' alt='Login Placeholder'></img>
         </div>
       </div>
       <div className='split right'>
         <div className='login-form-container'>
-          <img className='login-logo' src='assets/img/kv-logo.png' alt='KeyValue Logo'></img>
+          <img className='login-logo' src='/assets/img/kv-logo.png' alt='KeyValue Logo'></img>
           <LoginField
             label='Email'
             onChange={changeEmail}
