@@ -58,18 +58,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       setIsSuperAuthorized(true);
   }, [isMyProfileFetchSuccess]);
 
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
-      setIsSuperAuthorized(true);
-  }, [isSuccess]);
-  
   useEffect(() => {
     if (props.referral) {
       setName(props.referral.name);
@@ -86,16 +74,16 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       setPincode(props.referral.address.pincode);
     }
   }, [props.referral]);
-  
+
   useEffect(() => {
     setReferredById(props.referredBy?.id.toString());
   }, [props.referredBy]);
-  
+
   useEffect(() => {
     setRoleId(props.opening?.role?.id.toString());
     setOpeningId(props.opening?.id.toString());
   }, [props.opening]);
-  
+
   const [nameError, setNameError] = useState(false);
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
@@ -108,27 +96,27 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [stateError, setStateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [pincodeError, setPincodeError] = useState(false);
-  
+
   const onChangeName = (event) => {
     setName(event.target.value);
     setNameError(false);
   };
-  
+
   const onChangeEmail = (event) => {
     setEmail(event.target.value);
     setEmailError(false);
   };
-  
+
   const onChangePhone = (event) => {
     setPhone(event.target.value);
     setPhoneError(false);
   };
-  
+
   const onChangeExperience = (event) => {
     setExperience(event.target.value);
     setExperienceError(false);
   };
-  
+
   const onChangeResume = (event) => {
     if (event.target.files[0])
       if (validateResume(event.target.files[0])) {
@@ -138,22 +126,22 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         setResumeError(true);
       }
   };
-  
+
   const onChangeLine1 = (event) => {
     setLine1(event.target.value);
     setLine1Error(false);
   };
-  
+
   const onChangeLine2 = (event) => {
     setLine2(event.target.value);
     setLine2Error(false);
   };
-  
+
   const onChangeCity = (event) => {
     setCity(event.target.value);
     setCityError(false);
   };
-  
+
   const onChangeState = (event) => {
     setState(event.target.value);
     setStateError(false);
@@ -163,17 +151,17 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     setStatus(event.target.value);
     setStateError(false);
   };
-  
+
   const onChangeCountry = (event) => {
     setCountry(event.target.value);
     setCountryError(false);
   };
-  
+
   const onChangePincode = (event) => {
     setPincode(event.target.value);
     setPincodeError(false);
   };
-  
+
   const primaryButtonLabel = props.isEdit ? 'Save' : 'Submit Referral';
   const navigate = useNavigate();
 
