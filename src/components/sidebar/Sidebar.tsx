@@ -1,14 +1,27 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Sidebar.css';
 import SideBarButton from '../button/SideBarButton/SideBarButton';
 import { SelectedContext, SelectedContextType } from '../../app';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 
 const Sidebar: React.FC = () => {
+  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const { selectedTabIndex, setSelectedTabIndex } =
     useContext<SelectedContextType>(SelectedContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (
+      isMyProfileFetchSuccess &&
+      myProfile.data.role &&
+      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
+    )
+      setIsSuperAuthorized(true);
+  }, [isMyProfileFetchSuccess]);
 
   const onEmployeeListSelected = () => {
     setSelectedTabIndex(0);
@@ -20,7 +33,7 @@ const Sidebar: React.FC = () => {
     navigate(RouteConstants.opening);
   };
 
-  const onMyReferralsSelected = () => {
+  const onApplicationsSelected = () => {
     setSelectedTabIndex(2);
     navigate(RouteConstants.application);
   };
@@ -45,12 +58,14 @@ const Sidebar: React.FC = () => {
           imgIcon='/assets/icons/opening.png'
           headerText='Job Openings'
         />
-        <SideBarButton
-          isSelected={selectedTabIndex === 2}
-          onClick={onMyReferralsSelected}
-          imgIcon='/assets/icons/application.png'
-          headerText='Applications'
-        />
+        {isSuperAuthorized && (
+          <SideBarButton
+            isSelected={selectedTabIndex === 2}
+            onClick={onApplicationsSelected}
+            imgIcon='/assets/icons/application.png'
+            headerText='Applications'
+          />
+        )}
         <SideBarButton
           isSelected={selectedTabIndex === 3}
           onClick={onReferralsListSelected}

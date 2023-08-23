@@ -8,7 +8,7 @@ import { SelectedContext } from '../../app';
 
 const AllReferralsListingPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
@@ -32,7 +32,7 @@ const AllReferralsListingPage: React.FC = () => {
       myProfile.data.role &&
       myProfile.data.role.permissionLevel === PermissionLevel.SUPER
     )
-      setIsAuthorized(true);
+      setIsSuperAuthorized(true);
   }, [isMyProfileFetchSuccess]);
 
   const labelArray = [
@@ -46,12 +46,12 @@ const AllReferralsListingPage: React.FC = () => {
   ];
 
   useEffect(() => {
-    if (isAuthorized) {
+    if (isSuperAuthorized) {
       labelArray.push('Actions');
       labelArray.unshift('Referral ID');
       setLabels(labelArray);
     }
-  }, [isAuthorized]);
+  }, [isSuperAuthorized]);
 
   useEffect(() => {
     setLabels(labelArray);
