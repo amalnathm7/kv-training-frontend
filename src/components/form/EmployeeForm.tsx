@@ -404,10 +404,10 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
-          value={props.employee?.id}
+          value={props.employee?.employeeCode}
           onChange={() => {}}
-          label={'Employee ID'}
-          placeholder={'Employee ID'}
+          label={'Employee Code'}
+          placeholder={'Employee Code'}
           type={'text'}
           showError={false}
         />

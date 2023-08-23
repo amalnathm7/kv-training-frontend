@@ -172,7 +172,12 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
   const [
     checkFile,
-    { data: fileCheckData, isSuccess: isFileCheckSuccess, isError: isFileCheckError }
+    {
+      data: fileCheckData,
+      isSuccess: isFileCheckSuccess,
+      isError: isFileCheckError,
+      error: fileCheckError
+    }
   ] = useLazyCheckFileQuery();
 
   const saveReferral = () => {
@@ -275,7 +280,13 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     } else if (isFileCheckError) {
       notifyError('Re-upload Resume');
     }
-  }, [isFileUploadSuccess, isFileUploadError, isFileCheckSuccess, isFileCheckError]);
+  }, [
+    isFileUploadSuccess,
+    isFileUploadError,
+    isFileCheckSuccess,
+    isFileCheckError,
+    fileCheckError
+  ]);
 
   const [
     createReferral,
@@ -442,21 +453,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
           showError={false}
         />
       )}
-
-      {props.isEdit && isSuperAuthorized ? (
-        <FormField
-          disabled={true}
-          value={props.referral?.id}
-          onChange={() => {}}
-          label={'Referral ID'}
-          placeholder={'Referral ID'}
-          type={'text'}
-          showError={false}
-        />
-      ) : (
-        ''
-      )}
-
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />

@@ -252,17 +252,6 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
         onChange={onChangeRole}
         showError={roleError}
       />
-      {props.isEdit && (
-        <FormField
-          disabled={true}
-          value={props.opening?.id}
-          onChange={() => {}}
-          label={'Opening ID'}
-          placeholder={'Opening ID'}
-          type={'text'}
-          showError={false}
-        />
-      )}
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveOpening} />

@@ -16,9 +16,9 @@ type ApplicationsListingPropsType = {
 
 const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
   const [applications, setApplications] = useState([]);
-  const [getApplications, { data: lazyData, isSuccess: isLazySuccess }] =
+  const [getApplications, { data: lazyData, isLoading: isLazyLoading, isSuccess: isLazySuccess }] =
     useLazyGetApplicationsQuery();
-  const { data, isSuccess } = useGetApplicationsQuery({
+  const { data, isLoading, isSuccess } = useGetApplicationsQuery({
     email: props.emailValue,
     role: props.roleValue === 'All' ? '' : props.roleValue
   });
@@ -57,17 +57,22 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
           <thead>
             <tr className='list-header'>{labels}</tr>
           </thead>
-          {applications?.length === 0 && (
-            <tbody>
-              <tr>
-                <td>
+          <tbody>
+            <tr>
+              <td>
+                {(isLoading || isLazyLoading) && (
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    Loading...
+                  </label>
+                )}
+                {applications?.length === 0 && !isLoading && !isLazyLoading && (
                   <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
                     No Applications
                   </label>
-                </td>
-              </tr>
-            </tbody>
-          )}
+                )}
+              </td>
+            </tr>
+          </tbody>
           <tbody className='list-items'>{applications}</tbody>
         </table>
       </div>

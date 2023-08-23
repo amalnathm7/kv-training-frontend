@@ -423,21 +423,6 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
           showError={false}
         />
       )}
-
-      {props.isEdit && isSuperAuthorized ? (
-        <FormField
-          disabled={true}
-          value={props.application?.id}
-          onChange={() => {}}
-          label={'Application ID'}
-          placeholder={'Application ID'}
-          type={'text'}
-          showError={false}
-        />
-      ) : (
-        ''
-      )}
-
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveApplication} />

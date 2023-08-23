@@ -17,10 +17,14 @@ type ReferralsListingPropsType = {
 const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   const [referrals, setReferrals] = useState([]);
   const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
-  const [getMyReferrals, { data: myReferralsData, isSuccess: isMyReferralsSuccess }] =
-    useLazyGetMyReferralsQuery();
-  const [getAllReferrals, { data: allReferralsData, isSuccess: isAllReferralsSuccess }] =
-    useLazyGetAllReferralsQuery();
+  const [
+    getMyReferrals,
+    { data: myReferralsData, isSuccess: isMyReferralsSuccess, isLoading: isMyReferralsLoading }
+  ] = useLazyGetMyReferralsQuery();
+  const [
+    getAllReferrals,
+    { data: allReferralsData, isSuccess: isAllReferralsSuccess, isLoading: isAllReferralsLoading }
+  ] = useLazyGetAllReferralsQuery();
   const isMyReferrals = props.selection === 'my';
 
   useEffect(() => {
@@ -67,17 +71,22 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
           <thead>
             <tr className='list-header'>{labels}</tr>
           </thead>
-          {referrals?.length === 0 && (
-            <tbody>
-              <tr>
-                <td>
+          <tbody>
+            <tr>
+              <td>
+                {(isMyReferralsLoading || isAllReferralsLoading) && (
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    Loading...
+                  </label>
+                )}
+                {referrals?.length === 0 && !isMyReferralsLoading && !isAllReferralsLoading && (
                   <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
                     No Referrals
                   </label>
-                </td>
-              </tr>
-            </tbody>
-          )}
+                )}
+              </td>
+            </tr>
+          </tbody>
           <tbody className='list-items'>{referrals}</tbody>
         </table>
       </div>
