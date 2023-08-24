@@ -1,4 +1,4 @@
-import { GET_MY_REFERRAL_LIST, GET_REFERRAL_LIST } from '../constants/apiConstants';
+import { GET_MY_REFERRAL_LIST, GET_REFERRAL_LIST, PAGE_LENGTH } from '../constants/apiConstants';
 import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
@@ -14,7 +14,7 @@ export const referralApi = baseApi.injectEndpoints({
         let endpoint = `${RouteConstants.referralApi}`;
         const params = [];
 
-        params.push(`offset=${offset}`);
+        params.push(`offset=${offset}&length=${PAGE_LENGTH}`);
         if (email) params.push(`email=${email}`);
         if (role) params.push(`role=${role}`);
         if (openingId) params.push(`openingId=${openingId}`);
