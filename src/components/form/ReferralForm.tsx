@@ -169,7 +169,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   ] = useLazyCheckFileQuery();
 
   const updateReferralStatusCheck = () => {
-    console.log('status');
     if (status.trim() === 'Hired') setShowHirePopup(true);
     else saveReferral();
   };

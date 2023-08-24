@@ -6,8 +6,8 @@ import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 
 const Sidebar: React.FC = () => {
-  const isAuthorized = useContext(AuthorizationContext);
-  const { selectedTabIndex, setSelectedTabIndex } =
+  const authorizationContext = useContext(AuthorizationContext);
+  const { selectedTabIndex, setSelectedTabIndex, setIsMyReferralsSelected } =
     useContext<SelectedContextType>(SelectedContext);
   const navigate = useNavigate();
 
@@ -18,25 +18,26 @@ const Sidebar: React.FC = () => {
 
   const onJobOpeningsSelected = () => {
     setSelectedTabIndex(1);
-    if (isAuthorized.isSuperAuthorized) navigate(RouteConstants.opening);
+    if (!authorizationContext.isBasicAuthorized) navigate(RouteConstants.opening);
     else navigate(RouteConstants.publicOpening);
   };
 
   const onApplicationsSelected = () => {
     setSelectedTabIndex(2);
-    if (isAuthorized.isSuperAuthorized) navigate(RouteConstants.application);
-    else if (isAuthorized.isBasicAuthorized) navigate(`${RouteConstants.application}/:id`);
+    if (authorizationContext.isSuperAuthorized) navigate(RouteConstants.application);
+    else if (authorizationContext.isBasicAuthorized) navigate(`${RouteConstants.application}/:id`);
   };
 
   const onReferralsListSelected = () => {
     setSelectedTabIndex(3);
+    setIsMyReferralsSelected(false);
     navigate(RouteConstants.referral);
   };
 
   return (
     <div className='sidebar'>
       <div className='sidebar-items'>
-        {!isAuthorized.isBasicAuthorized && (
+        {!authorizationContext.isBasicAuthorized && (
           <SideBarButton
             isSelected={selectedTabIndex === 0}
             onClick={onEmployeeListSelected}
@@ -51,7 +52,7 @@ const Sidebar: React.FC = () => {
           headerText='Job Openings'
         />
 
-        {isAuthorized.isSuperAuthorized && (
+        {authorizationContext.isSuperAuthorized && (
           <SideBarButton
             isSelected={selectedTabIndex === 2}
             onClick={onApplicationsSelected}
@@ -59,7 +60,7 @@ const Sidebar: React.FC = () => {
             headerText='Applications'
           />
         )}
-        {!isAuthorized.isBasicAuthorized && (
+        {!authorizationContext.isBasicAuthorized && (
           <SideBarButton
             isSelected={selectedTabIndex === 3}
             onClick={onReferralsListSelected}

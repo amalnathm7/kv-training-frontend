@@ -76,7 +76,6 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
       location.pathname !== `${RouteConstants.opening}/${id}/apply` &&
       location.pathname !== `${RouteConstants.application}/${id}`
     )
-      // navigate(RouteConstants.login, { replace: true });
       navigate(-1);
   }, []);
 
