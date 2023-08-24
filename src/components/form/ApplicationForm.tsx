@@ -18,6 +18,7 @@ import { validateEmail, validatePhoneNo, validateResume } from '../../utils/vali
 import DropDown from '../input-field/drop-down/DropDown';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+import { RouteConstants } from '../../constants/routeConstants';
 
 export type ApplicationFormPropsType = {
   opening: OpeningType;
@@ -41,22 +42,26 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
 
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const {
+    data: myProfile,
+    isSuccess: isMyProfileFetchSuccess,
+    isError: isMyProfileFetchError
+  } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+  const [isBasicAuthorized, setIsBasicAuthorized] = useState(false);
 
   useEffect(() => {
     if (
       isMyProfileFetchSuccess &&
       myProfile.data.role &&
       myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    ) {
       setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+      setIsBasicAuthorized(false);
+    } else if (isMyProfileFetchError) {
+      setIsBasicAuthorized(true);
+    }
+  }, [isMyProfileFetchSuccess, isMyProfileFetchError]);
 
   useEffect(() => {
     if (props.application) {
@@ -261,6 +266,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
   const [
     createApplication,
     {
+      data: createApplicationData,
       isSuccess: isCreateApplicationSuccess,
       isError: isCreateApplicationError,
       error: createApplicationError
@@ -290,7 +296,9 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       }
     } else {
       if (isCreateApplicationSuccess) {
-        navigate(-1);
+        if (isBasicAuthorized)
+          navigate(`${RouteConstants.application}/${createApplicationData.data.id}`);
+        else navigate(-1);
         setTimeout(() => {
           notifySuccess('submitted');
         }, 100);

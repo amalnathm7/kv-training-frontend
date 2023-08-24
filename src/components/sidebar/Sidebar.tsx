@@ -24,9 +24,12 @@ const Sidebar: React.FC = () => {
       isMyProfileFetchSuccess &&
       myProfile.data.role &&
       myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    ) {
       setIsSuperAuthorized(true);
-    if (isMyProfileFetchError) setIsBasicAuthorized(true);
+      setIsBasicAuthorized(false);
+    } else if (isMyProfileFetchError) {
+      setIsBasicAuthorized(true);
+    }
   }, [isMyProfileFetchSuccess, isMyProfileFetchError]);
 
   const onEmployeeListSelected = () => {
