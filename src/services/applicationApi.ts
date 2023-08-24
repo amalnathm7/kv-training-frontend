@@ -38,7 +38,10 @@ export const applicationApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [GET_APPLICATION_LIST]
     }),
-    updateApplication: builder.mutation<Object, { id: string; application: ApplicationType }>({
+    updateApplication: builder.mutation<
+      ResponseType<{ id: string }>,
+      { id: string; application: ApplicationType }
+    >({
       query: (params) => ({
         url: `${RouteConstants.applicationApi}/${params.id}`,
         method: 'PATCH',

@@ -285,6 +285,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
     updateApplication,
     {
       isSuccess: isUpdateApplicationSuccess,
+      data: updateReferralData,
       isError: isUpdateApplicationError,
       error: updateApplicationError
     }
@@ -295,14 +296,19 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
 
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateApplicationSuccess) {
-        navigate(-1);
-        setTimeout(() => {
-          notifySuccess('updated');
-        }, 100);
-      } else if (isUpdateApplicationError) {
-        notifyError(updateApplicationError['data'].errors.error);
-      }
+      if (isUpdateApplicationSuccess)
+        if (updateReferralData.data.id) {
+          navigate(`${RouteConstants.employee}/${updateReferralData.data.id}`);
+          setTimeout(() => {
+            notifySuccess('updated');
+          }, 100);
+        } else {
+          navigate(-1);
+          setTimeout(() => {
+            notifySuccess('updated');
+          }, 100);
+        }
+      else if (isUpdateApplicationError) notifyError(updateApplicationError['data'].errors.error);
     } else {
       if (isCreateApplicationSuccess) {
         if (isBasicAuthorized)
