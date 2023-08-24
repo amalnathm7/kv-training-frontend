@@ -49,7 +49,11 @@ const Pagination: React.FC<PaginationPropsType> = (props) => {
   return (
     <td>
       {typeof props.page !== 'string' && props.page > 1 && (
-        <button onClick={onBackClicked} className='pagination-button'>
+        <button
+          onClick={onBackClicked}
+          className='pagination-button'
+          data-testid='pagination-back-test'
+        >
           <u>Back</u>
         </button>
       )}
@@ -61,10 +65,15 @@ const Pagination: React.FC<PaginationPropsType> = (props) => {
         className='pagination-page-number'
         value={props.page}
         onChange={onChangePage}
+        data-testid='pagination-page-number-test'
       ></input>
       <label>{` of ${totalPages}`}</label>
       {typeof props.page !== 'string' && props.page < totalPages && (
-        <button onClick={onNextClicked} className='pagination-button'>
+        <button
+          onClick={onNextClicked}
+          className='pagination-button'
+          data-testid='pagination-next-test'
+        >
           <u>Next</u>
         </button>
       )}
