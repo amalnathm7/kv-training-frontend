@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralListing from '../../components/listing/ReferralListing';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { RouteConstants } from '../../constants/routeConstants';
+import { useLocation, useParams } from 'react-router-dom';
 import { AuthorizationContext, SelectedContext } from '../../app';
 
 const MyReferralsListingPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { isSuperAuthorized } = useContext(AuthorizationContext);
+ 
+  const { isBasicAuthorized } = useContext(AuthorizationContext);
+
   const [labels, setLabels] = useState([]);
   const location = useLocation();
   const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
@@ -24,8 +24,8 @@ const MyReferralsListingPage: React.FC = () => {
   }, [isRoutedFromOpening]);
 
   useEffect(() => {
-    if (isSuperAuthorized) setLabels(labelArray);
-  }, [isSuperAuthorized]);
+    if (!isBasicAuthorized) setLabels(labelArray);
+  }, [isBasicAuthorized]);
 
   const labelArray = [
     'Referral Code',
@@ -40,10 +40,6 @@ const MyReferralsListingPage: React.FC = () => {
     'Actions'
   ];
 
-  const onCreateClicked = () => {
-    navigate(`${RouteConstants.referral}/:id/refer`);
-  };
-
   const { setIsMyReferralsSelected } = useContext(SelectedContext);
 
   const onRouteChanged = (event) => {
@@ -54,7 +50,7 @@ const MyReferralsListingPage: React.FC = () => {
     <HomeLayout
       subHeaderRouteOptions={routes}
       subHeaderOnRouteChanged={onRouteChanged}
-      subHeaderPrimaryAction={isSuperAuthorized ? onCreateClicked : null}
+      subHeaderPrimaryAction={null}
       subHeaderLabel={isRoutedFromOpening ? 'Referrals' : ''}
       subHeaderPrimaryActionIcon={''}
       subHeaderPrimaryActionLabel={''}

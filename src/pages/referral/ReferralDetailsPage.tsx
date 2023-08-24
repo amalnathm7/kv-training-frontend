@@ -3,6 +3,7 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 import { AuthorizationContext, SelectedContext } from '../../app';
 
 const ReferralDetailsPage: React.FC = () => {
@@ -14,6 +15,10 @@ const ReferralDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
+
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: referralData?.data.resume
+  });
 
   let items: CardItemType[] = [];
 
@@ -78,7 +83,7 @@ const ReferralDetailsPage: React.FC = () => {
       {
         label: 'Resume',
         value: 'View Resume',
-        filePath: referral.resume
+        filePath: resumeUrl
       }
     ];
   }

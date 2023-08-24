@@ -10,6 +10,7 @@ import { useDeleteApplicationMutation } from '../../services/applicationApi';
 import { toast } from 'react-toastify';
 import { ApplicationType } from '../../types/ApplicationType';
 import viewFile from '../../utils/viewFile';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 import { AuthorizationContext } from '../../app';
 
 type ApplicationListItemPropsType = {
@@ -17,11 +18,15 @@ type ApplicationListItemPropsType = {
 };
 
 const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: props.application.resume
+  });
+
   const { isSuperAuthorized } = useContext(AuthorizationContext);
 
   let status: StatusType = {
     label: props.application.status,
-    color: StatusColor[props.application.status]
+    color: StatusColor[props.application.status.replace(' ', '_')]
   };
 
   const navigate = useNavigate();
@@ -80,7 +85,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       <td
         onClick={(event) => {
           event.stopPropagation();
-          viewFile(props.application.resume);
+          viewFile(resumeUrl);
         }}
       >
         <u>View Resume</u>

@@ -4,6 +4,7 @@ import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
 import { CardItemPropsType } from '../../components/card-item/CardItem';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 import { AuthorizationContext } from '../../app';
 
 const ApplicationDetailsPage: React.FC = () => {
@@ -13,6 +14,9 @@ const ApplicationDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { data: applicationData, isSuccess } = useGetApplicationByIdQuery(id);
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: applicationData?.data.resume
+  });
 
   let items: CardItemPropsType[] = [];
 
@@ -73,7 +77,7 @@ const ApplicationDetailsPage: React.FC = () => {
       {
         label: 'Resume',
         value: 'View Resume',
-        filePath: application.resume
+        filePath: resumeUrl
       }
     ];
   }

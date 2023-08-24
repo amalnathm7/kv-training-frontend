@@ -69,8 +69,8 @@
 }
 
 .guest-login {
-    margin-top: 5px;
-    margin-left: auto;
+    margin-top: 20px;
+    text-align: center;
     font-weight: 100;
     cursor: pointer;
 }

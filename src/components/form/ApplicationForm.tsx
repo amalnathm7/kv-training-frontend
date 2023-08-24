@@ -11,12 +11,13 @@ import {
   useUpdateApplicationMutation
 } from '../../services/applicationApi';
 import FileUpload from '../input-field/file-upload/FileUpload';
-import { useUploadFileMutation } from '../../services/fileApi';
+import { useLazyCheckFileQuery, useUploadFileMutation } from '../../services/fileApi';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
 import DropDown from '../input-field/drop-down/DropDown';
 import { AuthorizationContext } from '../../app';
+import { RouteConstants } from '../../constants/routeConstants';
 
 export type ApplicationFormPropsType = {
   opening: OpeningType;
@@ -39,7 +40,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
   const [pincode, setPincode] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
-  const { isSuperAuthorized } = useContext(AuthorizationContext);
+  const { isSuperAuthorized, isBasicAuthorized } = useContext(AuthorizationContext);
 
   useEffect(() => {
     if (props.application) {
@@ -149,6 +150,16 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
     { data: fileData, isSuccess: isFileUploadSuccess, isError: isFileUploadError }
   ] = useUploadFileMutation();
 
+  const [
+    checkFile,
+    {
+      data: fileCheckData,
+      isSuccess: isFileCheckSuccess,
+      isError: isFileCheckError,
+      error: fileCheckError
+    }
+  ] = useLazyCheckFileQuery();
+
   const saveApplication = () => {
     let isValidated = true;
 
@@ -200,18 +211,20 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       isValidated = false;
       setPincodeError(true);
     }
-    if (isValidated) {
-      const formData = new FormData();
+    if (isValidated)
+      if (typeof resume === 'string' && resume.length > 0 && props.isEdit) {
+        checkFile({ file: resume });
+      } else {
+        const formData = new FormData();
 
-      formData.append('file', resume);
-      uploadFile(formData);
-    } else {
-      notifyError('Fill all required fields');
-    }
+        formData.append('file', resume);
+        uploadFile(formData);
+      }
+    else notifyError('Fill all required fields');
   };
 
   useEffect(() => {
-    if (isFileUploadSuccess) {
+    if (isFileUploadSuccess || (isFileCheckSuccess && fileCheckData.data.fileExists)) {
       const application = {
         id: props.application?.id,
         name: name.trim(),
@@ -220,7 +233,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
         experience: Number(experience),
         openingId,
         status: status,
-        resume: fileData.data.file,
+        resume: '',
         roleId,
         candidateCode: props.application?.candidateCode,
         address: {
@@ -233,17 +246,29 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
         }
       };
 
+      if (isFileCheckSuccess && typeof resume === 'string') application.resume = resume;
+      else application.resume = fileData.data.file;
+
       props.isEdit
         ? updateApplication({ id: props.application.id, application: application })
         : createApplication(application);
     } else if (isFileUploadError) {
       notifyError('Resume upload error');
+    } else if ((isFileCheckSuccess && !fileCheckData.data.fileExists) || isFileCheckError) {
+      notifyError('Re-upload Resume');
     }
-  }, [isFileUploadSuccess, isFileUploadError]);
+  }, [
+    isFileUploadSuccess,
+    isFileUploadError,
+    isFileCheckSuccess,
+    isFileCheckError,
+    fileCheckError
+  ]);
 
   const [
     createApplication,
     {
+      data: createApplicationData,
       isSuccess: isCreateApplicationSuccess,
       isError: isCreateApplicationError,
       error: createApplicationError
@@ -273,7 +298,9 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       }
     } else {
       if (isCreateApplicationSuccess) {
-        navigate(-1);
+        if (isBasicAuthorized)
+          navigate(`${RouteConstants.application}/${createApplicationData.data.id}`);
+        else navigate(-1);
         setTimeout(() => {
           notifySuccess('submitted');
         }, 100);

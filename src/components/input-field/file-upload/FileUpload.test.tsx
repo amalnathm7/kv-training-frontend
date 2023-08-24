@@ -41,4 +41,17 @@ describe('File upload Props Test', () => {
 
     expect(element).toMatchSnapshot();
   });
+
+  test('If file upload field rendered correctly with file value', () => {
+    const props: FileUploadPropsType = {
+      onChange: () => {},
+      label: 'file-upload-label',
+      showError: false,
+      value: new File(['foo'], 'foo.txt')
+    };
+
+    const element = render(<FileUpload {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
 });

@@ -1,18 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import './Listing.css';
 import EmployeeListItem from '../list-item/EmployeeListItem';
-import { useGetEmployeeListQuery } from '../../services/employeeApi';
+import { useLazyGetEmployeeListQuery } from '../../services/employeeApi';
+import Pagination from '../pagination/Pagination';
 
 type EmployeeListingPropsType = {
   labels: string[];
 };
 
 const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
-  const {
-    data: employeesData,
-    isLoading,
-    isSuccess: isEmployeesFetchSuccess
-  } = useGetEmployeeListQuery();
+  const [getEmployeesList, { data: employeesData, isLoading, isSuccess: isEmployeesFetchSuccess }] =
+    useLazyGetEmployeeListQuery();
+  const [page, setPage] = useState(1);
 
   const labels = props.labels.map((label) => (
     <td className='listing-label' key={label}>
@@ -23,13 +22,19 @@ const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
   const [employees, setEmployees] = useState([]);
 
   useEffect(() => {
-    if (isEmployeesFetchSuccess)
+    if (isEmployeesFetchSuccess) {
       setEmployees(
         employeesData.data.map((employee) => (
           <EmployeeListItem key={employee.id} employee={employee}></EmployeeListItem>
         ))
       );
+      setPage(employeesData.meta.offset + 1);
+    }
   }, [isEmployeesFetchSuccess, employeesData]);
+
+  useEffect(() => {
+    if (typeof page !== 'string') getEmployeesList({ offset: page - 1 });
+  }, [page]);
 
   return (
     <>
@@ -38,6 +43,14 @@ const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
         <table>
           <thead>
             <tr className='list-header'>{labels}</tr>
+            <tr className='list-pagination'>
+              <Pagination
+                page={page}
+                setPage={setPage}
+                length={employeesData?.meta.length}
+                total={employeesData?.meta.total}
+              />
+            </tr>
           </thead>
           <tbody>
             <tr>

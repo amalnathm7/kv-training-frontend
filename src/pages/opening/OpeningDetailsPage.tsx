@@ -70,6 +70,10 @@ const OpeningDetailsPage: React.FC = () => {
     navigate(`${RouteConstants.opening}/${id}/edit`);
   };
 
+  const onApplyClicked = () => {
+    navigate(`${RouteConstants.opening}/${id}/apply`);
+  };
+
   const onReferClicked = () => {
     navigate(`${RouteConstants.opening}/${id}/refer`);
   };
@@ -85,9 +89,9 @@ const OpeningDetailsPage: React.FC = () => {
   return (
     <HomeLayout
       subHeaderLabel='Opening Details'
-      subHeaderPrimaryAction={isAuthorized ? onReferClicked : null}
-      subHeaderPrimaryActionLabel={isAuthorized ? 'Refer a friend' : ''}
-      subHeaderPrimaryActionIcon={isAuthorized ? 'friend.png' : ''}
+      subHeaderPrimaryAction={isAuthorized ? onReferClicked : !isAuthorized ? onApplyClicked : null}
+      subHeaderPrimaryActionLabel={isAuthorized ? 'Refer a friend' : 'Apply now'}
+      subHeaderPrimaryActionIcon={isAuthorized ? 'friend.png' : 'create.png'}
       subHeaderSecondaryAction={isSuperAuthorized ? onEditClicked : null}
       subHeaderSecondaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
       subHeaderSecondaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}

@@ -10,6 +10,7 @@ import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteReferralMutation } from '../../services/referralApi';
 import { toast } from 'react-toastify';
 import viewFile from '../../utils/viewFile';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 import { AuthorizationContext } from '../../app';
 
 type ReferralListItemPropsType = {
@@ -19,10 +20,13 @@ type ReferralListItemPropsType = {
 
 const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const { isSuperAuthorized } = useContext(AuthorizationContext);
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: props.referral.resume
+  });
 
   let status: StatusType = {
     label: props.referral.status,
-    color: StatusColor[props.referral.status]
+    color: StatusColor[props.referral.status.replace(' ', '_')]
   };
 
   const navigate = useNavigate();
@@ -89,7 +93,8 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td
         onClick={(event) => {
           event.stopPropagation();
-          viewFile(props.referral.resume);
+
+          viewFile(resumeUrl);
         }}
       >
         <u>View Resume</u>

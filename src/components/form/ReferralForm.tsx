@@ -251,17 +251,19 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         }
       };
 
-      if (isFileCheckSuccess && typeof resume === 'string') referral.resume = resume;
-      else referral.resume = fileData.data.file;
+      if (isFileCheckSuccess && typeof resume === 'string') {
+        referral.resume = resume;
+      } else {
+        referral.resume = fileData.data.file;
+        setResume(fileData.data.file);
+      }
 
       props.isEdit
         ? updateReferral({ id: props.referral.id, referral: referral })
         : createReferral(referral);
     } else if (isFileUploadError) {
       notifyError('Resume upload error');
-    } else if (isFileCheckSuccess && !fileCheckData.data.fileExists) {
-      notifyError('Re-upload Resume');
-    } else if (isFileCheckError) {
+    } else if ((isFileCheckSuccess && !fileCheckData.data.fileExists) || isFileCheckError) {
       notifyError('Re-upload Resume');
     }
   }, [

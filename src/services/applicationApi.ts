@@ -1,4 +1,4 @@
-import { GET_APPLICATION_LIST } from '../constants/apiConstants';
+import { GET_APPLICATION_LIST, PAGE_LENGTH } from '../constants/apiConstants';
 import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
@@ -8,16 +8,17 @@ export const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getApplications: builder.query<
       ResponseType<ApplicationType[]>,
-      { email?: string; role?: string; openingId?: string }
+      { email?: string; role?: string; openingId?: string; offset: number }
     >({
-      query: ({ email, role, openingId }) => {
+      query: ({ email, role, openingId, offset }) => {
         let endpoint = `${RouteConstants.applicationApi}`;
         const params = [];
 
+        params.push(`offset=${offset}&length=${PAGE_LENGTH}`);
         if (email) params.push(`email=${email}`);
         if (role) params.push(`role=${role}`);
         if (openingId) params.push(`openingId=${openingId}`);
-        if (params.length > 0) endpoint += `?${params.join('&')}`;
+        endpoint += `?${params.join('&')}`;
 
         return endpoint;
       },
