@@ -5,6 +5,7 @@ import {
   GET_EMPLOYEE_LIST,
   GET_MY_REFERRAL_LIST,
   GET_OPENING_LIST,
+  GET_PUBLIC_OPENING_LIST,
   GET_REFERRAL_LIST
 } from '../constants/apiConstants';
 
@@ -28,6 +29,7 @@ export const baseApi = createApi({
   tagTypes: [
     GET_EMPLOYEE_LIST,
     GET_OPENING_LIST,
+    GET_PUBLIC_OPENING_LIST,
     GET_REFERRAL_LIST,
     GET_MY_REFERRAL_LIST,
     GET_APPLICATION_LIST
