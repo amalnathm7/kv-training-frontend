@@ -30,7 +30,7 @@ const ApplicationCreatePage: React.FC = () => {
   return (
     <HomeLayout
       subHeaderPrimaryAction={() => {}}
-      subHeaderLabel='Refer a friend'
+      subHeaderLabel='Apply'
       subHeaderPrimaryActionLabel=''
       subHeaderPrimaryActionIcon=''
     >
