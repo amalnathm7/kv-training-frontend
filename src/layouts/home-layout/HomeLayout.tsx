@@ -1,12 +1,13 @@
 import Sidebar from '../../components/sidebar/Sidebar';
 import Header from '../../components/header/Header';
 import SubHeader from '../../components/sub-header/SubHeader';
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './HomeLayout.css';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import { SelectedContext } from '../../app';
 import { ToastContainer, toast } from 'react-toastify';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
 
 type HomeLayoutPropsType = {
   subHeaderLabel: string;
@@ -29,21 +30,28 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const location = useLocation();
   const { id } = useParams();
   const { setSelectedTabIndex, isMyReferralsSelected } = useContext(SelectedContext);
+  const [isBasicAuthorized, setIsBasicAuthorized] = useState(false);
+
+  const { isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+
+  useEffect(() => {
+    if (!isMyProfileFetchSuccess) setIsBasicAuthorized(true);
+    console.log(isBasicAuthorized);
+  }, [isMyProfileFetchSuccess]);
 
   useEffect(() => {
     if (
       !localStorage.getItem('token') &&
-      !location.pathname.includes(`${RouteConstants.opening}`) &&
+      location.pathname !== RouteConstants.publicOpening &&
+      location.pathname !== `${RouteConstants.opening}/${id}` &&
+      location.pathname !== `${RouteConstants.opening}/${id}/apply` &&
       location.pathname !== `${RouteConstants.application}/${id}`
     )
       // navigate(RouteConstants.login, { replace: true });
       navigate(-1);
 
     if (location.pathname.includes(RouteConstants.employee)) setSelectedTabIndex(0);
-    else if (
-      location.pathname.includes(RouteConstants.opening) ||
-      location.pathname === `${RouteConstants.application}/${id}`
-    )
+    else if (location.pathname.includes(RouteConstants.opening) || isBasicAuthorized)
       setSelectedTabIndex(1);
     else if (location.pathname.includes(RouteConstants.application)) setSelectedTabIndex(2);
     else if (location.pathname.includes(RouteConstants.referral)) setSelectedTabIndex(3);
@@ -52,8 +60,9 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
 
   useEffect(() => {
     if (
-      location.pathname === RouteConstants.referral ||
-      location.pathname === RouteConstants.myReferral
+      localStorage.getItem('token') &&
+      (location.pathname === RouteConstants.referral ||
+        location.pathname === RouteConstants.myReferral)
     )
       if (isMyReferralsSelected) navigate(RouteConstants.myReferral);
       else navigate(RouteConstants.referral);
