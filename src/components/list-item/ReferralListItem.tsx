@@ -65,9 +65,9 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const [deleteReferral, { isSuccess: isDeleteSuccess }] = useDeleteReferralMutation();
 
   useEffect(() => {
-    if (props.referral.status !== 'Received') setDeleteError(true);
+    if (!isSuperAuthorized && props.referral.status !== 'Received') setDeleteError(true);
     else setDeleteError(false);
-  }, [props.referral.status]);
+  }, [isSuperAuthorized, props.referral.status]);
 
   useEffect(() => {
     if (isDeleteSuccess) {
@@ -78,7 +78,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.referral.candidateCode}</td>}
+      <td>{props.referral.candidateCode}</td>
       <td>{props.referral.name}</td>
       <td>{props.referral.email}</td>
       <td>{props.referral.phone}</td>

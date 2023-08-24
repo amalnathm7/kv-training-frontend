@@ -56,9 +56,9 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
   const [deleteApplication, { isSuccess: isDeleteSuccess }] = useDeleteApplicationMutation();
 
   useEffect(() => {
-    if (props.application.status !== 'Received') setDeleteError(true);
+    if (!isSuperAuthorized && props.application.status !== 'Received') setDeleteError(true);
     else setDeleteError(false);
-  }, [props.application.status]);
+  }, [isSuperAuthorized, props.application.status]);
 
   useEffect(() => {
     if (isDeleteSuccess) {
@@ -69,7 +69,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.application.candidateCode}</td>}
+      <td>{props.application.candidateCode}</td>
       <td>{props.application.name}</td>
       <td>{props.application.email}</td>
       <td>{props.application.phone}</td>

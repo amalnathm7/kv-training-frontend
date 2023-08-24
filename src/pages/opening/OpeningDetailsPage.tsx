@@ -98,23 +98,26 @@ const OpeningDetailsPage: React.FC = () => {
       subHeaderSecondaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
       subHeaderSecondaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}
     >
-      <Card
-        items={items}
-        secondaryButtonsProps={[
-          {
-            style: { marginTop: '40px', marginBottom: '20px' },
-            type: 'button',
-            label: 'View Applications',
-            onClick: onViewApplicationsClicked
-          },
-          {
-            style: { marginTop: '40px', marginBottom: '20px', marginLeft: '20px' },
-            type: 'button',
-            label: 'View Referrals',
-            onClick: onViewReferralsClicked
-          }
-        ]}
-      ></Card>
+      {isAuthorized && (
+        <Card
+          items={items}
+          secondaryButtonsProps={[
+            {
+              style: { marginTop: '40px', marginBottom: '20px' },
+              type: 'button',
+              label: 'View Applications',
+              onClick: onViewApplicationsClicked
+            },
+            {
+              style: { marginTop: '40px', marginBottom: '20px', marginLeft: '20px' },
+              type: 'button',
+              label: 'View Referrals',
+              onClick: onViewReferralsClicked
+            }
+          ]}
+        ></Card>
+      )}
+      {!isAuthorized && <Card items={items}></Card>}
     </HomeLayout>
   );
 };

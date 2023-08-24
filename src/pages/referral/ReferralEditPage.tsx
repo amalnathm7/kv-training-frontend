@@ -28,6 +28,7 @@ const ReferralEditPage: React.FC = () => {
 
   useEffect(() => {
     if (isReferralByIdFetchSuccess) setReferral(referralData.data);
+    console.log(referral);
   }, [isReferralByIdFetchSuccess]);
 
   return (

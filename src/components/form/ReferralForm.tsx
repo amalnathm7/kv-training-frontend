@@ -370,7 +370,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
             'Round 1',
             'Round 2',
             'Round 3',
-            'Hired',
             'Offered',
             'Offer Accepted',
             'Offer Declined',

@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 import { SelectedContext } from '../../app';
 
 const ReferralCreatePage: React.FC = () => {

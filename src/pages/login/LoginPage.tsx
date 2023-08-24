@@ -36,8 +36,11 @@ const LoginPage: React.FC = () => {
   };
 
   const onKeyUp = (event) => {
-    console.log(event);
     if (event.code === 'Enter') validateAndLogin();
+  };
+
+  const onCareersClicked = () => {
+    navigate(`${RouteConstants.opening}`);
   };
 
   useEffect(() => {
@@ -83,6 +86,9 @@ const LoginPage: React.FC = () => {
             label='Log in'
             onClick={validateAndLogin}
           />
+          <h4 className='guest-login' onClick={onCareersClicked}>
+            Apply for a job at KeyValue
+          </h4>
           {isError && (
             <div className='login-error'>
               <p>{error['data'].errors.error}</p>
