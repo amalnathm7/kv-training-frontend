@@ -15,7 +15,6 @@ type HomeLayoutPropsType = {
   subHeaderPrimaryActionIcon: string;
   subHeaderPrimaryActionValue?: string;
   subHeaderPrimaryActionPlaceholder?: string;
-  subHeaderPrimaryActionFilterOptions?: string[];
   subHeaderPrimaryAction: (e) => void;
   subHeaderSecondaryActionLabel?: string;
   subHeaderSecondaryActionIcon?: string;
@@ -23,6 +22,12 @@ type HomeLayoutPropsType = {
   subHeaderSecondaryAction?: (e) => void;
   subHeaderRouteOptions?: string[];
   subHeaderOnRouteChanged?: (event) => void;
+  subHeaderPrimaryFilterOptions?: string[];
+  subHeaderSecondaryFilterOptions?: string[];
+  subHeaderPrimaryFilterPlaceholder?: string;
+  subHeaderSecondaryFilterPlaceholder?: string;
+  subHeaderPrimaryFilterAction?: (event) => void;
+  subHeaderSecondaryFilterAction?: (event) => void;
 };
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
@@ -82,11 +87,15 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
         primaryActionIcon={props.subHeaderPrimaryActionIcon}
         primaryActionValue={props.subHeaderPrimaryActionValue}
         primaryActionPlaceholder={props.subHeaderPrimaryActionPlaceholder}
-        primaryActionFilterOptions={props.subHeaderPrimaryActionFilterOptions}
         secondaryAction={props.subHeaderSecondaryAction}
         secondaryActionLabel={props.subHeaderSecondaryActionLabel}
         secondaryActionIcon={props.subHeaderSecondaryActionIcon}
-        secondaryActionPlaceholder={props.subHeaderSecondaryActionPlaceholder}
+        primaryFilterAction={props.subHeaderPrimaryFilterAction}
+        primaryFilterOptions={props.subHeaderPrimaryFilterOptions}
+        primaryFilterPlaceholder={props.subHeaderPrimaryFilterPlaceholder}
+        secondaryFilterAction={props.subHeaderSecondaryFilterAction}
+        secondaryFilterOptions={props.subHeaderSecondaryFilterOptions}
+        secondaryFilterPlaceholder={props.subHeaderSecondaryFilterPlaceholder}
       />
       <Sidebar />
       <Header />

@@ -6,19 +6,29 @@ export type SubHeaderPropsType = {
   primaryActionLabel: string;
   primaryActionValue?: string;
   primaryActionPlaceholder?: string;
-  primaryActionFilterOptions?: string[];
   primaryActionIcon: string;
-  primaryAction: (e) => void;
+  primaryAction: (event) => void;
   secondaryActionLabel?: string;
   secondaryActionIcon?: string;
-  secondaryActionPlaceholder?: string;
-  secondaryAction?: (() => void) | ((string) => void);
+  secondaryAction?: (event) => void;
   routeOptions?: string[];
   onRouteChanged?: (event) => void;
+  primaryFilterOptions?: string[];
+  secondaryFilterOptions?: string[];
+  primaryFilterPlaceholder?: string;
+  secondaryFilterPlaceholder?: string;
+  primaryFilterAction?: (event) => void;
+  secondaryFilterAction?: (event) => void;
 };
 
 const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
-  const filterOptions = props.primaryActionFilterOptions?.map((option) => (
+  const primaryFilterOptions = props.primaryFilterOptions?.map((option) => (
+    <option key={option} value={option}>
+      {option}
+    </option>
+  ));
+
+  const secondaryFilterOptions = props.secondaryFilterOptions?.map((option) => (
     <option key={option} value={option}>
       {option}
     </option>
@@ -41,14 +51,22 @@ const SubHeader: React.FC<SubHeaderPropsType> = (props) => {
       <div className='sub-header-actions'>
         {props.primaryActionLabel === 'Search' && (
           <>
-            <div className='filter'>
-              <select className='filter-dropdown' onChange={props.secondaryAction}>
-                <option style={{ color: 'var(--hint-color)' }} hidden>
-                  {props.secondaryActionPlaceholder}
-                </option>
-                {filterOptions}
-              </select>
-            </div>
+            <select
+              className='filter-dropdown'
+              style={{ marginRight: '20px' }}
+              onChange={props.secondaryFilterAction}
+            >
+              <option style={{ color: 'var(--hint-color)' }} hidden>
+                {props.secondaryFilterPlaceholder}
+              </option>
+              {secondaryFilterOptions}
+            </select>
+            <select className='filter-dropdown' onChange={props.primaryFilterAction}>
+              <option style={{ color: 'var(--hint-color)' }} hidden>
+                {props.primaryFilterPlaceholder}
+              </option>
+              {primaryFilterOptions}
+            </select>
             <div className='action-button'>
               <div className='sub-header-action-icon-container'>
                 <img className='sub-header-action-icon' src={'/assets/icons/' + 'search.png'}></img>
