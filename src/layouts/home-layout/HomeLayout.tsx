@@ -37,12 +37,11 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const { setSelectedTabIndex, isMyReferralsSelected } = useContext(SelectedContext);
   const [isBasicAuthorized, setIsBasicAuthorized] = useState(false);
 
-  const { isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { isError: isMyProfileFetchError } = useGetMyProfileQuery();
 
   useEffect(() => {
-    if (!isMyProfileFetchSuccess) setIsBasicAuthorized(true);
-    console.log(isBasicAuthorized);
-  }, [isMyProfileFetchSuccess]);
+    if (isMyProfileFetchError) setIsBasicAuthorized(true);
+  }, [isMyProfileFetchError]);
 
   useEffect(() => {
     if (
@@ -52,7 +51,6 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
       location.pathname !== `${RouteConstants.opening}/${id}/apply` &&
       location.pathname !== `${RouteConstants.application}/${id}`
     )
-      // navigate(RouteConstants.login, { replace: true });
       navigate(-1);
   }, []);
 

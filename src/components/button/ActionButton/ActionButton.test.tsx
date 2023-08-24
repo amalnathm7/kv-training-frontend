@@ -6,6 +6,7 @@ describe('Primary Button Props Test', () => {
   test('If button rendered correctly', () => {
     const props: ActionButtonPropsType = {
       icon: 'icon.png',
+      style: { backgroundColor: 'red' },
       onClick: () => {}
     };
 

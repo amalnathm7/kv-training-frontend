@@ -22,7 +22,7 @@ const ReferralEditPage: React.FC = () => {
         (myProfile.data.role.permissionLevel !== PermissionLevel.SUPER &&
           myProfile.data.id !== referralData.data.referredBy?.id);
 
-      if (isNotAuthorized) navigate(-1);
+      if (isNotAuthorized || referralData.data.status === 'Hired') navigate(-1);
     }
   }, [isMyProfileFetchSuccess, isReferralByIdFetchSuccess]);
 

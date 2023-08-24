@@ -15,7 +15,7 @@ const Sidebar: React.FC = () => {
   } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [isBasicAuthorized, setIsBasicAuthorized] = useState(false);
-  const { selectedTabIndex, setSelectedTabIndex } =
+  const { selectedTabIndex, setSelectedTabIndex, setIsMyReferralsSelected } =
     useContext<SelectedContextType>(SelectedContext);
   const navigate = useNavigate();
 
@@ -39,7 +39,7 @@ const Sidebar: React.FC = () => {
 
   const onJobOpeningsSelected = () => {
     setSelectedTabIndex(1);
-    if (isSuperAuthorized) navigate(RouteConstants.opening);
+    if (!isBasicAuthorized) navigate(RouteConstants.opening);
     else navigate(RouteConstants.publicOpening);
   };
 
@@ -50,6 +50,7 @@ const Sidebar: React.FC = () => {
 
   const onReferralsListSelected = () => {
     setSelectedTabIndex(3);
+    setIsMyReferralsSelected(false);
     navigate(RouteConstants.referral);
   };
 
