@@ -6,7 +6,18 @@ describe('Primary Button Props Test', () => {
   test('If button rendered correctly', () => {
     const props: ActionButtonPropsType = {
       icon: 'icon.png',
-      style: { backgroundColor: 'red' },
+      onClick: () => {}
+    };
+
+    const element = render(<ActionButton {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
+
+  test('If disabled button rendered correctly', () => {
+    const props: ActionButtonPropsType = {
+      icon: 'icon.png',
+      isDisabled: true,
       onClick: () => {}
     };
 

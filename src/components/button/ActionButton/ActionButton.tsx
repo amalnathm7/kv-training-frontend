@@ -1,20 +1,21 @@
-import React, { CSSProperties } from 'react';
+import React from 'react';
 import './ActionButton.css';
 
 export type ActionButtonPropsType = {
   icon: string;
   onClick: () => void;
-  style?: CSSProperties;
+  isDisabled?: boolean;
 };
 
 const ActionButton: React.FC<ActionButtonPropsType> = (props) => (
   <img
-    style={props.style}
+    style={props.isDisabled ? { filter: 'grayscale(100%)' } : {}}
     className='action-button-icon'
     src={`/assets/icons/${props.icon}`}
     onClick={(event) => {
       event.stopPropagation();
-      props.onClick();
+
+      if (!props.isDisabled) props.onClick();
     }}
     data-testid='action-button-test'
   ></img>
