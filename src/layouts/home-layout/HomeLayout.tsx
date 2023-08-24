@@ -56,7 +56,7 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     else if (location.pathname.includes(RouteConstants.application)) setSelectedTabIndex(2);
     else if (location.pathname.includes(RouteConstants.referral)) setSelectedTabIndex(3);
     else setSelectedTabIndex(0);
-  }, []);
+  });
 
   useEffect(() => {
     if (
