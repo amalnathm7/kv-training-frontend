@@ -16,8 +16,14 @@ export const fileApi = baseApi.injectEndpoints({
         url: `${RouteConstants.fileCheckApi}?filePath=${params.file}`,
         method: 'GET'
       })
+    }),
+    getFileUrl: builder.query<string, { fileName: string }>({
+      query: (params) => ({
+        url: `${RouteConstants.fileApi}/${params.fileName}`,
+        method: 'GET'
+      })
     })
   })
 });
 
-export const { useUploadFileMutation, useLazyCheckFileQuery } = fileApi;
+export const { useUploadFileMutation, useLazyCheckFileQuery, useGetFileUrlQuery } = fileApi;
