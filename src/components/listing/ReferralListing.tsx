@@ -4,6 +4,7 @@ import {
   useLazyGetAllReferralsQuery,
   useLazyGetMyReferralsQuery
 } from '../../services/referralApi';
+import Pagination from '../pagination/Pagination';
 
 type ReferralsListingPropsType = {
   labels: string[];
@@ -16,6 +17,7 @@ type ReferralsListingPropsType = {
 
 const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   const [referrals, setReferrals] = useState([]);
+  const [page, setPage] = useState(1);
   const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
   const [
     getMyReferrals,
@@ -33,12 +35,13 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (isRoutedFromOpening) getAllReferrals({ openingId: props.openingId });
+    if (isRoutedFromOpening) getAllReferrals({ openingId: props.openingId, offset: page - 1 });
     else if (isMyReferrals) getMyReferrals();
     else
       getAllReferrals({
         email: props.emailValue,
-        role: props.roleValue === 'All' ? '' : props.roleValue
+        role: props.roleValue === 'All' ? '' : props.roleValue,
+        offset: page - 1
       });
   }, [isRoutedFromOpening, props.roleValue, props.emailValue, props.openingId]);
 
@@ -63,6 +66,10 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
     </td>
   ));
 
+  useEffect(() => {
+    if (typeof page !== 'string') getAllReferrals({ offset: page - 1 });
+  }, [page]);
+
   return (
     <>
       <div className='listing-spacing'></div>
@@ -70,6 +77,16 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
         <table>
           <thead>
             <tr className='list-header'>{labels}</tr>
+            {(!isMyReferrals || isRoutedFromOpening) && (
+              <tr className='list-pagination'>
+                <Pagination
+                  page={page}
+                  setPage={setPage}
+                  length={allReferralsData?.meta.length}
+                  total={allReferralsData?.meta.total}
+                />
+              </tr>
+            )}
           </thead>
           <tbody>
             <tr>

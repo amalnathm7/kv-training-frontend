@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './Listing.css';
 import OpeningListItem from '../list-item/OpeningListItem';
-import { useGetOpeningListQuery } from '../../services/openingApi';
+import { useLazyGetOpeningListQuery } from '../../services/openingApi';
 import { OpeningType } from '../../types/OpeningType';
+import Pagination from '../pagination/Pagination';
 
 type OpeningListingPropsType = {
   labels: string[];
@@ -10,7 +11,8 @@ type OpeningListingPropsType = {
 
 const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
   const [openings, setOpenings] = useState<OpeningType[]>([]);
-  const { data: openingData, isSuccess, isLoading } = useGetOpeningListQuery();
+  const [page, setPage] = useState(1);
+  const [getOpenings, { data: openingsData, isSuccess, isLoading }] = useLazyGetOpeningListQuery();
 
   const labels = props.labels.map((label) => (
     <td className='listing-label' key={label}>
@@ -19,8 +21,12 @@ const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
   ));
 
   useEffect(() => {
-    if (isSuccess) setOpenings(openingData.data);
-  }, [isSuccess, openingData]);
+    if (isSuccess) setOpenings(openingsData.data);
+  }, [isSuccess, openingsData]);
+
+  useEffect(() => {
+    if (typeof page !== 'string') getOpenings({ offset: page - 1 });
+  }, [page]);
 
   return (
     <>
@@ -29,6 +35,14 @@ const OpeningListing: React.FC<OpeningListingPropsType> = (props) => {
         <table>
           <thead>
             <tr className='list-header'>{labels}</tr>
+            <tr className='list-pagination'>
+              <Pagination
+                page={page}
+                setPage={setPage}
+                length={openingsData?.meta.length}
+                total={openingsData?.meta.total}
+              />
+            </tr>
           </thead>
           <tbody>
             <tr>
