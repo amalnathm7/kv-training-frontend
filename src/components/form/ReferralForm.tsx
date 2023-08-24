@@ -17,6 +17,7 @@ import DropDown from '../input-field/drop-down/DropDown';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import CustomPopup from '../popup/CustomPopup';
+import { RouteConstants } from '../../constants/routeConstants';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -310,6 +311,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     updateReferral,
     {
       isSuccess: isUpdateReferralSuccess,
+      data: updateReferralData,
       isError: isUpdateReferralError,
       error: updateReferralError
     }
@@ -320,14 +322,19 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateReferralSuccess) {
-        navigate(-1);
-        setTimeout(() => {
-          notifySuccess('updated');
-        }, 100);
-      } else if (isUpdateReferralError) {
-        notifyError(updateReferralError['data'].errors.error);
-      }
+      if (isUpdateReferralSuccess)
+        if (updateReferralData.data.id) {
+          navigate(`${RouteConstants.employee}/${updateReferralData.data.id}`);
+          setTimeout(() => {
+            notifySuccess('updated');
+          }, 100);
+        } else {
+          navigate(-1);
+          setTimeout(() => {
+            notifySuccess('updated');
+          }, 100);
+        }
+      else if (isUpdateReferralError) notifyError(updateReferralError['data'].errors.error);
     } else {
       if (isCreateReferralSuccess) {
         navigate(-1);
