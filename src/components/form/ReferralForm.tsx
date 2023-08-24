@@ -15,6 +15,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
 import DropDown from '../input-field/drop-down/DropDown';
 import { AuthorizationContext } from '../../app';
+import CustomPopup from '../popup/CustomPopup';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -39,6 +40,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [referredById, setReferredById] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
+  const [showHirePopup, setShowHirePopup] = useState(false);
 
   const { isSuperAuthorized } = useContext(AuthorizationContext);
 
@@ -163,6 +165,12 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       error: fileCheckError
     }
   ] = useLazyCheckFileQuery();
+
+  const updateReferralStatusCheck = () => {
+    console.log('status');
+    if (status.trim() === 'Hired') setShowHirePopup(true);
+    else saveReferral();
+  };
 
   const saveReferral = () => {
     let isValidated = true;
@@ -440,7 +448,11 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       )}
       <div className='form-buttons'>
         <div className='form-primary-button'>
-          <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />
+          <PrimaryButton
+            type='submit'
+            label={primaryButtonLabel}
+            onClick={props.isEdit ? updateReferralStatusCheck : saveReferral}
+          />
         </div>
         <SecondaryButton
           type='button'
@@ -450,6 +462,15 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
           }}
         />
       </div>
+      {showHirePopup && (
+        <CustomPopup
+          onConfirm={saveReferral}
+          onCancel={() => {
+            setShowHirePopup(false);
+          }}
+          subtext='Once hired changes cannot be reverted.'
+        />
+      )}
     </div>
   );
 };
