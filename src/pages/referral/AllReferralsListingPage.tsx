@@ -4,12 +4,14 @@ import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
 import { AuthorizationContext, SelectedContext } from '../../app';
 import { useParams } from 'react-router-dom';
+import { candidateStatuses } from '../../constants/statusConstants';
 
 const AllReferralsListingPage: React.FC = () => {
   const { isSuperAuthorized } = useContext(AuthorizationContext);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
+  const [statusValue, setStatusValue] = useState('');
   const [roles, setRoles] = useState([]);
   const { id } = useParams();
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
@@ -56,6 +58,10 @@ const AllReferralsListingPage: React.FC = () => {
     setRoleValue(event.target.value);
   };
 
+  const onChangeStatus = (event) => {
+    setStatusValue(event.target.value);
+  };
+
   const { setIsMyReferralsSelected } = useContext(SelectedContext);
 
   const onRouteChanged = (event) => {
@@ -72,16 +78,20 @@ const AllReferralsListingPage: React.FC = () => {
       subHeaderLabel=''
       subHeaderPrimaryActionValue={emailValue}
       subHeaderPrimaryActionPlaceholder={'Search by email'}
-      subHeaderPrimaryActionFilterOptions={roles}
-      subHeaderSecondaryAction={onChangeRole}
-      subHeaderSecondaryActionPlaceholder='Filter by role'
       subHeaderPrimaryActionLabel={'Search'}
       subHeaderPrimaryActionIcon={'search.png'}
+      subHeaderPrimaryFilterAction={onChangeRole}
+      subHeaderPrimaryFilterOptions={roles}
+      subHeaderPrimaryFilterPlaceholder='Filter by role'
+      subHeaderSecondaryFilterOptions={['All', ...candidateStatuses]}
+      subHeaderSecondaryFilterPlaceholder='Filter by status'
+      subHeaderSecondaryFilterAction={onChangeStatus}
     >
       <ReferralListing
         openingId={id}
         emailValue={emailValue}
         roleValue={roleValue}
+        statusValue={statusValue}
         labels={labels}
         searchLabel='Search'
         selection='all'

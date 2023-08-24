@@ -14,7 +14,8 @@ const Pagination: React.FC<PaginationPropsType> = (props) => {
 
   useEffect(() => {
     if (props.total === 0) props.setPage(0);
-  }, [props.total]);
+    else if (props.page === 0) props.setPage(1);
+  }, [props.total, props.page]);
 
   const onChangePage = (event) => {
     props.setPage(event.target.value);

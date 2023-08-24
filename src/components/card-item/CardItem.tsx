@@ -2,7 +2,7 @@ import React from 'react';
 import './CardItem.css';
 import StatusIcon from '../status-icon/StatusIcon';
 import { StatusType } from '../../types/StatusType';
-import { StatusColor } from '../../constants/statusColorConstants';
+import { StatusColor } from '../../constants/statusConstants';
 import viewFile from '../../utils/viewFile';
 
 export type CardItemPropsType = {

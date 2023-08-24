@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import StatusIcon from '../status-icon/StatusIcon';
 import { StatusType } from '../../types/StatusType';
-import { StatusColor } from '../../constants/statusColorConstants';
+import { StatusColor } from '../../constants/statusConstants';
 import ActionButton from '../button/ActionButton/ActionButton';
 import CustomPopup from '../popup/CustomPopup';
 import { useNavigate } from 'react-router-dom';

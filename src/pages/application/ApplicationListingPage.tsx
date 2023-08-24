@@ -4,6 +4,7 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import ApplicationListing from '../../components/listing/ApplicationListing';
 import { useParams } from 'react-router-dom';
 import { AuthorizationContext, SelectedContext } from '../../app';
+import { candidateStatuses } from '../../constants/statusConstants';
 
 const ApplicationListingPage: React.FC = () => {
   const { isBasicAuthorized } = useContext(AuthorizationContext);
@@ -11,6 +12,7 @@ const ApplicationListingPage: React.FC = () => {
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
+  const [statusValue, setStatusValue] = useState('');
   const [roles, setRoles] = useState([]);
 
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
@@ -70,21 +72,29 @@ const ApplicationListingPage: React.FC = () => {
     setRoleValue(event.target.value);
   };
 
+  const onChangeStatus = (event) => {
+    setStatusValue(event.target.value);
+  };
+
   return (
     <HomeLayout
       subHeaderPrimaryAction={onChangeSearch}
       subHeaderLabel={isRoutedFromOpening ? 'Applications' : 'Applications List'}
       subHeaderPrimaryActionValue={emailValue}
       subHeaderPrimaryActionPlaceholder={'Search by email'}
-      subHeaderPrimaryActionFilterOptions={roles}
-      subHeaderSecondaryAction={onChangeRole}
-      subHeaderSecondaryActionPlaceholder='Filter by role'
       subHeaderPrimaryActionLabel={isAuthorized ? 'Search' : ''}
       subHeaderPrimaryActionIcon={isAuthorized ? 'search.png' : ''}
+      subHeaderPrimaryFilterAction={onChangeRole}
+      subHeaderPrimaryFilterOptions={roles}
+      subHeaderPrimaryFilterPlaceholder='Filter by role'
+      subHeaderSecondaryFilterOptions={['All', ...candidateStatuses]}
+      subHeaderSecondaryFilterPlaceholder='Filter by status'
+      subHeaderSecondaryFilterAction={onChangeStatus}
     >
       <ApplicationListing
         emailValue={emailValue}
         roleValue={roleValue}
+        statusValue={statusValue}
         labels={labels}
         searchLabel='Search'
         openingId={id}

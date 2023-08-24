@@ -11,6 +11,7 @@ type ReferralsListingPropsType = {
   searchLabel?: string;
   emailValue?: string;
   roleValue?: string;
+  statusValue?: string;
   selection: 'my' | 'all';
   openingId: string;
 };
@@ -35,15 +36,34 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (isRoutedFromOpening) getAllReferrals({ openingId: props.openingId, offset: page - 1 });
-    else if (isMyReferrals) getMyReferrals();
-    else
-      getAllReferrals({
-        email: props.emailValue,
-        role: props.roleValue === 'All' ? '' : props.roleValue,
-        offset: page - 1
-      });
-  }, [isRoutedFromOpening, props.roleValue, props.emailValue, props.openingId]);
+    if (typeof page !== 'string')
+      if (isRoutedFromOpening) {
+        getAllReferrals({ openingId: props.openingId, offset: page <= 0 ? 0 : page - 1 });
+      } else if (isMyReferrals) {
+        getMyReferrals();
+      } else {
+        let whereProps = {
+          email: null,
+          role: null,
+          status: null,
+          offset: page <= 0 ? 0 : page - 1
+        };
+
+        if (props.emailValue) whereProps.email = props.emailValue;
+        if (props.roleValue) whereProps.role = props.roleValue === 'All' ? '' : props.roleValue;
+        if (props.statusValue)
+          whereProps.status = props.statusValue === 'All' ? '' : props.statusValue;
+
+        getAllReferrals(whereProps);
+      }
+  }, [
+    isRoutedFromOpening,
+    props.emailValue,
+    props.roleValue,
+    props.openingId,
+    props.statusValue,
+    page
+  ]);
 
   useEffect(() => {
     if (isAllReferralsSuccess || isMyReferralsSuccess)
@@ -65,10 +85,6 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
       <label>{label}</label>
     </td>
   ));
-
-  useEffect(() => {
-    if (typeof page !== 'string') getAllReferrals({ offset: page - 1 });
-  }, [page]);
 
   return (
     <>

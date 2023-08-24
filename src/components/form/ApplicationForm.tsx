@@ -19,6 +19,7 @@ import DropDown from '../input-field/drop-down/DropDown';
 import { AuthorizationContext } from '../../app';
 import { RouteConstants } from '../../constants/routeConstants';
 import CustomPopup from '../popup/CustomPopup';
+import { candidateStatuses } from '../../constants/statusConstants';
 
 export type ApplicationFormPropsType = {
   opening: OpeningType;
@@ -364,19 +365,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       />
       {props.isEdit && isSuperAuthorized && (
         <DropDown
-          options={[
-            'Received',
-            'Review',
-            'Round 1',
-            'Round 2',
-            'Round 3',
-            'Hired',
-            'Offered',
-            'Offer Accepted',
-            'Offer Declined',
-            'Rejected',
-            'Hired'
-          ]}
+          options={candidateStatuses}
           value={status}
           label='Status'
           placeholder='Select Status'
