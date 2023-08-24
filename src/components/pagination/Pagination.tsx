@@ -57,7 +57,7 @@ const Pagination: React.FC<PaginationPropsType> = (props) => {
         type='number'
         onBlur={onBlur}
         onKeyUp={onKeyUp}
-        className='pagination-page-offset'
+        className='pagination-page-number'
         value={props.page}
         onChange={onChangePage}
       ></input>
