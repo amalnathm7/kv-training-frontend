@@ -36,7 +36,6 @@ const LoginPage: React.FC = () => {
   };
 
   const onKeyUp = (event) => {
-    console.log(event);
     if (event.code === 'Enter') validateAndLogin();
   };
 

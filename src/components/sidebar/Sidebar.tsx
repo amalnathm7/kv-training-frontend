@@ -41,7 +41,8 @@ const Sidebar: React.FC = () => {
 
   const onApplicationsSelected = () => {
     setSelectedTabIndex(2);
-    navigate(RouteConstants.application);
+    if (isSuperAuthorized) navigate(RouteConstants.application);
+    else if (isBasicAuthorized) navigate(`${RouteConstants.application}/:id`);
   };
 
   const onReferralsListSelected = () => {
@@ -67,7 +68,7 @@ const Sidebar: React.FC = () => {
           headerText='Job Openings'
         />
 
-        {isSuperAuthorized && (
+        {(isSuperAuthorized || isBasicAuthorized) && (
           <SideBarButton
             isSelected={selectedTabIndex === 2}
             onClick={onApplicationsSelected}

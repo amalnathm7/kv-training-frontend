@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
 
 const ReferralCreatePage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { data: myProfile, isError: isMyProfileFetchError } = useGetMyProfileQuery();
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -20,12 +19,8 @@ const ReferralCreatePage: React.FC = () => {
   }, [isOpeningFetchSucces]);
 
   useEffect(() => {
-    if (
-      isMyProfileFetchSuccess &&
-      (!myProfile.data.role || myProfile.data.role.permissionLevel === PermissionLevel.BASIC)
-    )
-      navigate(`${RouteConstants.employee}`);
-  }, [isMyProfileFetchSuccess]);
+    if (isMyProfileFetchError) navigate(`${RouteConstants.opening}`);
+  }, [isMyProfileFetchError]);
 
   return (
     <HomeLayout
