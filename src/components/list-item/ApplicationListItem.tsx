@@ -70,7 +70,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.application.candidateCode}</td>}
+      <td>{props.application.candidateCode}</td>
       <td>{props.application.name}</td>
       <td>{props.application.email}</td>
       <td>{props.application.phone}</td>
