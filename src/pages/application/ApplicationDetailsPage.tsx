@@ -1,6 +1,6 @@
 import Card from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
 import { CardItemPropsType } from '../../components/card-item/CardItem';
@@ -9,6 +9,7 @@ import { AuthorizationContext } from '../../app';
 
 const ApplicationDetailsPage: React.FC = () => {
   const { isSuperAuthorized } = useContext(AuthorizationContext);
+  const [canEdit, setCanEdit] = useState(false);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -82,16 +83,20 @@ const ApplicationDetailsPage: React.FC = () => {
     ];
   }
 
+  useEffect(() => {
+    if (isSuccess) setCanEdit(isSuperAuthorized && applicationData.data.status !== 'Hired');
+  }, [isSuccess, isSuperAuthorized, applicationData]);
+
   const onEditClicked = () => {
     navigate(window.location.pathname + '/edit');
   };
 
   return (
     <HomeLayout
-      subHeaderPrimaryAction={isSuperAuthorized ? onEditClicked : null}
+      subHeaderPrimaryAction={canEdit ? onEditClicked : null}
       subHeaderLabel='Application Details'
-      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
-      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}
+      subHeaderPrimaryActionLabel={canEdit ? 'Edit' : ''}
+      subHeaderPrimaryActionIcon={canEdit ? 'edit.svg' : ''}
     >
       <Card items={items}></Card>
     </HomeLayout>

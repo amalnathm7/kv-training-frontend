@@ -1,6 +1,6 @@
 import Card, { CardItemType } from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
 import { useGetFileUrlQuery } from '../../services/fileApi';
@@ -8,13 +8,21 @@ import { AuthorizationContext, SelectedContext } from '../../app';
 
 const ReferralDetailsPage: React.FC = () => {
   const { myProfile } = useContext(SelectedContext);
-
-  const { isSuperAuthorized } = useContext(AuthorizationContext);
-
+  const [canEdit, setCanEdit] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
 
   const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
+
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
+
+  useEffect(() => {
+    if (isSuccess)
+      setCanEdit(
+        (isSuperAuthorized || myProfile.id === referralData?.data.referredBy?.id) &&
+          referralData.data.status !== 'Hired'
+      );
+  }, [isSuccess, isSuperAuthorized, myProfile, referralData]);
 
   const { data: resumeUrl } = useGetFileUrlQuery({
     fileName: referralData?.data.resume
@@ -94,18 +102,10 @@ const ReferralDetailsPage: React.FC = () => {
 
   return (
     <HomeLayout
-      subHeaderPrimaryAction={
-        isSuperAuthorized || myProfile?.id === referralData?.data.referredBy?.id
-          ? onEditClicked
-          : null
-      }
+      subHeaderPrimaryAction={canEdit ? onEditClicked : null}
       subHeaderLabel='Referral Details'
-      subHeaderPrimaryActionLabel={
-        isSuperAuthorized || myProfile?.id === referralData?.data.referredBy?.id ? 'Edit' : ''
-      }
-      subHeaderPrimaryActionIcon={
-        isSuperAuthorized || myProfile?.id === referralData?.data.referredBy?.id ? 'edit.svg' : ''
-      }
+      subHeaderPrimaryActionLabel={canEdit ? 'Edit' : ''}
+      subHeaderPrimaryActionIcon={canEdit ? 'edit.svg' : ''}
     >
       <Card items={items}></Card>
     </HomeLayout>
