@@ -524,6 +524,320 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with primary and s
 }
 `;
 
+exports[`SubHeader Props Test If SubHeader rendered correctly with primary and secondary filter options 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="sub-header"
+      >
+        <label
+          class="sub-header-label"
+        >
+          SubHeader-label
+        </label>
+        <div
+          class="sub-header-actions"
+        >
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon.png"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="sub-header-actions"
+      >
+        <div
+          class="action-button"
+        >
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon.png"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
+        </div>
+        <div
+          class="action-button"
+        >
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
+exports[`SubHeader Props Test If SubHeader rendered correctly with primary filter options 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="sub-header"
+      >
+        <label
+          class="sub-header-label"
+        >
+          SubHeader-label
+        </label>
+        <div
+          class="sub-header-actions"
+        >
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon.png"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+          <div
+            class="action-button"
+          >
+            <div
+              class="sub-header-action-icon-container"
+            >
+              <img
+                class="sub-header-action-icon"
+                src="/assets/icons/SubHeader-action-icon"
+              />
+            </div>
+            <label
+              class="sub-header-action-label"
+            >
+              SubHeader-action-label
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="sub-header"
+    >
+      <label
+        class="sub-header-label"
+      >
+        SubHeader-label
+      </label>
+      <div
+        class="sub-header-actions"
+      >
+        <div
+          class="action-button"
+        >
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon.png"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
+        </div>
+        <div
+          class="action-button"
+        >
+          <div
+            class="sub-header-action-icon-container"
+          >
+            <img
+              class="sub-header-action-icon"
+              src="/assets/icons/SubHeader-action-icon"
+            />
+          </div>
+          <label
+            class="sub-header-action-label"
+          >
+            SubHeader-action-label
+          </label>
+        </div>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
+
 exports[`SubHeader Props Test If SubHeader rendered correctly with route options 1`] = `
 {
   "asFragment": [Function],
@@ -715,27 +1029,31 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with search field 
         <div
           class="sub-header-actions"
         >
-          <div
-            class="filter"
+          <select
+            class="filter-dropdown"
+            style="margin-right: 20px;"
           >
-            <select
-              class="filter-dropdown"
+            <option
+              hidden=""
+            />
+          </select>
+          <select
+            class="filter-dropdown"
+          >
+            <option
+              hidden=""
+            />
+            <option
+              value="filter 1"
             >
-              <option
-                hidden=""
-              />
-              <option
-                value="filter 1"
-              >
-                filter 1
-              </option>
-              <option
-                value="filter 2"
-              >
-                filter 2
-              </option>
-            </select>
-          </div>
+              filter 1
+            </option>
+            <option
+              value="filter 2"
+            >
+              filter 2
+            </option>
+          </select>
           <div
             class="action-button"
           >
@@ -787,27 +1105,31 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with search field 
       <div
         class="sub-header-actions"
       >
-        <div
-          class="filter"
+        <select
+          class="filter-dropdown"
+          style="margin-right: 20px;"
         >
-          <select
-            class="filter-dropdown"
+          <option
+            hidden=""
+          />
+        </select>
+        <select
+          class="filter-dropdown"
+        >
+          <option
+            hidden=""
+          />
+          <option
+            value="filter 1"
           >
-            <option
-              hidden=""
-            />
-            <option
-              value="filter 1"
-            >
-              filter 1
-            </option>
-            <option
-              value="filter 2"
-            >
-              filter 2
-            </option>
-          </select>
-        </div>
+            filter 1
+          </option>
+          <option
+            value="filter 2"
+          >
+            filter 2
+          </option>
+        </select>
         <div
           class="action-button"
         >

@@ -9,6 +9,7 @@ exports[`Primary Button Props Test If button rendered correctly 1`] = `
         class="action-button-icon"
         data-testid="action-button-test"
         src="/assets/icons/icon.png"
+        style="background-color: red;"
       />
     </div>
   </body>,
@@ -17,6 +18,7 @@ exports[`Primary Button Props Test If button rendered correctly 1`] = `
       class="action-button-icon"
       data-testid="action-button-test"
       src="/assets/icons/icon.png"
+      style="background-color: red;"
     />
   </div>,
   "debug": [Function],
