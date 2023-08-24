@@ -6,8 +6,10 @@ import { GET_OPENING_LIST } from '../constants/apiConstants';
 
 export const openingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getOpeningList: builder.query<ResponseType<OpeningType[]>, void>({
-      query: () => `${RouteConstants.openingApi}`,
+    getOpeningList: builder.query<ResponseType<OpeningType[]>, { offset: number }>({
+      query: (params) => ({
+        url: `${RouteConstants.openingApi}?${params.offset}`
+      }),
       providesTags: [GET_OPENING_LIST]
     }),
     getOpeningById: builder.query<ResponseType<OpeningType>, string>({
@@ -40,7 +42,7 @@ export const openingApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetOpeningListQuery,
+  useLazyGetOpeningListQuery,
   useGetOpeningByIdQuery,
   useCreateOpeningMutation,
   useUpdateOpeningMutation,

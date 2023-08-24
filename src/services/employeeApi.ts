@@ -6,8 +6,10 @@ import { ResponseType } from '../types/ResponseType';
 
 export const employeeApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getEmployeeList: builder.query<ResponseType<EmployeeType[]>, void>({
-      query: () => `${RouteConstants.employeeApi}`,
+    getEmployeeList: builder.query<ResponseType<EmployeeType[]>, { offset: number }>({
+      query: (params) => ({
+        url: `${RouteConstants.employeeApi}?offset=${params.offset}`
+      }),
       providesTags: [GET_EMPLOYEE_LIST]
     }),
     getMyProfile: builder.query<ResponseType<EmployeeType>, void>({
@@ -43,7 +45,7 @@ export const employeeApi = baseApi.injectEndpoints({
 });
 
 export const {
-  useGetEmployeeListQuery,
+  useLazyGetEmployeeListQuery,
   useGetMyProfileQuery,
   useGetEmployeeByIdQuery,
   useCreateEmployeeMutation,
