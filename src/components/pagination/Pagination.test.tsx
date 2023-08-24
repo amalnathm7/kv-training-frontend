@@ -23,6 +23,26 @@ describe('Pagination Props Test', () => {
 
     expect(element).toMatchSnapshot();
   });
+  test('If pagination rendered correctly after page was set 0 and total became greater than 0', () => {
+    const props: PaginationPropsType = {
+      page: 0,
+      length: 10,
+      total: 25,
+      setPage: () => {}
+    };
+
+    const element = render(
+      <table>
+        <tbody>
+          <tr>
+            <Pagination {...props} />
+          </tr>
+        </tbody>
+      </table>
+    );
+
+    expect(element).toMatchSnapshot();
+  });
 
   test('If pagination next button clicks', () => {
     const setPage = jest.fn((value: number) => ({ value }));

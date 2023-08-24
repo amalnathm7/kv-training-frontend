@@ -64,7 +64,7 @@ describe('SubHeader Props Test', () => {
     expect(element).toMatchSnapshot();
   });
 
-  test('If SubHeader rendered correctly with filter options', () => {
+  test('If SubHeader rendered correctly with primary filter options', () => {
     const props: SubHeaderPropsType = {
       label: 'SubHeader-label',
       primaryActionLabel: 'SubHeader-action-label',
@@ -74,6 +74,8 @@ describe('SubHeader Props Test', () => {
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
       primaryFilterOptions: ['filter 1', 'filter 2'],
+      primaryFilterAction: () => {},
+      primaryFilterPlaceholder: 'Subheader-placeholder',
       primaryActionPlaceholder: 'Subheader-placeholder',
       primaryActionValue: 'Subheader-value'
     };
@@ -83,6 +85,29 @@ describe('SubHeader Props Test', () => {
     expect(element).toMatchSnapshot();
   });
 
+  test('If SubHeader rendered correctly with primary and secondary filter options', () => {
+    const props: SubHeaderPropsType = {
+      label: 'SubHeader-label',
+      primaryActionLabel: 'SubHeader-action-label',
+      primaryActionIcon: 'SubHeader-action-icon.png',
+      primaryAction: () => {},
+      secondaryActionLabel: 'SubHeader-action-label',
+      secondaryActionIcon: 'SubHeader-action-icon',
+      secondaryAction: () => {},
+      primaryFilterOptions: ['filter 1', 'filter 2'],
+      primaryFilterAction: () => {},
+      primaryFilterPlaceholder: 'Subheader-placeholder',
+      secondaryFilterOptions: ['filter 1', 'filter 2'],
+      secondaryFilterAction: () => {},
+      secondaryFilterPlaceholder: 'Subheader-placeholder',
+      primaryActionPlaceholder: 'Subheader-placeholder',
+      primaryActionValue: 'Subheader-value'
+    };
+
+    const element = render(<SubHeader {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
   test('If SubHeader rendered correctly with route options', () => {
     const props: SubHeaderPropsType = {
       label: 'SubHeader-label',
