@@ -1,5 +1,5 @@
 import { ReferralType } from '../../types/ReferralType';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import StatusIcon from '../status-icon/StatusIcon';
 import { StatusType } from '../../types/StatusType';
 import { StatusColor } from '../../constants/statusColorConstants';
@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteReferralMutation } from '../../services/referralApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
 import viewFile from '../../utils/viewFile';
+import { SelectedContext } from '../../app';
 
 type ReferralListItemPropsType = {
   referral: ReferralType;
@@ -19,13 +19,12 @@ type ReferralListItemPropsType = {
 };
 
 const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
+  }, [myProfile]);
 
   let status: StatusType = {
     label: props.referral.status,

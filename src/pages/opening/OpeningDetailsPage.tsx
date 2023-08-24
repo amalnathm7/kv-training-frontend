@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
@@ -8,23 +7,19 @@ import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Card from '../../components/card/Card';
 import { RouteConstants } from '../../constants/routeConstants';
 import { OpeningType } from '../../types/OpeningType';
+import { SelectedContext } from '../../app';
 
 const OpeningDetailsPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
+    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
 
-    if (
-      isMyProfileFetchSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel !== PermissionLevel.BASIC
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel !== PermissionLevel.BASIC)
       setIsAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+  }, []);
 
   const { id } = useParams();
   const navigate = useNavigate();

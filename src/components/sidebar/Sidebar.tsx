@@ -4,24 +4,19 @@ import SideBarButton from '../button/SideBarButton/SideBarButton';
 import { SelectedContext, SelectedContextType } from '../../app';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 
 const Sidebar: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const { selectedTabIndex, setSelectedTabIndex } =
     useContext<SelectedContextType>(SelectedContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (
-      isMyProfileFetchSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+  }, [myProfile]);
 
   const onEmployeeListSelected = () => {
     setSelectedTabIndex(0);

@@ -1,25 +1,21 @@
 import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import OpeningListing from '../../components/listing/OpeningListing';
+import { SelectedContext } from '../../app';
 
 const OpeningListingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
-  }, [isSuccess]);
+  }, []);
 
   useEffect(() => {
     if (isSuperAuthorized) {

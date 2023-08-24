@@ -1,6 +1,5 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext, useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetRoleListQuery } from '../../services/roleApi';
 import ApplicationListing from '../../components/listing/ApplicationListing';
@@ -8,7 +7,7 @@ import { useParams } from 'react-router-dom';
 import { SelectedContext } from '../../app';
 
 const ApplicationListingPage: React.FC = () => {
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isAuthorized, setIsAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
@@ -38,13 +37,9 @@ const ApplicationListingPage: React.FC = () => {
   }, [isRoleFetchSuccess]);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel !== PermissionLevel.BASIC
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel !== PermissionLevel.BASIC)
       setIsAuthorized(true);
-  }, [isSuccess]);
+  }, [myProfile]);
 
   const labelArray = [
     'Application Code',

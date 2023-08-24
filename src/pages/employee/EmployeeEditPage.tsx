@@ -1,19 +1,20 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import EmployeeForm from '../../components/form/EmployeeForm';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect, useState } from 'react';
-import { useGetEmployeeByIdQuery, useGetMyProfileQuery } from '../../services/employeeApi';
+import React, { useContext, useEffect, useState } from 'react';
+import { useGetEmployeeByIdQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
+import { SelectedContext } from '../../app';
 
 const EmployeeEditPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel !== PermissionLevel.SUPER)
+    if (myProfile.role?.permissionLevel !== PermissionLevel.SUPER)
       navigate(`${RouteConstants.employee}`, { replace: true });
-  }, [isMyProfileFetchSuccess]);
+  });
 
   const { id } = useParams();
 

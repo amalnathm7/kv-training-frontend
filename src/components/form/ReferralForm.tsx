@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './Form.css';
 import FormField from '../input-field/form-field/FormField';
 import PrimaryButton from '../button/PrimaryButton/PrimaryButton';
@@ -14,8 +14,8 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
 import DropDown from '../input-field/drop-down/DropDown';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+import { SelectedContext } from '../../app';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -41,22 +41,15 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
 
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
 
-  useEffect(() => {
-    if (
-      isMyProfileFetchSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+  }, [myProfile]);
 
   useEffect(() => {
     if (props.referral) {

@@ -1,19 +1,20 @@
 import EmployeeForm from '../../components/form/EmployeeForm';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
+import React, { useContext, useEffect } from 'react';
+
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
+import { SelectedContext } from '../../app';
 
 const EmployeeCreatePage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel !== PermissionLevel.SUPER)
+    if (myProfile.role?.permissionLevel !== PermissionLevel.SUPER)
       navigate(`${RouteConstants.employee}`);
-  }, [isMyProfileFetchSuccess]);
+  });
 
   return (
     <HomeLayout

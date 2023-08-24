@@ -1,28 +1,28 @@
 import { EmployeeType } from '../../types/EmployeeType';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ListItem.css';
 import { StatusType } from '../../types/StatusType';
 import StatusIcon from '../status-icon/StatusIcon';
 import ActionButton from '../button/ActionButton/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import CustomPopup from '../popup/CustomPopup';
-import { useDeleteEmployeeMutation, useGetMyProfileQuery } from '../../services/employeeApi';
+import { useDeleteEmployeeMutation } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { toast } from 'react-toastify';
+import { SelectedContext } from '../../app';
 
 type EmployeeListItemPropsType = {
   employee: EmployeeType;
 };
 
 const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (isSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [isSuccess]);
+    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
+  }, [myProfile]);
 
   const navigate = useNavigate();
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -41,7 +41,7 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
   };
 
   const handleDelete = () => {
-    if (props.employee.id !== myProfile.data?.id) setShowDeletePopup(true);
+    if (props.employee.id !== myProfile?.id) setShowDeletePopup(true);
     else toast.error('You cannot delete yourself!');
   };
 

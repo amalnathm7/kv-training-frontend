@@ -1,14 +1,14 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import { useNavigate, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
+import React, { useContext, useEffect, useState } from 'react';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
 import { ReferralType } from '../../types/ReferralType';
+import { SelectedContext } from '../../app';
 
 const ReferralEditPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -16,15 +16,15 @@ const ReferralEditPage: React.FC = () => {
   const [referral, setReferral] = useState<ReferralType>(null);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && isReferralByIdFetchSuccess) {
+    if (isReferralByIdFetchSuccess) {
       const isNotAuthorized =
-        !myProfile.data.role ||
-        (myProfile.data.role.permissionLevel !== PermissionLevel.SUPER &&
-          myProfile.data.id !== referralData.data.referredBy?.id);
+        !myProfile?.role ||
+        (myProfile?.role.permissionLevel !== PermissionLevel.SUPER &&
+          myProfile?.id !== referralData.data.referredBy?.id);
 
       if (isNotAuthorized) navigate(-1);
     }
-  }, [isMyProfileFetchSuccess, isReferralByIdFetchSuccess]);
+  }, [isReferralByIdFetchSuccess, myProfile]);
 
   useEffect(() => {
     if (isReferralByIdFetchSuccess) setReferral(referralData.data);
@@ -38,7 +38,7 @@ const ReferralEditPage: React.FC = () => {
       subHeaderPrimaryActionIcon=''
     >
       <ReferralForm
-        referredBy={myProfile?.data}
+        referredBy={myProfile}
         opening={referral?.opening}
         referral={referral}
         isEdit={true}

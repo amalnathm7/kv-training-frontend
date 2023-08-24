@@ -1,6 +1,5 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext, useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
@@ -8,7 +7,7 @@ import { SelectedContext } from '../../app';
 import { useParams } from 'react-router-dom';
 
 const AllReferralsListingPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
@@ -28,13 +27,9 @@ const AllReferralsListingPage: React.FC = () => {
   }, [isRoleFetchSuccess]);
 
   useEffect(() => {
-    if (
-      isMyProfileFetchSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+  }, []);
 
   const labelArray = [
     'Referral Code',

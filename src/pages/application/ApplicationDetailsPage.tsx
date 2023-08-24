@@ -1,20 +1,19 @@
 import Card from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
 import { CardItemPropsType } from '../../components/card-item/CardItem';
+import { SelectedContext } from '../../app';
 
 const ApplicationDetailsPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
+  }, [myProfile]);
 
   const { id } = useParams();
   const navigate = useNavigate();

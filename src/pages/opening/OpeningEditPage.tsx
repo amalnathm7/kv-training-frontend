@@ -1,20 +1,20 @@
 import { useNavigate, useParams } from 'react-router-dom';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
+import React, { useContext, useEffect, useState } from 'react';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
 import OpeningForm from '../../components/form/OpeningForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
+import { SelectedContext } from '../../app';
 
 const OpeningEditPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel !== PermissionLevel.SUPER)
+    if (myProfile?.role?.permissionLevel !== PermissionLevel.SUPER)
       navigate(`${RouteConstants.opening}`, { replace: true });
-  }, [isMyProfileFetchSuccess]);
+  }, []);
 
   const { id } = useParams();
 

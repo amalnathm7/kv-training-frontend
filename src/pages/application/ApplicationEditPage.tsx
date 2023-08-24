@@ -1,14 +1,14 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import { useNavigate, useParams } from 'react-router-dom';
-import React, { useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
+import React, { useContext, useEffect, useState } from 'react';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import ApplicationForm from '../../components/form/ApplicationForm';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
 import { ApplicationType } from '../../types/ApplicationType';
+import { SelectedContext } from '../../app';
 
 const ApplicationEditPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -17,13 +17,13 @@ const ApplicationEditPage: React.FC = () => {
   const [application, setApplication] = useState<ApplicationType>(null);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && isApplicationByIdFetchSuccess) {
+    if (myProfile && isApplicationByIdFetchSuccess) {
       const isNotAuthorized =
-        !myProfile.data.role || myProfile.data.role.permissionLevel !== PermissionLevel.SUPER;
+        !myProfile?.role || myProfile?.role.permissionLevel !== PermissionLevel.SUPER;
 
       if (isNotAuthorized) navigate(-1);
     }
-  }, [isMyProfileFetchSuccess, isApplicationByIdFetchSuccess]);
+  }, [myProfile, isApplicationByIdFetchSuccess]);
 
   useEffect(() => {
     if (isApplicationByIdFetchSuccess) setApplication(applicationData.data);

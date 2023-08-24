@@ -1,31 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import './ListItem.css';
 import ActionButton from '../button/ActionButton/ActionButton';
 import { useNavigate } from 'react-router-dom';
 import CustomPopup from '../popup/CustomPopup';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { OpeningType } from '../../types/OpeningType';
 import { useDeleteOpeningMutation } from '../../services/openingApi';
 import { toast } from 'react-toastify';
+import { SelectedContext } from '../../app';
 
 type OpeningListItemPropsType = {
   opening: OpeningType;
 };
 
 const OpeningListItem: React.FC<OpeningListItemPropsType> = (props) => {
-  const { data: myProfile, isSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (
-      isSuccess &&
-      myProfile.data.role &&
-      myProfile.data.role.permissionLevel === PermissionLevel.SUPER
-    )
+    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
-  }, [isSuccess]);
+  }, [myProfile]);
 
   const navigate = useNavigate();
   const [showDeletePopup, setShowDeletePopup] = useState(false);

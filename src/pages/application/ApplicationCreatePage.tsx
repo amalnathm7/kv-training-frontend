@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ApplicationForm from '../../components/form/ApplicationForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
+import { SelectedContext } from '../../app';
 
 const ApplicationCreatePage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -20,12 +20,9 @@ const ApplicationCreatePage: React.FC = () => {
   }, [isOpeningFetchSucces]);
 
   useEffect(() => {
-    if (
-      isMyProfileFetchSuccess &&
-      (!myProfile.data.role || myProfile.data.role.permissionLevel === PermissionLevel.BASIC)
-    )
+    if (!myProfile?.role || myProfile?.role.permissionLevel === PermissionLevel.BASIC)
       navigate(`${RouteConstants.employee}`);
-  }, [isMyProfileFetchSuccess]);
+  }, [myProfile]);
 
   return (
     <HomeLayout

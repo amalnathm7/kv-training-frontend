@@ -21,12 +21,15 @@ import ApplicationListingPage from './pages/application/ApplicationListingPage';
 import ApplicationDetailsPage from './pages/application/ApplicationDetailsPage';
 import ApplicationCreatePage from './pages/application/ApplicationCreatePage';
 import ApplicationEditPage from './pages/application/ApplicationEditPage';
+import { EmployeeType } from './types/EmployeeType';
 
 export type SelectedContextType = {
   selectedTabIndex: number;
   setSelectedTabIndex: Dispatch<SetStateAction<number>>;
   isMyReferralsSelected: boolean;
   setIsMyReferralsSelected: Dispatch<SetStateAction<boolean>>;
+  myProfile: EmployeeType;
+  setMyProfile: Dispatch<SetStateAction<EmployeeType>>;
 };
 
 export const SelectedContext: Context<SelectedContextType> = createContext(null);
@@ -34,6 +37,7 @@ export const SelectedContext: Context<SelectedContextType> = createContext(null)
 const App: FC = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(-1);
   const [isMyReferralsSelected, setIsMyReferralsSelected] = useState(false);
+  const [myProfile, setMyProfile] = useState();
 
   return (
     <div className='app'>
@@ -42,7 +46,9 @@ const App: FC = () => {
           selectedTabIndex,
           setSelectedTabIndex,
           isMyReferralsSelected,
-          setIsMyReferralsSelected
+          setIsMyReferralsSelected,
+          myProfile,
+          setMyProfile
         }}
       >
         <BrowserRouter>

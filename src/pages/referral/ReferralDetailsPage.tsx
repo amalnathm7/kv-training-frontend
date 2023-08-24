@@ -1,19 +1,18 @@
 import Card, { CardItemType } from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
+import { SelectedContext } from '../../app';
 
 const ReferralDetailsPage: React.FC = () => {
-  const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { myProfile } = useContext(SelectedContext);
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [isMyProfileFetchSuccess]);
+    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
+  }, [myProfile]);
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -95,18 +94,16 @@ const ReferralDetailsPage: React.FC = () => {
   return (
     <HomeLayout
       subHeaderPrimaryAction={
-        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id
+        isSuperAuthorized || myProfile?.id === referralData?.data.referredBy?.id
           ? onEditClicked
           : null
       }
       subHeaderLabel='Referral Details'
       subHeaderPrimaryActionLabel={
-        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id ? 'Edit' : ''
+        isSuperAuthorized || myProfile?.id === referralData?.data.referredBy?.id ? 'Edit' : ''
       }
       subHeaderPrimaryActionIcon={
-        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id
-          ? 'edit.svg'
-          : ''
+        isSuperAuthorized || myProfile?.id === referralData?.data.referredBy?.id ? 'edit.svg' : ''
       }
     >
       <Card items={items}></Card>
