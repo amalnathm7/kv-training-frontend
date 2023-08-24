@@ -54,6 +54,7 @@ const App: FC = () => {
             <Route path={`${RouteConstants.employee}/create`} element={<EmployeeCreatePage />} />
             <Route path={`${RouteConstants.employee}/:id/edit`} element={<EmployeeEditPage />} />
             <Route path={`${RouteConstants.opening}`} element={<OpeningListingPage />} />
+            <Route path={`${RouteConstants.publicOpening}`} element={<OpeningListingPage />} />
             <Route path={`${RouteConstants.opening}/:id`} element={<OpeningDetailsPage />} />
             <Route path={`${RouteConstants.opening}/:id/refer`} element={<ReferralCreatePage />} />
             <Route path={`${RouteConstants.referral}/:id/edit`} element={<ReferralEditPage />} />

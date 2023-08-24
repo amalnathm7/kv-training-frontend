@@ -40,7 +40,7 @@ const LoginPage: React.FC = () => {
   };
 
   const onCareersClicked = () => {
-    navigate(`${RouteConstants.opening}`);
+    navigate(`${RouteConstants.publicOpening}`);
   };
 
   useEffect(() => {
