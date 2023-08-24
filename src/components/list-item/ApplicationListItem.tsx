@@ -57,9 +57,9 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
   const [deleteApplication, { isSuccess: isDeleteSuccess }] = useDeleteApplicationMutation();
 
   useEffect(() => {
-    if (props.application.status !== 'Received') setDeleteError(true);
+    if (!isSuperAuthorized && props.application.status !== 'Received') setDeleteError(true);
     else setDeleteError(false);
-  }, [props.application.status]);
+  }, [isSuperAuthorized, props.application.status]);
 
   useEffect(() => {
     if (isDeleteSuccess) {
