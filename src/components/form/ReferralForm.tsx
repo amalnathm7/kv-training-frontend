@@ -18,6 +18,7 @@ import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import CustomPopup from '../popup/CustomPopup';
 import { RouteConstants } from '../../constants/routeConstants';
+import { candidateStatuses } from '../../constants/statusConstants';
 
 export type ReferralFormPropsType = {
   referredBy: EmployeeType;
@@ -388,18 +389,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       />
       {props.isEdit && isSuperAuthorized && (
         <DropDown
-          options={[
-            'Received',
-            'Review',
-            'Round 1',
-            'Round 2',
-            'Round 3',
-            'Offered',
-            'Offer Accepted',
-            'Offer Declined',
-            'Rejected',
-            'Hired'
-          ]}
+          options={candidateStatuses}
           value={status}
           label='Status'
           placeholder='Select Status'

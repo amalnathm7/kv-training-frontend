@@ -54,7 +54,7 @@ describe('SubHeader Props Test', () => {
       secondaryActionLabel: 'SubHeader-action-label',
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
-      primaryActionFilterOptions: ['filter 1', 'filter 2'],
+      primaryFilterOptions: ['filter 1', 'filter 2'],
       primaryActionPlaceholder: 'Subheader-placeholder',
       primaryActionValue: 'Subheader-value'
     };
@@ -73,7 +73,7 @@ describe('SubHeader Props Test', () => {
       secondaryActionLabel: 'SubHeader-action-label',
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
-      primaryActionFilterOptions: ['filter 1', 'filter 2'],
+      primaryFilterOptions: ['filter 1', 'filter 2'],
       primaryActionPlaceholder: 'Subheader-placeholder',
       primaryActionValue: 'Subheader-value'
     };

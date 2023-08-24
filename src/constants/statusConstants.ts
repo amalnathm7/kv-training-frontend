@@ -13,3 +13,16 @@ export const StatusColor = {
   Rejected: '#FFBFBF',
   Hired: '#D3F4BE'
 };
+
+export const candidateStatuses = [
+  'Received',
+  'Review',
+  'Round 1',
+  'Round 2',
+  'Round 3',
+  'Offered',
+  'Offer Accepted',
+  'Offer Declined',
+  'Rejected',
+  'Hired'
+];
