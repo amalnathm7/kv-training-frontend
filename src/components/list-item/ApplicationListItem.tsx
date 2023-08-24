@@ -28,7 +28,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
 
   let status: StatusType = {
     label: props.application.status,
-    color: StatusColor[props.application.status]
+    color: StatusColor[props.application.status.replace(' ', '_')]
   };
 
   const navigate = useNavigate();

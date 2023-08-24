@@ -29,7 +29,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
 
   let status: StatusType = {
     label: props.referral.status,
-    color: StatusColor[props.referral.status]
+    color: StatusColor[props.referral.status.replace(' ', '_')]
   };
 
   const navigate = useNavigate();
