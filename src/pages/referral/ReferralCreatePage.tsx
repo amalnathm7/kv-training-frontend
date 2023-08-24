@@ -5,9 +5,14 @@ import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 
 const ReferralCreatePage: React.FC = () => {
-  const { data: myProfile, isError: isMyProfileFetchError } = useGetMyProfileQuery();
+  const {
+    data: myProfile,
+    isSuccess: isMyProfileFetchSuccess,
+    isError: isMyProfileFetchError
+  } = useGetMyProfileQuery();
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -19,7 +24,12 @@ const ReferralCreatePage: React.FC = () => {
   }, [isOpeningFetchSucces]);
 
   useEffect(() => {
-    if (isMyProfileFetchError) navigate(`${RouteConstants.opening}`);
+    if (
+      isMyProfileFetchError ||
+      (isMyProfileFetchSuccess &&
+        (!myProfile.data.role || myProfile.data.role.permissionLevel === PermissionLevel.BASIC))
+    )
+      navigate(`${RouteConstants.opening}`);
   }, [isMyProfileFetchError]);
 
   return (

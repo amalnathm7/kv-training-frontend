@@ -68,7 +68,7 @@ const Sidebar: React.FC = () => {
           headerText='Job Openings'
         />
 
-        {(isSuperAuthorized || isBasicAuthorized) && (
+        {isSuperAuthorized && (
           <SideBarButton
             isSelected={selectedTabIndex === 2}
             onClick={onApplicationsSelected}
