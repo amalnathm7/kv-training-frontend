@@ -18,7 +18,6 @@ export const applicationApi = baseApi.injectEndpoints({
         if (email) params.push(`email=${email}`);
         if (role) params.push(`role=${role}`);
         if (openingId) params.push(`openingId=${openingId}`);
-
         endpoint += `?${params.join('&')}`;
 
         return endpoint;
