@@ -49,7 +49,9 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     )
       // navigate(RouteConstants.login, { replace: true });
       navigate(-1);
+  }, []);
 
+  useEffect(() => {
     if (location.pathname.includes(RouteConstants.employee)) setSelectedTabIndex(0);
     else if (location.pathname.includes(RouteConstants.opening) || isBasicAuthorized)
       setSelectedTabIndex(1);
