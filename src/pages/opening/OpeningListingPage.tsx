@@ -5,7 +5,6 @@ import { useNavigate } from 'react-router-dom';
 import OpeningListing from '../../components/listing/OpeningListing';
 import { AuthorizationContext } from '../../app';
 
-
 const OpeningListingPage: React.FC = () => {
   const navigate = useNavigate();
   const { isSuperAuthorized } = useContext(AuthorizationContext);

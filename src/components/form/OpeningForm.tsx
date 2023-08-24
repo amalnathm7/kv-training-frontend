@@ -10,6 +10,7 @@ import { useGetDepartmentListQuery } from '../../services/departmentApi';
 import { OpeningType } from '../../types/OpeningType';
 import { useCreateOpeningMutation, useUpdateOpeningMutation } from '../../services/openingApi';
 import { toast } from 'react-toastify';
+import { RouteConstants } from '../../constants/routeConstants';
 
 export type OpeningnFormPropsType = {
   opening: OpeningType;
@@ -158,7 +159,7 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
   useEffect(() => {
     if (props.isEdit) {
       if (isUpdateOpeningSuccess) {
-        navigate(-1);
+        navigate(`${RouteConstants.opening}`, { replace: true });
         setTimeout(() => {
           notifySuccess('updated');
         }, 100);
@@ -167,7 +168,7 @@ const OpeningForm: React.FC<OpeningnFormPropsType> = (props) => {
       }
     } else {
       if (isCreateOpeningSuccess) {
-        navigate(-1);
+        navigate(`${RouteConstants.opening}`, { replace: true });
         setTimeout(() => {
           notifySuccess('created');
         }, 100);

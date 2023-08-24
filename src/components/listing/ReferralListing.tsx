@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import ReferralListItem from '../list-item/ReferralListItem';
 import {
   useLazyGetAllReferralsQuery,
   useLazyGetMyReferralsQuery
 } from '../../services/referralApi';
 import Pagination from '../pagination/Pagination';
+import { debounce } from 'lodash';
 
 type ReferralsListingPropsType = {
   labels: string[];
@@ -30,6 +31,13 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
   ] = useLazyGetAllReferralsQuery();
   const isMyReferrals = props.selection === 'my';
 
+  const debouncedGetReferrals = useCallback(
+    debounce((whereProps) => {
+      getAllReferrals(whereProps);
+    }, 500),
+    []
+  );
+
   useEffect(() => {
     if (location.pathname.includes('opening')) setIsRoutedFromOpening(true);
     else setIsRoutedFromOpening(false);
@@ -54,7 +62,8 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
         if (props.statusValue)
           whereProps.status = props.statusValue === 'All' ? '' : props.statusValue;
 
-        getAllReferrals(whereProps);
+        if (props.emailValue) debouncedGetReferrals(whereProps);
+        else getAllReferrals(whereProps);
       }
   }, [
     isRoutedFromOpening,

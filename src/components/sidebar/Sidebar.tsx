@@ -18,14 +18,13 @@ const Sidebar: React.FC = () => {
 
   const onJobOpeningsSelected = () => {
     setSelectedTabIndex(1);
-    if (!authorizationContext.isBasicAuthorized) navigate(RouteConstants.opening);
-    else navigate(RouteConstants.publicOpening);
+    if (authorizationContext.isBasicAuthorized) navigate(RouteConstants.publicOpening);
+    else navigate(RouteConstants.opening);
   };
 
   const onApplicationsSelected = () => {
     setSelectedTabIndex(2);
-    if (authorizationContext.isSuperAuthorized) navigate(RouteConstants.application);
-    else if (authorizationContext.isBasicAuthorized) navigate(`${RouteConstants.application}/:id`);
+    navigate(RouteConstants.application);
   };
 
   const onReferralsListSelected = () => {

@@ -46,7 +46,6 @@ export const AuthorizationContext: Context<AuthorizationContextType> = createCon
 const App: FC = () => {
   const [selectedTabIndex, setSelectedTabIndex] = useState(-1);
   const [isMyReferralsSelected, setIsMyReferralsSelected] = useState(false);
-
   const [myProfile, setMyProfile] = useState<EmployeeType>();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [isAdvanceAuthorized, setIsAdvanceAuthorized] = useState(false);

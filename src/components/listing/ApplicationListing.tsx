@@ -1,8 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
 import { useLazyGetApplicationsQuery } from '../../services/applicationApi';
 import ApplicationListItem from '../list-item/ApplicationListItem';
 import { SelectedContext } from '../../app';
 import Pagination from '../pagination/Pagination';
+import { debounce } from 'lodash';
 
 type ApplicationsListingPropsType = {
   labels: string[];
@@ -20,6 +21,13 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
     useLazyGetApplicationsQuery();
   const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
   const { selectedTabIndex } = useContext(SelectedContext);
+
+  const debouncedGetApplications = useCallback(
+    debounce((whereProps) => {
+      getApplications(whereProps);
+    }, 500),
+    []
+  );
 
   useEffect(() => {
     if (location.pathname.includes('opening')) setIsRoutedFromOpening(true);
@@ -42,7 +50,8 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
         if (props.roleValue) whereProps.role = props.roleValue === 'All' ? '' : props.roleValue;
         if (props.statusValue) whereProps.status = props.statusValue;
 
-        getApplications(whereProps);
+        if (props.emailValue) debouncedGetApplications(whereProps);
+        else getApplications(whereProps);
       }
   }, [
     isRoutedFromOpening,

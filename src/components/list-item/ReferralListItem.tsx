@@ -10,7 +10,7 @@ import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteReferralMutation } from '../../services/referralApi';
 import { toast } from 'react-toastify';
 import viewFile from '../../utils/viewFile';
-import { useGetFileUrlQuery } from '../../services/fileApi';
+import { useLazyGetFileUrlQuery } from '../../services/fileApi';
 import { AuthorizationContext } from '../../app';
 
 type ReferralListItemPropsType = {
@@ -20,9 +20,11 @@ type ReferralListItemPropsType = {
 
 const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const { isSuperAuthorized } = useContext(AuthorizationContext);
-  const { data: resumeUrl } = useGetFileUrlQuery({
-    fileName: props.referral.resume
-  });
+  const [getFile, { data: resumeUrl }] = useLazyGetFileUrlQuery();
+
+  useEffect(() => {
+    if (resumeUrl) viewFile(resumeUrl);
+  }, [resumeUrl]);
 
   let status: StatusType = {
     label: props.referral.status,
@@ -93,8 +95,9 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td
         onClick={(event) => {
           event.stopPropagation();
-
-          viewFile(resumeUrl);
+          getFile({
+            fileName: props.referral.resume
+          });
         }}
       >
         <u>View Resume</u>

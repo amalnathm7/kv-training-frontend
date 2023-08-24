@@ -11,6 +11,7 @@ import { useGetDepartmentListQuery } from '../../services/departmentApi';
 import { useCreateEmployeeMutation, useUpdateEmployeeMutation } from '../../services/employeeApi';
 import { validateEmail, validatePhoneNo } from '../../utils/validation';
 import { toast } from 'react-toastify';
+import { RouteConstants } from '../../constants/routeConstants';
 
 export type EmployeeFormPropsType = {
   employee: EmployeeType;
@@ -259,7 +260,7 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
   useEffect(() => {
     if (props.isEdit) {
       if (isUpdateEmployeeSuccess) {
-        navigate(-1);
+        navigate(`${RouteConstants.employee}`, { replace: true });
         setTimeout(() => {
           notifySuccess('updated');
         }, 100);
@@ -268,7 +269,7 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
       }
     } else {
       if (isCreateEmployeeSuccess) {
-        navigate(-1);
+        navigate(`${RouteConstants.employee}`, { replace: true });
         setTimeout(() => {
           notifySuccess('created');
         }, 100);

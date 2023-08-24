@@ -42,29 +42,29 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const { id } = useParams();
   const { setSelectedTabIndex, isMyReferralsSelected } = useContext(SelectedContext);
   const { setMyProfile } = useContext(SelectedContext);
-  const isAuthorized = useContext(AuthorizationContext);
+  const authorizationContext = useContext(AuthorizationContext);
 
   useEffect(() => {
     if (isMyProfileFetchSuccess) {
       setMyProfile(data?.data);
       if (data?.data.role?.permissionLevel === PermissionLevel.SUPER) {
-        isAuthorized.setIsSuperAuthorized(true);
-        isAuthorized.setIsAdvanceAuthorized(false);
-        isAuthorized.setIBasicAuthorized(false);
+        authorizationContext.setIsSuperAuthorized(true);
+        authorizationContext.setIsAdvanceAuthorized(false);
+        authorizationContext.setIBasicAuthorized(false);
       } else if (data?.data.role?.permissionLevel === PermissionLevel.ADVANCED) {
-        isAuthorized.setIsSuperAuthorized(false);
-        isAuthorized.setIsAdvanceAuthorized(true);
-        isAuthorized.setIBasicAuthorized(false);
+        authorizationContext.setIsSuperAuthorized(false);
+        authorizationContext.setIsAdvanceAuthorized(true);
+        authorizationContext.setIBasicAuthorized(false);
       } else if (data?.data.role?.permissionLevel === PermissionLevel.BASIC) {
-        isAuthorized.setIsSuperAuthorized(false);
-        isAuthorized.setIsAdvanceAuthorized(false);
-        isAuthorized.setIBasicAuthorized(true);
+        authorizationContext.setIsSuperAuthorized(false);
+        authorizationContext.setIsAdvanceAuthorized(false);
+        authorizationContext.setIBasicAuthorized(true);
       }
     }
     if (isMyProfileFetchFailed) {
-      isAuthorized.setIsSuperAuthorized(false);
-      isAuthorized.setIsAdvanceAuthorized(false);
-      isAuthorized.setIBasicAuthorized(true);
+      authorizationContext.setIsSuperAuthorized(false);
+      authorizationContext.setIsAdvanceAuthorized(false);
+      authorizationContext.setIBasicAuthorized(true);
     }
   }, [isMyProfileFetchSuccess, data, isMyProfileFetchFailed]);
 
@@ -81,7 +81,10 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
 
   useEffect(() => {
     if (location.pathname.includes(RouteConstants.employee)) setSelectedTabIndex(0);
-    else if (location.pathname.includes(RouteConstants.opening) || isAuthorized.isBasicAuthorized)
+    else if (
+      location.pathname.includes(RouteConstants.opening) ||
+      authorizationContext.isBasicAuthorized
+    )
       setSelectedTabIndex(1);
     else if (location.pathname.includes(RouteConstants.application)) setSelectedTabIndex(2);
     else if (location.pathname.includes(RouteConstants.referral)) setSelectedTabIndex(3);
@@ -90,23 +93,17 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
 
   useEffect(() => {
     if (
-      isAuthorized.isAdvanceAuthorized &&
+      authorizationContext.isAdvanceAuthorized &&
       location.pathname.includes(RouteConstants.application)
-    ) {
-      console.log(isAuthorized.isAdvanceAuthorized);
+    )
       navigate(-1);
-    }
-    console.log(isAuthorized.isAdvanceAuthorized);
   });
   useEffect(() => {
     if (
-      isAuthorized.isAdvanceAuthorized &&
+      authorizationContext.isAdvanceAuthorized &&
       location.pathname.includes(RouteConstants.application)
-    ) {
-      console.log(isAuthorized.isAdvanceAuthorized);
+    )
       navigate(-1);
-    }
-    console.log(isAuthorized.isAdvanceAuthorized);
   });
   useEffect(() => {
     if (

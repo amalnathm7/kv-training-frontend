@@ -26,4 +26,9 @@ export const fileApi = baseApi.injectEndpoints({
   })
 });
 
-export const { useUploadFileMutation, useLazyCheckFileQuery, useGetFileUrlQuery } = fileApi;
+export const {
+  useUploadFileMutation,
+  useLazyCheckFileQuery,
+  useGetFileUrlQuery,
+  useLazyGetFileUrlQuery
+} = fileApi;

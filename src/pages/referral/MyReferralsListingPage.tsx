@@ -5,7 +5,6 @@ import { useLocation, useParams } from 'react-router-dom';
 import { AuthorizationContext, SelectedContext } from '../../app';
 
 const MyReferralsListingPage: React.FC = () => {
- 
   const { isBasicAuthorized } = useContext(AuthorizationContext);
 
   const [labels, setLabels] = useState([]);

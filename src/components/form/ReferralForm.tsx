@@ -295,7 +295,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     updateReferral,
     {
       isSuccess: isUpdateReferralSuccess,
-      data: updateReferralData,
       isError: isUpdateReferralError,
       error: updateReferralError
     }
@@ -306,22 +305,17 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateReferralSuccess)
-        if (updateReferralData.data.id) {
-          navigate(`${RouteConstants.employee}/${updateReferralData.data.id}`);
-          setTimeout(() => {
-            notifySuccess('updated');
-          }, 100);
-        } else {
-          navigate(-1);
-          setTimeout(() => {
-            notifySuccess('updated');
-          }, 100);
-        }
-      else if (isUpdateReferralError) notifyError(updateReferralError['data'].errors.error);
+      if (isUpdateReferralSuccess) {
+        navigate(`${RouteConstants.referral}`, { replace: true });
+        setTimeout(() => {
+          notifySuccess('updated');
+        }, 100);
+      } else if (isUpdateReferralError) {
+        notifyError(updateReferralError['data'].errors.error);
+      }
     } else {
       if (isCreateReferralSuccess) {
-        navigate(-1);
+        navigate(`${RouteConstants.referral}`, { replace: true });
         setTimeout(() => {
           notifySuccess('submitted');
         }, 100);
