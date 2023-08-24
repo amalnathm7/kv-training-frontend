@@ -12,6 +12,7 @@ import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
 import { ApplicationType } from '../../types/ApplicationType';
 import viewFile from '../../utils/viewFile';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 
 type ApplicationListItemPropsType = {
   application: ApplicationType;
@@ -19,6 +20,9 @@ type ApplicationListItemPropsType = {
 
 const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: props.application.resume
+  });
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
@@ -87,7 +91,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       <td
         onClick={(event) => {
           event.stopPropagation();
-          viewFile(props.application.resume);
+          viewFile(resumeUrl);
         }}
       >
         <u>View Resume</u>

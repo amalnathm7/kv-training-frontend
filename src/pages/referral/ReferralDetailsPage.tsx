@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 
 const ReferralDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
@@ -19,6 +20,10 @@ const ReferralDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
+
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: referralData?.data.resume
+  });
 
   let items: CardItemType[] = [];
 
@@ -83,7 +88,7 @@ const ReferralDetailsPage: React.FC = () => {
       {
         label: 'Resume',
         value: 'View Resume',
-        filePath: referral.resume
+        filePath: resumeUrl
       }
     ];
   }

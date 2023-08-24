@@ -12,6 +12,7 @@ import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
 import viewFile from '../../utils/viewFile';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 
 type ReferralListItemPropsType = {
   referral: ReferralType;
@@ -20,6 +21,9 @@ type ReferralListItemPropsType = {
 
 const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: props.referral.resume
+  });
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
@@ -96,7 +100,8 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td
         onClick={(event) => {
           event.stopPropagation();
-          viewFile(props.referral.resume);
+
+          viewFile(resumeUrl);
         }}
       >
         <u>View Resume</u>

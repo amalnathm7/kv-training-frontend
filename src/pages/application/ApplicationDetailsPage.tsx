@@ -6,6 +6,7 @@ import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
 import { CardItemPropsType } from '../../components/card-item/CardItem';
+import { useGetFileUrlQuery } from '../../services/fileApi';
 
 const ApplicationDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
@@ -20,6 +21,10 @@ const ApplicationDetailsPage: React.FC = () => {
   const navigate = useNavigate();
 
   const { data: applicationData, isSuccess } = useGetApplicationByIdQuery(id);
+  const { data: resumeUrl } = useGetFileUrlQuery({
+    fileName: applicationData?.data.resume
+  });
+
 
   let items: CardItemPropsType[] = [];
 
@@ -80,7 +85,7 @@ const ApplicationDetailsPage: React.FC = () => {
       {
         label: 'Resume',
         value: 'View Resume',
-        filePath: application.resume
+        filePath: resumeUrl
       }
     ];
   }
