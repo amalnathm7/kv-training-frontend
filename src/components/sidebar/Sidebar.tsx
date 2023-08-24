@@ -42,7 +42,6 @@ const Sidebar: React.FC = () => {
   const onApplicationsSelected = () => {
     setSelectedTabIndex(2);
     if (isSuperAuthorized) navigate(RouteConstants.application);
-    else if (isBasicAuthorized) navigate(`${RouteConstants.application}/:id`);
   };
 
   const onReferralsListSelected = () => {

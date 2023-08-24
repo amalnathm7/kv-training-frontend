@@ -10,6 +10,7 @@ const OpeningListingPage: React.FC = () => {
   const navigate = useNavigate();
   const { data: myProfile, isSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+
   const [labels, setLabels] = useState([]);
 
   useEffect(() => {

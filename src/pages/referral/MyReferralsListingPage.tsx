@@ -1,14 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralListing from '../../components/listing/ReferralListing';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
-import { RouteConstants } from '../../constants/routeConstants';
 import { SelectedContext } from '../../app';
 
 const MyReferralsListingPage: React.FC = () => {
-  const navigate = useNavigate();
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
   const [labels, setLabels] = useState([]);
@@ -48,10 +46,6 @@ const MyReferralsListingPage: React.FC = () => {
     'Actions'
   ];
 
-  const onCreateClicked = () => {
-    navigate(`${RouteConstants.referral}/:id/refer`);
-  };
-
   const { setIsMyReferralsSelected } = useContext(SelectedContext);
 
   const onRouteChanged = (event) => {
@@ -62,7 +56,7 @@ const MyReferralsListingPage: React.FC = () => {
     <HomeLayout
       subHeaderRouteOptions={routes}
       subHeaderOnRouteChanged={onRouteChanged}
-      subHeaderPrimaryAction={isSuperAuthorized ? onCreateClicked : null}
+      subHeaderPrimaryAction={null}
       subHeaderLabel={isRoutedFromOpening ? 'Referrals' : ''}
       subHeaderPrimaryActionIcon={''}
       subHeaderPrimaryActionLabel={''}
