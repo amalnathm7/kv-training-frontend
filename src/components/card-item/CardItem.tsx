@@ -37,6 +37,7 @@ const CardItem: React.FC<CardItemPropsType> = (props) => {
           onClick={() => {
             viewFile(props.filePath);
           }}
+          data-testid='card-file-test'
         >
           <u>{props.value}</u>
         </div>

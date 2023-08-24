@@ -1,5 +1,5 @@
 import CardItem, { CardItemPropsType } from './CardItem';
-import { render } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
 describe('Card Props Test', () => {
@@ -29,7 +29,7 @@ describe('Card Props Test', () => {
     expect(element).toMatchSnapshot();
   });
 
-  test('If card file rendered correctly', () => {
+  test('If card file rendered correctly and file click works', () => {
     const props: CardItemPropsType = {
       label: 'card-item',
       value: 'card-value',
@@ -38,7 +38,10 @@ describe('Card Props Test', () => {
     };
 
     const element = render(<CardItem {...props} />);
+    const ClickElement = screen.getByTestId('card-file-test');
 
+    window.open = jest.fn();
+    ClickElement.click();
     expect(element).toMatchSnapshot();
   });
 });

@@ -1,8 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import {
-  useGetApplicationsQuery,
-  useLazyGetApplicationsQuery
-} from '../../services/applicationApi';
+import { useLazyGetApplicationsQuery } from '../../services/applicationApi';
 import ApplicationListItem from '../list-item/ApplicationListItem';
 import { SelectedContext } from '../../app';
 import Pagination from '../pagination/Pagination';
@@ -18,17 +15,8 @@ type ApplicationsListingPropsType = {
 const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
   const [applications, setApplications] = useState([]);
   const [page, setPage] = useState(1);
-  const [getApplications, { data: lazyData, isLoading: isLazyLoading, isSuccess: isLazySuccess }] =
+  const [getApplications, { data: applicationsData, isLoading, isSuccess }] =
     useLazyGetApplicationsQuery();
-  const {
-    data: applicationsData,
-    isLoading,
-    isSuccess
-  } = useGetApplicationsQuery({
-    email: props.emailValue,
-    role: props.roleValue === 'All' ? '' : props.roleValue,
-    offset: page - 1
-  });
   const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
   const { selectedTabIndex } = useContext(SelectedContext);
 
@@ -38,27 +26,30 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
   }, [selectedTabIndex]);
 
   useEffect(() => {
-    if (isRoutedFromOpening) getApplications({ openingId: props.openingId, offset: page - 1 });
-  }, [isRoutedFromOpening]);
+    if (typeof page !== 'string')
+      if (isRoutedFromOpening) getApplications({ openingId: props.openingId, offset: page - 1 });
+      else
+        getApplications({
+          email: props.emailValue,
+          role: props.roleValue === 'All' ? '' : props.roleValue,
+          offset: page - 1
+        });
+  }, [isRoutedFromOpening, page]);
 
   useEffect(() => {
-    if (isSuccess || isLazySuccess)
+    if (isSuccess)
       setApplications(
-        (isRoutedFromOpening ? lazyData : applicationsData)?.data.map((application) => (
+        applicationsData?.data.map((application) => (
           <ApplicationListItem key={application.id} application={application}></ApplicationListItem>
         ))
       );
-  }, [isSuccess, isLazySuccess, applicationsData, lazyData]);
+  }, [isSuccess, applicationsData, applicationsData]);
 
   const labels = props.labels.map((label) => (
     <td className='listing-label' key={label}>
       <label>{label}</label>
     </td>
   ));
-
-  useEffect(() => {
-    if (typeof page !== 'string') getApplications({ offset: page - 1 });
-  }, [page]);
 
   return (
     <>
@@ -79,12 +70,12 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
           <tbody>
             <tr>
               <td>
-                {(isLoading || isLazyLoading) && (
+                {isLoading && (
                   <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
                     Loading...
                   </label>
                 )}
-                {applications?.length === 0 && !isLoading && !isLazyLoading && (
+                {applications?.length === 0 && !isLoading && (
                   <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
                     No Applications
                   </label>

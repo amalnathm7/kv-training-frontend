@@ -44,4 +44,60 @@ describe('SubHeader Props Test', () => {
 
     expect(element).toMatchSnapshot();
   });
+
+  test('If SubHeader rendered correctly with search field', () => {
+    const props: SubHeaderPropsType = {
+      label: 'SubHeader-label',
+      primaryActionLabel: 'Search',
+      primaryActionIcon: 'SubHeader-action-icon.png',
+      primaryAction: () => {},
+      secondaryActionLabel: 'SubHeader-action-label',
+      secondaryActionIcon: 'SubHeader-action-icon',
+      secondaryAction: () => {},
+      primaryActionFilterOptions: ['filter 1', 'filter 2'],
+      primaryActionPlaceholder: 'Subheader-placeholder',
+      primaryActionValue: 'Subheader-value'
+    };
+
+    const element = render(<SubHeader {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
+
+  test('If SubHeader rendered correctly with filter options', () => {
+    const props: SubHeaderPropsType = {
+      label: 'SubHeader-label',
+      primaryActionLabel: 'SubHeader-action-label',
+      primaryActionIcon: 'SubHeader-action-icon.png',
+      primaryAction: () => {},
+      secondaryActionLabel: 'SubHeader-action-label',
+      secondaryActionIcon: 'SubHeader-action-icon',
+      secondaryAction: () => {},
+      primaryActionFilterOptions: ['filter 1', 'filter 2'],
+      primaryActionPlaceholder: 'Subheader-placeholder',
+      primaryActionValue: 'Subheader-value'
+    };
+
+    const element = render(<SubHeader {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
+
+  test('If SubHeader rendered correctly with route options', () => {
+    const props: SubHeaderPropsType = {
+      label: 'SubHeader-label',
+      primaryActionLabel: 'SubHeader-action-label',
+      primaryActionIcon: 'SubHeader-action-icon.png',
+      primaryAction: () => {},
+      secondaryActionLabel: 'SubHeader-action-label',
+      secondaryActionIcon: 'SubHeader-action-icon',
+      secondaryAction: () => {},
+      routeOptions: ['route 1', 'route 2'],
+      onRouteChanged: () => {}
+    };
+
+    const element = render(<SubHeader {...props} />);
+
+    expect(element).toMatchSnapshot();
+  });
 });
