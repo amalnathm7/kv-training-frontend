@@ -2,13 +2,13 @@ import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
 import { OpeningType } from '../types/OpeningType';
-import { GET_OPENING_LIST } from '../constants/apiConstants';
+import { GET_OPENING_LIST, PAGE_LENGTH } from '../constants/apiConstants';
 
 export const openingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getOpeningList: builder.query<ResponseType<OpeningType[]>, { offset: number }>({
       query: (params) => ({
-        url: `${RouteConstants.openingApi}?${params.offset}`
+        url: `${RouteConstants.openingApi}?offset=${params.offset}&length=${PAGE_LENGTH}`
       }),
       providesTags: [GET_OPENING_LIST]
     }),

@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import './Pagination.css';
+import { PAGE_LENGTH } from '../../constants/apiConstants';
 
 export type PaginationPropsType = {
   page: number;
@@ -9,7 +10,7 @@ export type PaginationPropsType = {
 };
 
 const Pagination: React.FC<PaginationPropsType> = (props) => {
-  const totalPages = Math.ceil(props.total / 10);
+  const totalPages = Math.ceil(props.total / PAGE_LENGTH);
 
   useEffect(() => {
     if (props.total === 0) props.setPage(0);
