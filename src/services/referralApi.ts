@@ -38,7 +38,10 @@ export const referralApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
     }),
-    updateReferral: builder.mutation<Object, { id: string; referral: ReferralType }>({
+    updateReferral: builder.mutation<
+      ResponseType<{ id: string }>,
+      { id: string; referral: ReferralType }
+    >({
       query: (params) => ({
         url: `${RouteConstants.referralApi}/${params.id}`,
         method: 'PATCH',

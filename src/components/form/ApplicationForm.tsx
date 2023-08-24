@@ -19,6 +19,7 @@ import DropDown from '../input-field/drop-down/DropDown';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
+import CustomPopup from '../popup/CustomPopup';
 
 export type ApplicationFormPropsType = {
   opening: OpeningType;
@@ -97,6 +98,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
   const [stateError, setStateError] = useState(false);
   const [countryError, setCountryError] = useState(false);
   const [pincodeError, setPincodeError] = useState(false);
+  const [showHirePopup, setShowHirePopup] = useState(false);
 
   const onChangeName = (event) => {
     setName(event.target.value);
@@ -180,6 +182,11 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       error: fileCheckError
     }
   ] = useLazyCheckFileQuery();
+  const updateApplicationStatusCheck = () => {
+    console.log('status');
+    if (status.trim() === 'Hired') setShowHirePopup(true);
+    else saveApplication();
+  };
 
   const saveApplication = () => {
     let isValidated = true;
@@ -299,6 +306,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
     updateApplication,
     {
       isSuccess: isUpdateApplicationSuccess,
+      data: updateReferralData,
       isError: isUpdateApplicationError,
       error: updateApplicationError
     }
@@ -309,14 +317,19 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
 
   useEffect(() => {
     if (props.isEdit) {
-      if (isUpdateApplicationSuccess) {
-        navigate(-1);
-        setTimeout(() => {
-          notifySuccess('updated');
-        }, 100);
-      } else if (isUpdateApplicationError) {
-        notifyError(updateApplicationError['data'].errors.error);
-      }
+      if (isUpdateApplicationSuccess)
+        if (updateReferralData.data.id) {
+          navigate(`${RouteConstants.employee}/${updateReferralData.data.id}`);
+          setTimeout(() => {
+            notifySuccess('updated');
+          }, 100);
+        } else {
+          navigate(-1);
+          setTimeout(() => {
+            notifySuccess('updated');
+          }, 100);
+        }
+      else if (isUpdateApplicationError) notifyError(updateApplicationError['data'].errors.error);
     } else {
       if (isCreateApplicationSuccess) {
         if (isBasicAuthorized)
@@ -456,7 +469,11 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       )}
       <div className='form-buttons'>
         <div className='form-primary-button'>
-          <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveApplication} />
+          <PrimaryButton
+            type='submit'
+            label={primaryButtonLabel}
+            onClick={props.isEdit ? updateApplicationStatusCheck : saveApplication}
+          />
         </div>
         <SecondaryButton
           type='button'
@@ -466,6 +483,15 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
           }}
         />
       </div>
+      {showHirePopup && (
+        <CustomPopup
+          onConfirm={saveApplication}
+          onCancel={() => {
+            setShowHirePopup(false);
+          }}
+          subtext='A new employee will be created and changes cannot be reverted.'
+        />
+      )}
     </div>
   );
 };

@@ -10,16 +10,24 @@ import { useGetFileUrlQuery } from '../../services/fileApi';
 const ReferralDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
 
   useEffect(() => {
     if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
       setIsSuperAuthorized(true);
   }, [isMyProfileFetchSuccess]);
 
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
+  useEffect(() => {
+    if (isSuccess)
+      setCanEdit(
+        (isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id) &&
+          referralData.data.status !== 'Hired'
+      );
+  }, [isSuccess, isSuperAuthorized, myProfile, referralData]);
 
   const { data: resumeUrl } = useGetFileUrlQuery({
     fileName: referralData?.data.resume
@@ -99,20 +107,10 @@ const ReferralDetailsPage: React.FC = () => {
 
   return (
     <HomeLayout
-      subHeaderPrimaryAction={
-        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id
-          ? onEditClicked
-          : null
-      }
+      subHeaderPrimaryAction={canEdit ? onEditClicked : null}
       subHeaderLabel='Referral Details'
-      subHeaderPrimaryActionLabel={
-        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id ? 'Edit' : ''
-      }
-      subHeaderPrimaryActionIcon={
-        isSuperAuthorized || myProfile?.data.id === referralData?.data.referredBy?.id
-          ? 'edit.svg'
-          : ''
-      }
+      subHeaderPrimaryActionLabel={canEdit ? 'Edit' : ''}
+      subHeaderPrimaryActionIcon={canEdit ? 'edit.svg' : ''}
     >
       <Card items={items}></Card>
     </HomeLayout>
