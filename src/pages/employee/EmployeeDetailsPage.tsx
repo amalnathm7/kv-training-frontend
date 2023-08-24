@@ -1,19 +1,12 @@
 import Card from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetEmployeeByIdQuery } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
-import { PermissionLevel } from '../../utils/PermissionLevel';
-import { SelectedContext } from '../../app';
-
+import { AuthorizationContext } from '../../app';
 const EmployeeDetailsPage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-  }, []);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
 
   const { id } = useParams();
   const navigate = useNavigate();

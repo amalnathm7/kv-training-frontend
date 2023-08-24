@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import './Header.css';
 import SecondaryButton from '../button/SecondaryButton/SecondaryButton';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import { useDispatch } from 'react-redux';
 import { baseApi } from '../../services/baseApi';
-import { useGetMyProfileQuery } from '../../services/employeeApi';
-
+import { AuthorizationContext } from '../../app';
 export type HeaderPropsType = {
   isSplash?: boolean;
 };
@@ -19,12 +18,7 @@ const Header: React.FC<HeaderPropsType> = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { isError: isMyProfileFetchError } = useGetMyProfileQuery();
-  const [isBasicAuthorized, setIsBasicAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (isMyProfileFetchError) setIsBasicAuthorized(true);
-  }, [isMyProfileFetchError]);
+  const { isBasicAuthorized } = useContext(AuthorizationContext);
 
   const handleLogout = () => {
     localStorage.removeItem('token');

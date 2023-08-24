@@ -4,10 +4,10 @@ import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralForm from '../../components/form/ReferralForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
-import { PermissionLevel } from '../../utils/PermissionLevel';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 
 const ReferralCreatePage: React.FC = () => {
+  const { isBasicAuthorized } = useContext(AuthorizationContext);
   const { myProfile } = useContext(SelectedContext);
   const navigate = useNavigate();
 
@@ -20,9 +20,8 @@ const ReferralCreatePage: React.FC = () => {
   }, [isOpeningFetchSucces]);
 
   useEffect(() => {
-    if (!myProfile?.role || myProfile?.role.permissionLevel === PermissionLevel.BASIC)
-      navigate(`${RouteConstants.employee}`);
-  }, [myProfile]);
+    if (isBasicAuthorized) navigate(`${RouteConstants.employee}`);
+  }, []);
 
   return (
     <HomeLayout

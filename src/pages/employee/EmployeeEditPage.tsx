@@ -3,17 +3,15 @@ import EmployeeForm from '../../components/form/EmployeeForm';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext, useEffect, useState } from 'react';
 import { useGetEmployeeByIdQuery } from '../../services/employeeApi';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext } from '../../app';
 
 const EmployeeEditPage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (myProfile.role?.permissionLevel !== PermissionLevel.SUPER)
-      navigate(`${RouteConstants.employee}`, { replace: true });
+    if (!isSuperAuthorized) navigate(`${RouteConstants.employee}`, { replace: true });
   });
 
   const { id } = useParams();

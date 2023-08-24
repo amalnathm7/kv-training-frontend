@@ -1,18 +1,14 @@
 import Card, { CardItemType } from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetReferralByIdQuery } from '../../services/referralApi';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 
 const ReferralDetailsPage: React.FC = () => {
   const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
-  useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-  }, [myProfile]);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
 
   const { id } = useParams();
   const navigate = useNavigate();

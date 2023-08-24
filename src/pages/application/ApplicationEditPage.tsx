@@ -1,14 +1,14 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import { useNavigate, useParams } from 'react-router-dom';
 import React, { useContext, useEffect, useState } from 'react';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import ApplicationForm from '../../components/form/ApplicationForm';
 import { useGetApplicationByIdQuery } from '../../services/applicationApi';
 import { ApplicationType } from '../../types/ApplicationType';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 
 const ApplicationEditPage: React.FC = () => {
   const { myProfile } = useContext(SelectedContext);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -18,8 +18,7 @@ const ApplicationEditPage: React.FC = () => {
 
   useEffect(() => {
     if (myProfile && isApplicationByIdFetchSuccess) {
-      const isNotAuthorized =
-        !myProfile?.role || myProfile?.role.permissionLevel !== PermissionLevel.SUPER;
+      const isNotAuthorized = !myProfile?.role || !isSuperAuthorized;
 
       if (isNotAuthorized) navigate(-1);
     }

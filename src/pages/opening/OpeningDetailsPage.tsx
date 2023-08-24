@@ -1,25 +1,19 @@
 import React, { useContext } from 'react';
 import { useEffect, useState } from 'react';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import Card from '../../components/card/Card';
 import { RouteConstants } from '../../constants/routeConstants';
 import { OpeningType } from '../../types/OpeningType';
-import { SelectedContext } from '../../app';
-
+import { AuthorizationContext } from '../../app';
 const OpeningDetailsPage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
+  const { isSuperAuthorized, isBasicAuthorized } = useContext(AuthorizationContext);
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
 
   useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-
-    if (myProfile?.role && myProfile?.role.permissionLevel !== PermissionLevel.BASIC)
-      setIsAuthorized(true);
-  }, []);
+    if (!isBasicAuthorized) setIsAuthorized(true);
+  });
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -101,20 +95,31 @@ const OpeningDetailsPage: React.FC = () => {
       {isAuthorized && (
         <Card
           items={items}
-          secondaryButtonsProps={[
-            {
-              style: { marginTop: '40px', marginBottom: '20px' },
-              type: 'button',
-              label: 'View Applications',
-              onClick: onViewApplicationsClicked
-            },
-            {
-              style: { marginTop: '40px', marginBottom: '20px', marginLeft: '20px' },
-              type: 'button',
-              label: 'View Referrals',
-              onClick: onViewReferralsClicked
-            }
-          ]}
+          secondaryButtonsProps={
+            isSuperAuthorized
+              ? [
+                  {
+                    style: { marginTop: '40px', marginBottom: '20px' },
+                    type: 'button',
+                    label: 'View Applications',
+                    onClick: onViewApplicationsClicked
+                  },
+                  {
+                    style: { marginTop: '40px', marginBottom: '20px', marginLeft: '20px' },
+                    type: 'button',
+                    label: 'View Referrals',
+                    onClick: onViewReferralsClicked
+                  }
+                ]
+              : [
+                  {
+                    style: { marginTop: '40px', marginBottom: '20px', marginLeft: '20px' },
+                    type: 'button',
+                    label: 'View Referrals',
+                    onClick: onViewReferralsClicked
+                  }
+                ]
+          }
         ></Card>
       )}
       {!isAuthorized && <Card items={items}></Card>}

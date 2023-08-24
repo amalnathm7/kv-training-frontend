@@ -7,23 +7,17 @@ import CustomPopup from '../popup/CustomPopup';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import { useDeleteApplicationMutation } from '../../services/applicationApi';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { toast } from 'react-toastify';
 import { ApplicationType } from '../../types/ApplicationType';
 import viewFile from '../../utils/viewFile';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext } from '../../app';
 
 type ApplicationListItemPropsType = {
   application: ApplicationType;
 };
 
 const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
-  const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-  }, [myProfile]);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
 
   let status: StatusType = {
     label: props.application.status,

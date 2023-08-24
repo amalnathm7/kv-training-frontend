@@ -2,14 +2,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ReferralListing from '../../components/listing/ReferralListing';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 
 const MyReferralsListingPage: React.FC = () => {
   const navigate = useNavigate();
-  const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
   const [labels, setLabels] = useState([]);
   const location = useLocation();
   const [isRoutedFromOpening, setIsRoutedFromOpening] = useState(false);
@@ -24,10 +22,6 @@ const MyReferralsListingPage: React.FC = () => {
   useEffect(() => {
     setRoutes(isRoutedFromOpening ? null : ['My Referrals', 'All Referrals']);
   }, [isRoutedFromOpening]);
-
-  useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-  }, [myProfile]);
 
   useEffect(() => {
     if (isSuperAuthorized) setLabels(labelArray);

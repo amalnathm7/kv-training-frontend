@@ -5,8 +5,10 @@ import React, { useContext, useEffect } from 'react';
 import './HomeLayout.css';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 import { ToastContainer, toast } from 'react-toastify';
+import { useGetMyProfileQuery } from '../../services/employeeApi';
+import { PermissionLevel } from '../../utils/PermissionLevel';
 
 type HomeLayoutPropsType = {
   subHeaderLabel: string;
@@ -27,7 +29,38 @@ type HomeLayoutPropsType = {
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const {
+    data,
+    isSuccess: isMyProfileFetchSuccess,
+    isError: isMyProfileFetchFailed
+  } = useGetMyProfileQuery();
   const { setSelectedTabIndex, isMyReferralsSelected } = useContext(SelectedContext);
+  const { setMyProfile } = useContext(SelectedContext);
+  const isAuthorized = useContext(AuthorizationContext);
+
+  useEffect(() => {
+    if (isMyProfileFetchSuccess) {
+      setMyProfile(data?.data);
+      if (data?.data.role?.permissionLevel === PermissionLevel.SUPER) {
+        isAuthorized.setIsSuperAuthorized(true);
+        isAuthorized.setIsAdvanceAuthorized(false);
+        isAuthorized.setIBasicAuthorized(false);
+      } else if (data?.data.role?.permissionLevel === PermissionLevel.ADVANCED) {
+        isAuthorized.setIsSuperAuthorized(false);
+        isAuthorized.setIsAdvanceAuthorized(true);
+        isAuthorized.setIBasicAuthorized(false);
+      } else if (data?.data.role?.permissionLevel === PermissionLevel.BASIC) {
+        isAuthorized.setIsSuperAuthorized(false);
+        isAuthorized.setIsAdvanceAuthorized(false);
+        isAuthorized.setIBasicAuthorized(true);
+      }
+    }
+    if (isMyProfileFetchFailed) {
+      isAuthorized.setIsSuperAuthorized(false);
+      isAuthorized.setIsAdvanceAuthorized(false);
+      isAuthorized.setIBasicAuthorized(true);
+    }
+  }, [isMyProfileFetchSuccess, data, isMyProfileFetchFailed]);
 
   useEffect(() => {
     if (!localStorage.getItem('token') && !location.pathname.includes(`${RouteConstants.opening}`))
@@ -41,6 +74,16 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
     else setSelectedTabIndex(0);
   }, []);
 
+  useEffect(() => {
+    if (
+      isAuthorized.isAdvanceAuthorized &&
+      location.pathname.includes(RouteConstants.application)
+    ) {
+      console.log(isAuthorized.isAdvanceAuthorized);
+      navigate(-1);
+    }
+    console.log(isAuthorized.isAdvanceAuthorized);
+  });
   useEffect(() => {
     if (
       location.pathname === RouteConstants.referral ||

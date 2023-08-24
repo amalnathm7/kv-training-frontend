@@ -16,8 +16,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { validateEmail, validatePhoneNo, validateResume } from '../../utils/validation';
 import DropDown from '../input-field/drop-down/DropDown';
-import { PermissionLevel } from '../../utils/PermissionLevel';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext } from '../../app';
 
 export type ApplicationFormPropsType = {
   opening: OpeningType;
@@ -40,16 +39,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
   const [pincode, setPincode] = useState('');
   const [roleId, setRoleId] = useState('');
   const [openingId, setOpeningId] = useState('');
-
-  const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-
-    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, [myProfile]);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
 
   useEffect(() => {
     if (props.application) {

@@ -1,18 +1,15 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext, useEffect } from 'react';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
 import OpeningForm from '../../components/form/OpeningForm';
-import { SelectedContext } from '../../app';
-
+import { AuthorizationContext } from '../../app';
 const OpeningCreatePage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (myProfile?.role?.permissionLevel !== PermissionLevel.SUPER)
-      navigate(`${RouteConstants.opening}`);
+    if (!isSuperAuthorized) navigate(`${RouteConstants.opening}`);
   }, []);
 
   return (

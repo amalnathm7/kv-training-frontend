@@ -1,19 +1,16 @@
 import EmployeeForm from '../../components/form/EmployeeForm';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext, useEffect } from 'react';
-
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext } from '../../app';
 
 const EmployeeCreatePage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (myProfile.role?.permissionLevel !== PermissionLevel.SUPER)
-      navigate(`${RouteConstants.employee}`);
+    if (!isSuperAuthorized) navigate(`${RouteConstants.employee}`);
   });
 
   return (

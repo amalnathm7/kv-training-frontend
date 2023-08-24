@@ -1,14 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { RouteConstants } from '../../constants/routeConstants';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import ApplicationForm from '../../components/form/ApplicationForm';
 import { useGetOpeningByIdQuery } from '../../services/openingApi';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext } from '../../app';
 
 const ApplicationCreatePage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
+  const { isBasicAuthorized } = useContext(AuthorizationContext);
   const navigate = useNavigate();
 
   const { id } = useParams();
@@ -19,10 +18,7 @@ const ApplicationCreatePage: React.FC = () => {
     if (isOpeningFetchSucces) setOpening(openingData.data);
   }, [isOpeningFetchSucces]);
 
-  useEffect(() => {
-    if (!myProfile?.role || myProfile?.role.permissionLevel === PermissionLevel.BASIC)
-      navigate(`${RouteConstants.employee}`);
-  }, [myProfile]);
+  if (!isBasicAuthorized) navigate(`${RouteConstants.employee}`);
 
   return (
     <HomeLayout

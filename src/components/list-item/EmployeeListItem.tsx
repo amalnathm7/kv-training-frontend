@@ -8,9 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import CustomPopup from '../popup/CustomPopup';
 import { useDeleteEmployeeMutation } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import { toast } from 'react-toastify';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 
 type EmployeeListItemPropsType = {
   employee: EmployeeType;
@@ -18,11 +17,7 @@ type EmployeeListItemPropsType = {
 
 const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
   const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
-
-  useEffect(() => {
-    if (myProfile?.role?.permissionLevel === PermissionLevel.SUPER) setIsSuperAuthorized(true);
-  }, [myProfile]);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
 
   const navigate = useNavigate();
   const [showDeletePopup, setShowDeletePopup] = useState(false);

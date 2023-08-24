@@ -1,14 +1,12 @@
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useContext, useEffect, useState } from 'react';
-import { PermissionLevel } from '../../utils/PermissionLevel';
 import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
-import { SelectedContext } from '../../app';
+import { AuthorizationContext, SelectedContext } from '../../app';
 import { useParams } from 'react-router-dom';
 
 const AllReferralsListingPage: React.FC = () => {
-  const { myProfile } = useContext(SelectedContext);
-  const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
   const [labels, setLabels] = useState([]);
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
@@ -25,11 +23,6 @@ const AllReferralsListingPage: React.FC = () => {
       setRoles(rolesArray.concat(...additionalRoles));
     }
   }, [isRoleFetchSuccess]);
-
-  useEffect(() => {
-    if (myProfile?.role && myProfile?.role.permissionLevel === PermissionLevel.SUPER)
-      setIsSuperAuthorized(true);
-  }, []);
 
   const labelArray = [
     'Referral Code',
