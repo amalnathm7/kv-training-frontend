@@ -489,7 +489,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
           onCancel={() => {
             setShowHirePopup(false);
           }}
-          subtext='Once hired changes cannot be reverted.'
+          subtext='A new employee will be created and changes cannot be reverted.'
         />
       )}
     </div>

@@ -104,8 +104,12 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
       {(props.selection === 'my' || isSuperAuthorized) && (
         <td>
-          <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
-          <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+          {props.referral.status !== 'Hired' && (
+            <>
+              <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
+              <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+            </>
+          )}
         </td>
       )}
       {showDeletePopup && (

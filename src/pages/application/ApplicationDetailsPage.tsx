@@ -10,6 +10,7 @@ import { CardItemPropsType } from '../../components/card-item/CardItem';
 const ApplicationDetailsPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
   const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
 
   useEffect(() => {
     if (isMyProfileFetchSuccess && myProfile.data.role?.permissionLevel === PermissionLevel.SUPER)
@@ -85,16 +86,20 @@ const ApplicationDetailsPage: React.FC = () => {
     ];
   }
 
+  useEffect(() => {
+    if (isSuccess) setCanEdit(isSuperAuthorized && applicationData.data.status !== 'Hired');
+  }, [isSuccess, isSuperAuthorized, myProfile, applicationData]);
+
   const onEditClicked = () => {
     navigate(window.location.pathname + '/edit');
   };
 
   return (
     <HomeLayout
-      subHeaderPrimaryAction={isSuperAuthorized ? onEditClicked : null}
+      subHeaderPrimaryAction={canEdit ? onEditClicked : null}
       subHeaderLabel='Application Details'
-      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
-      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}
+      subHeaderPrimaryActionLabel={canEdit ? 'Edit' : ''}
+      subHeaderPrimaryActionIcon={canEdit ? 'edit.svg' : ''}
     >
       <Card items={items}></Card>
     </HomeLayout>
