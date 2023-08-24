@@ -6,7 +6,7 @@ import { ReferralType } from '../types/ReferralType';
 
 export const referralApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllReferralsList: builder.query<
+    getAllReferrals: builder.query<
       ResponseType<ReferralType[]>,
       { email?: string; role?: string; openingId?: string }
     >({
@@ -67,7 +67,8 @@ export const {
   useUpdateReferralMutation,
   useGetReferralByIdQuery,
   useGetMyReferralsQuery,
-  useGetAllReferralsListQuery,
+  useGetAllReferralsQuery,
   useDeleteReferralMutation,
-  useLazyGetAllReferralsListQuery
+  useLazyGetAllReferralsQuery,
+  useLazyGetMyReferralsQuery
 } = referralApi;

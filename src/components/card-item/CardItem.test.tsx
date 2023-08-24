@@ -7,7 +7,8 @@ describe('Card Props Test', () => {
     const props: CardItemPropsType = {
       label: 'card-item',
       value: 'card-value',
-      isStatus: true
+      isStatus: false,
+      filePath: ''
     };
 
     const element = render(<CardItem {...props} />);
@@ -15,11 +16,12 @@ describe('Card Props Test', () => {
     expect(element).toMatchSnapshot();
   });
 
-  test('If card status active rendered correctly', () => {
+  test('If card status rendered correctly', () => {
     const props: CardItemPropsType = {
       label: 'card-item',
-      value: 'Active',
-      isStatus: true
+      value: 'card-value',
+      isStatus: true,
+      filePath: ''
     };
 
     const element = render(<CardItem {...props} />);
@@ -27,23 +29,12 @@ describe('Card Props Test', () => {
     expect(element).toMatchSnapshot();
   });
 
-  test('If card status inactive rendered correctly', () => {
+  test('If card file rendered correctly', () => {
     const props: CardItemPropsType = {
       label: 'card-item',
-      value: 'Inactive',
-      isStatus: true
-    };
-
-    const element = render(<CardItem {...props} />);
-
-    expect(element).toMatchSnapshot();
-  });
-
-  test('If card status probation rendered correctly', () => {
-    const props: CardItemPropsType = {
-      label: 'card-item',
-      value: 'Inactive',
-      isStatus: true
+      value: 'card-value',
+      isStatus: false,
+      filePath: 'file'
     };
 
     const element = render(<CardItem {...props} />);

@@ -1,4 +1,4 @@
-import Card from '../../components/card/Card';
+import Card, { CardItemType } from '../../components/card/Card';
 import HomeLayout from '../../layouts/home-layout/HomeLayout';
 import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -20,15 +20,15 @@ const ReferralDetailsPage: React.FC = () => {
 
   const { data: referralData, isSuccess } = useGetReferralByIdQuery(id);
 
-  let items = [];
+  let items: CardItemType[] = [];
 
   if (isSuccess) {
     const referral = referralData.data;
 
     items = [
       {
-        label: 'Referral ID',
-        value: referral.id
+        label: 'Referral Code',
+        value: referral.candidateCode
       },
       {
         label: 'Name',
@@ -79,6 +79,11 @@ const ReferralDetailsPage: React.FC = () => {
           referral.address.country +
           ', ' +
           referral.address.pincode
+      },
+      {
+        label: 'Resume',
+        value: 'View Resume',
+        filePath: referral.resume
       }
     ];
   }

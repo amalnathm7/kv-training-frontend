@@ -39,10 +39,6 @@ const OpeningDetailsPage: React.FC = () => {
 
     items = [
       {
-        label: 'Opening ID',
-        value: opening.id
-      },
-      {
         label: 'Title',
         value: opening.title
       },

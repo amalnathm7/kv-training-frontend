@@ -205,6 +205,7 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
         joiningDate: new Date(date),
         status: status.trim(),
         experience: Number(experience),
+        employeeCode: props.employee?.employeeCode,
         departmentId: departmentData.data.find((dept) => dept.name === department)?.id,
         roleId: rolesData.data.find((roleData) => roleData.role === role)?.id,
         address: {
@@ -403,10 +404,10 @@ const EmployeeForm: React.FC<EmployeeFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
-          value={props.employee?.id}
+          value={props.employee?.employeeCode}
           onChange={() => {}}
-          label={'Employee ID'}
-          placeholder={'Employee ID'}
+          label={'Employee Code'}
+          placeholder={'Employee Code'}
           type={'text'}
           showError={false}
         />

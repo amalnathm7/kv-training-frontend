@@ -172,7 +172,12 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
 
   const [
     checkFile,
-    { data: fileCheckData, isSuccess: isFileCheckSuccess, isError: isFileCheckError }
+    {
+      data: fileCheckData,
+      isSuccess: isFileCheckSuccess,
+      isError: isFileCheckError,
+      error: fileCheckError
+    }
   ] = useLazyCheckFileQuery();
 
   const saveReferral = () => {
@@ -251,7 +256,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
         status: status,
         resume: '',
         roleId,
-        referralCode: props.referral?.referralCode,
+        candidateCode: props.referral?.candidateCode,
         address: {
           line1: line1.trim(),
           line2: line2.trim(),
@@ -275,7 +280,13 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
     } else if (isFileCheckError) {
       notifyError('Re-upload Resume');
     }
-  }, [isFileUploadSuccess, isFileUploadError, isFileCheckSuccess, isFileCheckError]);
+  }, [
+    isFileUploadSuccess,
+    isFileUploadError,
+    isFileCheckSuccess,
+    isFileCheckError,
+    fileCheckError
+  ]);
 
   const [
     createReferral,
@@ -434,7 +445,7 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
-          value={props.referral?.referralCode}
+          value={props.referral?.candidateCode}
           onChange={() => {}}
           label={'Referral Code'}
           placeholder={'Referral Code'}
@@ -442,21 +453,6 @@ const ReferralForm: React.FC<ReferralFormPropsType> = (props) => {
           showError={false}
         />
       )}
-
-      {props.isEdit && isSuperAuthorized ? (
-        <FormField
-          disabled={true}
-          value={props.referral?.id}
-          onChange={() => {}}
-          label={'Referral ID'}
-          placeholder={'Referral ID'}
-          type={'text'}
-          showError={false}
-        />
-      ) : (
-        ''
-      )}
-
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveReferral} />

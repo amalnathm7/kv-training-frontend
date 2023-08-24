@@ -11,6 +11,7 @@ import { useDeleteReferralMutation } from '../../services/referralApi';
 import { PermissionLevel } from '../../utils/PermissionLevel';
 import { useGetMyProfileQuery } from '../../services/employeeApi';
 import { toast } from 'react-toastify';
+import viewFile from '../../utils/viewFile';
 
 type ReferralListItemPropsType = {
   referral: ReferralType;
@@ -70,14 +71,18 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   }, [props.referral.status]);
 
   useEffect(() => {
-    setShowDeletePopup(false);
+    if (isDeleteSuccess) {
+      setShowDeletePopup(false);
+      toast.success('Successfully deleted referral');
+    }
   }, [isDeleteSuccess]);
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.referral.id}</td>}
+      {isSuperAuthorized && <td>{props.referral.candidateCode}</td>}
       <td>{props.referral.name}</td>
       <td>{props.referral.email}</td>
+      <td>{props.referral.phone}</td>
       <td>
         {props.referral.experience == 1
           ? props.referral.experience + ' year'
@@ -86,8 +91,16 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.referral.opening.title}</td>
+      <td>{props.referral.opening?.title}</td>
       <td>{props.referral.role.role}</td>
+      <td
+        onClick={(event) => {
+          event.stopPropagation();
+          viewFile(props.referral.resume);
+        }}
+      >
+        <u>View Resume</u>
+      </td>
       {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
       {(props.selection === 'my' || isSuperAuthorized) && (
         <td>

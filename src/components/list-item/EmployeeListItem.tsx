@@ -9,6 +9,7 @@ import CustomPopup from '../popup/CustomPopup';
 import { useDeleteEmployeeMutation, useGetMyProfileQuery } from '../../services/employeeApi';
 import { RouteConstants } from '../../constants/routeConstants';
 import { PermissionLevel } from '../../utils/PermissionLevel';
+import { toast } from 'react-toastify';
 
 type EmployeeListItemPropsType = {
   employee: EmployeeType;
@@ -40,7 +41,8 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
   };
 
   const handleDelete = () => {
-    setShowDeletePopup(true);
+    if (props.employee.id !== myProfile.data?.id) setShowDeletePopup(true);
+    else toast.error('You cannot delete yourself!');
   };
 
   const onClick = () => {
@@ -54,12 +56,15 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
   const [deleteEmployee, { isSuccess: isDeleteSuccess }] = useDeleteEmployeeMutation();
 
   useEffect(() => {
-    setShowDeletePopup(false);
+    if (isDeleteSuccess) {
+      setShowDeletePopup(false);
+      toast.success('Successfully deleted employee');
+    }
   }, [isDeleteSuccess]);
 
   return (
     <tr className='list-item' onClick={onClick}>
-      {isSuperAuthorized && <td>{props.employee.id}</td>}
+      <td>{props.employee.employeeCode}</td>
       <td>{props.employee.name}</td>
       <td>{props.employee.email}</td>
       <td>{props.employee.phone}</td>

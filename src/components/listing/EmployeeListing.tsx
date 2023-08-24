@@ -8,7 +8,11 @@ type EmployeeListingPropsType = {
 };
 
 const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
-  const { data: employeesData, isSuccess: isEmployeesFetchSuccess } = useGetEmployeeListQuery();
+  const {
+    data: employeesData,
+    isLoading,
+    isSuccess: isEmployeesFetchSuccess
+  } = useGetEmployeeListQuery();
 
   const labels = props.labels.map((label) => (
     <td className='listing-label' key={label}>
@@ -25,17 +29,36 @@ const EmployeeListing: React.FC<EmployeeListingPropsType> = (props) => {
           <EmployeeListItem key={employee.id} employee={employee}></EmployeeListItem>
         ))
       );
-  }, [isEmployeesFetchSuccess]);
+  }, [isEmployeesFetchSuccess, employeesData]);
 
   return (
-    <div className='listing'>
-      <table>
-        <thead>
-          <tr className='list-header'>{labels}</tr>
-        </thead>
-        <tbody className='list-items'>{employees}</tbody>
-      </table>
-    </div>
+    <>
+      <div className='listing-spacing'></div>
+      <div className='listing'>
+        <table>
+          <thead>
+            <tr className='list-header'>{labels}</tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>
+                {isLoading && (
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    Loading...
+                  </label>
+                )}
+                {employees?.length === 0 && !isLoading && (
+                  <label style={{ alignItems: 'center', marginTop: '20px' }} className='list-items'>
+                    No Employees
+                  </label>
+                )}
+              </td>
+            </tr>
+          </tbody>
+          <tbody className='list-items'>{employees}</tbody>
+        </table>
+      </div>
+    </>
   );
 };
 

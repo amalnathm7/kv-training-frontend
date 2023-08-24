@@ -47,13 +47,15 @@ const ApplicationListingPage: React.FC = () => {
   }, [isSuccess]);
 
   const labelArray = [
-    'Application ID',
-    'Candidate Name',
+    'Application Code',
+    'Name',
     'Email',
+    'Phone',
     'Experience',
     'Status',
     'Opening',
-    'Role'
+    'Role',
+    'Resume'
   ];
 
   useEffect(() => {

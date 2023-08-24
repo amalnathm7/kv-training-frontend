@@ -5,6 +5,7 @@ import { PermissionLevel } from '../../utils/PermissionLevel';
 import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
 import { SelectedContext } from '../../app';
+import { useParams } from 'react-router-dom';
 
 const AllReferralsListingPage: React.FC = () => {
   const { data: myProfile, isSuccess: isMyProfileFetchSuccess } = useGetMyProfileQuery();
@@ -13,7 +14,7 @@ const AllReferralsListingPage: React.FC = () => {
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
   const [roles, setRoles] = useState([]);
-
+  const { id } = useParams();
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
 
   useEffect(() => {
@@ -36,19 +37,21 @@ const AllReferralsListingPage: React.FC = () => {
   }, [isMyProfileFetchSuccess]);
 
   const labelArray = [
-    'Candidate Name',
+    'Referral Code',
+    'Name',
     'Email',
+    'Phone',
     'Experience',
     'Status',
     'Opening',
     'Role',
+    'Resume',
     'Referred By'
   ];
 
   useEffect(() => {
     if (isSuperAuthorized) {
       labelArray.push('Actions');
-      labelArray.unshift('Referral ID');
       setLabels(labelArray);
     }
   }, [isSuperAuthorized]);
@@ -88,6 +91,7 @@ const AllReferralsListingPage: React.FC = () => {
       subHeaderPrimaryActionIcon={'search.png'}
     >
       <ReferralListing
+        openingId={id}
         emailValue={emailValue}
         roleValue={roleValue}
         labels={labels}

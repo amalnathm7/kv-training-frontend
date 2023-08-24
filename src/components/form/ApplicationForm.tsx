@@ -239,7 +239,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
         status: status,
         resume: fileData.data.file,
         roleId,
-        applicationCode: props.application?.applicationCode,
+        candidateCode: props.application?.candidateCode,
         address: {
           line1: line1.trim(),
           line2: line2.trim(),
@@ -415,7 +415,7 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
       {props.isEdit && (
         <FormField
           disabled={true}
-          value={props.application?.applicationCode}
+          value={props.application?.candidateCode}
           onChange={() => {}}
           label={'Application Code'}
           placeholder={'Application Code'}
@@ -423,21 +423,6 @@ const ApplicationForm: React.FC<ApplicationFormPropsType> = (props) => {
           showError={false}
         />
       )}
-
-      {props.isEdit && isSuperAuthorized ? (
-        <FormField
-          disabled={true}
-          value={props.application?.id}
-          onChange={() => {}}
-          label={'Application ID'}
-          placeholder={'Application ID'}
-          type={'text'}
-          showError={false}
-        />
-      ) : (
-        ''
-      )}
-
       <div className='form-buttons'>
         <div className='form-primary-button'>
           <PrimaryButton type='submit' label={primaryButtonLabel} onClick={saveApplication} />

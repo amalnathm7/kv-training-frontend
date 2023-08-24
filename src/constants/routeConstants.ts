@@ -1,4 +1,5 @@
 export class RouteConstants {
+  // View Constants
   static login = '/login';
   static employee = '/employee';
   static opening = '/opening';
@@ -6,6 +7,7 @@ export class RouteConstants {
   static application = '/application';
   static myReferral = '/referral/me';
 
+  // API Constants
   static employeeApi = '/employees';
   static departmentApi = '/departments';
   static roleApi = '/roles';
@@ -13,6 +15,7 @@ export class RouteConstants {
   static openingApi = '/openings';
   static applicationApi = '/applications';
   static referralApi = '/referrals';
+  static fileApi = '/files';
   static fileUploadApi = '/files/upload';
   static fileCheckApi = '/files/check';
 }

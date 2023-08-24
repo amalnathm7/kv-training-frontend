@@ -20,13 +20,13 @@ const EmployeeListingPage: React.FC = () => {
   useEffect(() => {
     if (isSuperAuthorized) {
       labelArray.push('Actions');
-      labelArray.unshift('Employee ID');
       setLabels(labelArray);
     }
   }, [isSuperAuthorized]);
 
   const labelArray = [
-    'Employee Name',
+    'Employee Code',
+    'Name',
     'Email',
     'Phone',
     'Joining Date',
