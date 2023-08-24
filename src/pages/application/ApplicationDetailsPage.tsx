@@ -25,7 +25,6 @@ const ApplicationDetailsPage: React.FC = () => {
     fileName: applicationData?.data.resume
   });
 
-
   let items: CardItemPropsType[] = [];
 
   if (isSuccess) {
