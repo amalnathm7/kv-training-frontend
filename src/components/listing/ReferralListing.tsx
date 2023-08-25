@@ -13,6 +13,7 @@ type ReferralsListingPropsType = {
   emailValue?: string;
   roleValue?: string;
   statusValue?: string;
+  bonusStatusValue?: string;
   selection: 'my' | 'all';
   openingId: string;
 };
@@ -54,6 +55,7 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
           email: null,
           role: null,
           status: null,
+          bonusStatus: null,
           offset: page <= 0 ? 0 : page - 1
         };
 
@@ -61,6 +63,8 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
         if (props.roleValue) whereProps.role = props.roleValue === 'All' ? '' : props.roleValue;
         if (props.statusValue)
           whereProps.status = props.statusValue === 'All' ? '' : props.statusValue;
+        if (props.bonusStatusValue)
+          whereProps.bonusStatus = props.bonusStatusValue === 'All' ? '' : props.bonusStatusValue;
 
         if (props.emailValue) debouncedGetReferrals(whereProps);
         else getAllReferrals(whereProps);
@@ -71,6 +75,7 @@ const ReferralsListing: React.FC<ReferralsListingPropsType> = (props) => {
     props.roleValue,
     props.openingId,
     props.statusValue,
+    props.bonusStatusValue,
     page
   ]);
 

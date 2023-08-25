@@ -4,7 +4,8 @@ import ReferralListing from '../../components/listing/ReferralListing';
 import { useGetRoleListQuery } from '../../services/roleApi';
 import { AuthorizationContext, SelectedContext } from '../../app';
 import { useParams } from 'react-router-dom';
-import { candidateStatuses } from '../../constants/statusConstants';
+import { bonusStatuses, candidateStatuses } from '../../constants/statusConstants';
+import { FilterType } from '../../components/sub-header/SubHeader';
 
 const AllReferralsListingPage: React.FC = () => {
   const { isSuperAuthorized } = useContext(AuthorizationContext);
@@ -12,6 +13,7 @@ const AllReferralsListingPage: React.FC = () => {
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
   const [statusValue, setStatusValue] = useState('');
+  const [bonusStatusValue, setBonusStatusValue] = useState('');
   const [roles, setRoles] = useState([]);
   const { id } = useParams();
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
@@ -63,6 +65,10 @@ const AllReferralsListingPage: React.FC = () => {
     setStatusValue(event.target.value);
   };
 
+  const onChangeBonusStatus = (event) => {
+    setBonusStatusValue(event.target.value);
+  };
+
   const { setIsMyReferralsSelected } = useContext(SelectedContext);
 
   const onRouteChanged = (event) => {
@@ -70,6 +76,24 @@ const AllReferralsListingPage: React.FC = () => {
   };
 
   const routes = ['All Referrals', 'My Referrals'];
+
+  let filters: FilterType[] = [
+    {
+      options: ['All', ...bonusStatuses],
+      action: onChangeBonusStatus,
+      placeholder: 'Filter by bonus status'
+    },
+    {
+      options: ['All', ...candidateStatuses],
+      action: onChangeStatus,
+      placeholder: 'Filter by status'
+    },
+    {
+      options: roles,
+      action: onChangeRole,
+      placeholder: 'Filter by role'
+    }
+  ];
 
   return (
     <HomeLayout
@@ -81,18 +105,14 @@ const AllReferralsListingPage: React.FC = () => {
       subHeaderPrimaryActionPlaceholder={'Search by email'}
       subHeaderPrimaryActionLabel={'Search'}
       subHeaderPrimaryActionIcon={'search.png'}
-      subHeaderPrimaryFilterAction={onChangeRole}
-      subHeaderPrimaryFilterOptions={roles}
-      subHeaderPrimaryFilterPlaceholder='Filter by role'
-      subHeaderSecondaryFilterOptions={['All', ...candidateStatuses]}
-      subHeaderSecondaryFilterPlaceholder='Filter by status'
-      subHeaderSecondaryFilterAction={onChangeStatus}
+      subHeaderFilters={filters}
     >
       <ReferralListing
         openingId={id}
         emailValue={emailValue}
         roleValue={roleValue}
         statusValue={statusValue}
+        bonusStatusValue={bonusStatusValue}
         labels={labels}
         searchLabel='Search'
         selection='all'

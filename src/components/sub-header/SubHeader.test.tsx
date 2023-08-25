@@ -8,7 +8,8 @@ describe('SubHeader Props Test', () => {
       label: 'SubHeader-label',
       primaryActionLabel: '',
       primaryActionIcon: '',
-      primaryAction: null
+      primaryAction: null,
+      filters: []
     };
 
     const element = render(<SubHeader {...props} />);
@@ -21,7 +22,8 @@ describe('SubHeader Props Test', () => {
       label: 'SubHeader-label',
       primaryActionLabel: 'SubHeader-action-label',
       primaryActionIcon: 'SubHeader-action-icon.png',
-      primaryAction: () => {}
+      primaryAction: () => {},
+      filters: []
     };
 
     const element = render(<SubHeader {...props} />);
@@ -37,7 +39,8 @@ describe('SubHeader Props Test', () => {
       primaryAction: () => {},
       secondaryActionLabel: 'SubHeader-action-label',
       secondaryActionIcon: 'SubHeader-action-icon',
-      secondaryAction: () => {}
+      secondaryAction: () => {},
+      filters: []
     };
 
     const element = render(<SubHeader {...props} />);
@@ -54,7 +57,7 @@ describe('SubHeader Props Test', () => {
       secondaryActionLabel: 'SubHeader-action-label',
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
-      primaryFilterOptions: ['filter 1', 'filter 2'],
+      filters: [],
       primaryActionPlaceholder: 'Subheader-placeholder',
       primaryActionValue: 'Subheader-value'
     };
@@ -73,9 +76,13 @@ describe('SubHeader Props Test', () => {
       secondaryActionLabel: 'SubHeader-action-label',
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
-      primaryFilterOptions: ['filter 1', 'filter 2'],
-      primaryFilterAction: () => {},
-      primaryFilterPlaceholder: 'Subheader-placeholder',
+      filters: [
+        {
+          options: ['filter 1', 'filter 2'],
+          action: () => {},
+          placeholder: 'Subheader-placeholder'
+        }
+      ],
       primaryActionPlaceholder: 'Subheader-placeholder',
       primaryActionValue: 'Subheader-value'
     };
@@ -94,12 +101,18 @@ describe('SubHeader Props Test', () => {
       secondaryActionLabel: 'SubHeader-action-label',
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
-      primaryFilterOptions: ['filter 1', 'filter 2'],
-      primaryFilterAction: () => {},
-      primaryFilterPlaceholder: 'Subheader-placeholder',
-      secondaryFilterOptions: ['filter 1', 'filter 2'],
-      secondaryFilterAction: () => {},
-      secondaryFilterPlaceholder: 'Subheader-placeholder',
+      filters: [
+        {
+          options: ['filter 1', 'filter 2'],
+          action: () => {},
+          placeholder: 'Subheader-placeholder'
+        },
+        {
+          options: ['filter 3', 'filter 4'],
+          action: () => {},
+          placeholder: 'Subheader-placeholder'
+        }
+      ],
       primaryActionPlaceholder: 'Subheader-placeholder',
       primaryActionValue: 'Subheader-value'
     };
@@ -118,7 +131,8 @@ describe('SubHeader Props Test', () => {
       secondaryActionIcon: 'SubHeader-action-icon',
       secondaryAction: () => {},
       routeOptions: ['route 1', 'route 2'],
-      onRouteChanged: () => {}
+      onRouteChanged: () => {},
+      filters: []
     };
 
     const element = render(<SubHeader {...props} />);

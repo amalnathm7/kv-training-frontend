@@ -84,14 +84,14 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   useEffect(() => {
     if (isApproveReferralSucess) {
       setShowApprovePopup(false);
-      toast.success('Successfully Approved Bonus');
+      toast.success('Successfully approved bonus');
     }
   }, [isApproveReferralSucess]);
 
   useEffect(() => {
     if (isApproveReferralError) {
       setShowApprovePopup(false);
-      toast.error('Error Approving Bonus');
+      toast.error('Error approving bonus');
     }
   }, [isApproveReferralError]);
 
@@ -176,8 +176,8 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
           }}
           subtext={
             props.referral.bonusStatus === 'Processing'
-              ? 'Referral is still being processed. Do you still want to Approve the Bonus'
-              : 'Do you really want to Approve Bonus for the referral?'
+              ? 'Referral is still being processed. Do you still want to approve the bonus?'
+              : 'Do you really want to approve bonus for the referral?'
           }
         />
       )}

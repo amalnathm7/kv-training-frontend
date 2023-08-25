@@ -8,9 +8,16 @@ export const applicationApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getApplications: builder.query<
       ResponseType<ApplicationType[]>,
-      { email?: string; role?: string; openingId?: string; status?: string; offset: number }
+      {
+        email?: string;
+        role?: string;
+        openingId?: string;
+        status?: string;
+        bonusStatus?: string;
+        offset: number;
+      }
     >({
-      query: ({ email, role, openingId, offset, status }) => {
+      query: ({ email, role, openingId, offset, status, bonusStatus }) => {
         let endpoint = `${RouteConstants.applicationApi}`;
         const params = [];
 
@@ -18,6 +25,7 @@ export const applicationApi = baseApi.injectEndpoints({
         if (email) params.push(`email=${email}`);
         if (role) params.push(`role=${role}`);
         if (status) params.push(`status=${status}`);
+        if (bonusStatus) params.push(`bonusStatus=${bonusStatus}`);
         if (openingId) params.push(`openingId=${openingId}`);
         endpoint += `?${params.join('&')}`;
 

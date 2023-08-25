@@ -4,7 +4,8 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import ApplicationListing from '../../components/listing/ApplicationListing';
 import { useParams } from 'react-router-dom';
 import { AuthorizationContext, SelectedContext } from '../../app';
-import { candidateStatuses } from '../../constants/statusConstants';
+import { bonusStatuses, candidateStatuses } from '../../constants/statusConstants';
+import { FilterType } from '../../components/sub-header/SubHeader';
 
 const ApplicationListingPage: React.FC = () => {
   const { isBasicAuthorized } = useContext(AuthorizationContext);
@@ -13,6 +14,7 @@ const ApplicationListingPage: React.FC = () => {
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
   const [statusValue, setStatusValue] = useState('');
+  const [bonusStatusValue, setBonusStatusValue] = useState('');
   const [roles, setRoles] = useState([]);
 
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
@@ -76,6 +78,28 @@ const ApplicationListingPage: React.FC = () => {
     setStatusValue(event.target.value);
   };
 
+  const onChangeBonusStatus = (event) => {
+    setBonusStatusValue(event.target.value);
+  };
+
+  let filters: FilterType[] = [
+    {
+      options: ['All', ...bonusStatuses],
+      action: onChangeBonusStatus,
+      placeholder: 'Filter by bonus status'
+    },
+    {
+      options: ['All', ...candidateStatuses],
+      action: onChangeStatus,
+      placeholder: 'Filter by status'
+    },
+    {
+      options: roles,
+      action: onChangeRole,
+      placeholder: 'Filter by role'
+    }
+  ];
+
   return (
     <HomeLayout
       subHeaderPrimaryAction={onChangeSearch}
@@ -84,17 +108,13 @@ const ApplicationListingPage: React.FC = () => {
       subHeaderPrimaryActionPlaceholder={'Search by email'}
       subHeaderPrimaryActionLabel={isAuthorized ? 'Search' : ''}
       subHeaderPrimaryActionIcon={isAuthorized ? 'search.png' : ''}
-      subHeaderPrimaryFilterAction={onChangeRole}
-      subHeaderPrimaryFilterOptions={roles}
-      subHeaderPrimaryFilterPlaceholder='Filter by role'
-      subHeaderSecondaryFilterOptions={['All', ...candidateStatuses]}
-      subHeaderSecondaryFilterPlaceholder='Filter by status'
-      subHeaderSecondaryFilterAction={onChangeStatus}
+      subHeaderFilters={filters}
     >
       <ApplicationListing
         emailValue={emailValue}
         roleValue={roleValue}
         statusValue={statusValue}
+        bonusStatusValue={bonusStatusValue}
         labels={labels}
         searchLabel='Search'
         openingId={id}

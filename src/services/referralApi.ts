@@ -13,9 +13,16 @@ export const referralApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getAllReferrals: builder.query<
       ResponseType<ReferralType[]>,
-      { email?: string; role?: string; openingId?: string; status?: string; offset: number }
+      {
+        email?: string;
+        role?: string;
+        openingId?: string;
+        status?: string;
+        bonusStatus?: string;
+        offset: number;
+      }
     >({
-      query: ({ email, role, openingId, status, offset }) => {
+      query: ({ email, role, openingId, status, bonusStatus, offset }) => {
         let endpoint = `${RouteConstants.referralApi}`;
         const params = [];
 
@@ -23,6 +30,7 @@ export const referralApi = baseApi.injectEndpoints({
         if (email) params.push(`email=${email}`);
         if (role) params.push(`role=${role}`);
         if (status) params.push(`status=${status}`);
+        if (bonusStatus) params.push(`bonusStatus=${bonusStatus}`);
         if (openingId) params.push(`openingId=${openingId}`);
         endpoint += `?${params.join('&')}`;
 
