@@ -66,7 +66,7 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
   useEffect(() => {
     if (
       !localStorage.getItem('token') &&
-      location.pathname !== RouteConstants.publicOpening &&
+      location.pathname !== RouteConstants.opening &&
       location.pathname !== `${RouteConstants.opening}/${id}` &&
       location.pathname !== `${RouteConstants.opening}/${id}/apply` &&
       location.pathname !== `${RouteConstants.application}/${id}`

@@ -18,7 +18,7 @@ const Sidebar: React.FC = () => {
 
   const onJobOpeningsSelected = () => {
     setSelectedTabIndex(1);
-    if (authorizationContext.isBasicAuthorized) navigate(RouteConstants.publicOpening);
+    if (authorizationContext.isBasicAuthorized) navigate(RouteConstants.opening);
     else navigate(RouteConstants.opening);
   };
 
