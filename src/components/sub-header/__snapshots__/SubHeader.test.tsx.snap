@@ -872,31 +872,6 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with search field 
         <div
           class="sub-header-actions"
         >
-          <select
-            class="filter-dropdown"
-            style="margin-right: 20px;"
-          >
-            <option
-              hidden=""
-            />
-          </select>
-          <select
-            class="filter-dropdown"
-          >
-            <option
-              hidden=""
-            />
-            <option
-              value="filter 1"
-            >
-              filter 1
-            </option>
-            <option
-              value="filter 2"
-            >
-              filter 2
-            </option>
-          </select>
           <div
             class="action-button"
           >
@@ -948,31 +923,6 @@ exports[`SubHeader Props Test If SubHeader rendered correctly with search field 
       <div
         class="sub-header-actions"
       >
-        <select
-          class="filter-dropdown"
-          style="margin-right: 20px;"
-        >
-          <option
-            hidden=""
-          />
-        </select>
-        <select
-          class="filter-dropdown"
-        >
-          <option
-            hidden=""
-          />
-          <option
-            value="filter 1"
-          >
-            filter 1
-          </option>
-          <option
-            value="filter 2"
-          >
-            filter 2
-          </option>
-        </select>
         <div
           class="action-button"
         >
