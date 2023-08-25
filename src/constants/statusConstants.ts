@@ -11,7 +11,10 @@ export const StatusColor = {
   Offer_Accepted: '#D3F4BE',
   Offer_Declined: '#FFBFBF',
   Rejected: '#FFBFBF',
-  Hired: '#D3F4BE'
+  Hired: '#D3F4BE',
+  Eligible: '#F5ECB8',
+  Processing: '#F5ECB8',
+  Approved: '#D3F4BE'
 };
 
 export const candidateStatuses = [

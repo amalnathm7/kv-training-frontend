@@ -7,7 +7,7 @@ import ActionButton from '../button/ActionButton/ActionButton';
 import CustomPopup from '../popup/CustomPopup';
 import { useNavigate } from 'react-router-dom';
 import { RouteConstants } from '../../constants/routeConstants';
-import { useDeleteReferralMutation } from '../../services/referralApi';
+import { useApproveReferralMutation, useDeleteReferralMutation } from '../../services/referralApi';
 import { toast } from 'react-toastify';
 import viewFile from '../../utils/viewFile';
 import { useLazyGetFileUrlQuery } from '../../services/fileApi';
@@ -31,6 +31,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
     color: StatusColor[props.referral.status.replace(' ', '_')]
   };
 
+  let bonusStatus: StatusType = {
+    label: props.referral.bonusStatus,
+    color: StatusColor[props.referral.bonusStatus.replace(' ', '_')]
+  };
+
   const navigate = useNavigate();
 
   const handleEdit = () => {
@@ -44,6 +49,12 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
   const handleDelete = () => {
     if (deleteError) toast.error('Candidate has been moved to further stages');
     else setShowDeletePopup(true);
+  };
+
+  const handleApprove = () => {
+    const bonusStatus = props.referral.bonusStatus;
+
+    if (bonusStatus === 'Processing' || bonusStatus === 'Eligible') setShowApprovePopup(true);
   };
 
   const onClick = () => {
@@ -60,7 +71,29 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
     deleteReferral(props.referral.id);
   };
 
+  const [approveReferral, { isSuccess: isApproveReferralSucess, isError: isApproveReferralError }] =
+    useApproveReferralMutation();
+
+  const onConfirmApprove = () => {
+    approveReferral({ id: props.referral.id });
+  };
+
   const [showDeletePopup, setShowDeletePopup] = useState(false);
+  const [showApprovePopup, setShowApprovePopup] = useState(false);
+
+  useEffect(() => {
+    if (isApproveReferralSucess) {
+      setShowApprovePopup(false);
+      toast.success('Successfully Approved Bonus');
+    }
+  }, [isApproveReferralSucess]);
+
+  useEffect(() => {
+    if (isApproveReferralError) {
+      setShowApprovePopup(false);
+      toast.error('Error Approving Bonus');
+    }
+  }, [isApproveReferralError]);
 
   const [deleteReferral, { isSuccess: isDeleteSuccess }] = useDeleteReferralMutation();
 
@@ -103,6 +136,10 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
         <u>View Resume</u>
       </td>
       {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
+      <td>
+        <StatusIcon status={bonusStatus}></StatusIcon>
+      </td>
+
       {(props.selection === 'my' || isSuperAuthorized) && (
         <td>
           <ActionButton
@@ -115,6 +152,11 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
             icon='edit.png'
             onClick={handleEdit}
           ></ActionButton>
+          {props.referral.status === 'Hired' &&
+            (props.referral.bonusStatus === 'Eligible' ||
+              props.referral.bonusStatus === 'Processing') && (
+              <ActionButton icon='tick-green.svg' onClick={handleApprove}></ActionButton>
+            )}
         </td>
       )}
       {showDeletePopup && (
@@ -124,6 +166,19 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
             setShowDeletePopup(false);
           }}
           subtext='Do you really want to delete the referral?'
+        />
+      )}
+      {showApprovePopup && (
+        <CustomPopup
+          onConfirm={onConfirmApprove}
+          onCancel={() => {
+            setShowApprovePopup(false);
+          }}
+          subtext={
+            props.referral.bonusStatus === 'Processing'
+              ? 'Referral is still being processed. Do you still want to Approve the Bonus'
+              : 'Do you really want to Approve Bonus for the referral?'
+          }
         />
       )}
     </tr>
