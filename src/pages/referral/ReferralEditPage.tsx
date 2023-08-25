@@ -19,7 +19,7 @@ const ReferralEditPage: React.FC = () => {
     if (isReferralByIdFetchSuccess) {
       const isNotAuthorized =
         !myProfile?.role ||
-        (isSuperAuthorized && myProfile?.id !== referralData.data.referredBy?.id);
+        (!isSuperAuthorized && myProfile?.id !== referralData.data.referredBy?.id);
 
       if (isNotAuthorized || referralData.data.status === 'Hired') navigate(-1);
     }
