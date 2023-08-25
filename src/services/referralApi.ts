@@ -1,4 +1,9 @@
-import { GET_MY_REFERRAL_LIST, GET_REFERRAL_LIST, PAGE_LENGTH } from '../constants/apiConstants';
+import {
+  GET_MY_REFERRAL_LIST,
+  GET_REFERRAL_BY_ID,
+  GET_REFERRAL_LIST,
+  PAGE_LENGTH
+} from '../constants/apiConstants';
 import { ResponseType } from '../types/ResponseType';
 import { baseApi } from './baseApi';
 import { RouteConstants } from '../constants/routeConstants';
@@ -29,7 +34,8 @@ export const referralApi = baseApi.injectEndpoints({
       query: (id) => ({
         url: `${RouteConstants.referralApi}/${id}`,
         method: 'GET'
-      })
+      }),
+      providesTags: [GET_REFERRAL_BY_ID]
     }),
     createReferral: builder.mutation<ResponseType<ReferralType>, ReferralType>({
       query: (body) => ({
@@ -49,6 +55,16 @@ export const referralApi = baseApi.injectEndpoints({
         body: params.referral
       }),
       invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST]
+    }),
+    approveReferral: builder.mutation<void, { id: string }>({
+      query: (params) => ({
+        url: `${RouteConstants.referralApi}/bonus/${params.id}`,
+        method: 'PATCH',
+        body: {
+          bonusStatus: 'Approved'
+        }
+      }),
+      invalidatesTags: [GET_REFERRAL_LIST, GET_MY_REFERRAL_LIST, GET_REFERRAL_BY_ID]
     }),
     getMyReferrals: builder.query<ResponseType<ReferralType[]>, void>({
       query: () => ({
@@ -73,5 +89,6 @@ export const {
   useGetReferralByIdQuery,
   useDeleteReferralMutation,
   useLazyGetAllReferralsQuery,
-  useLazyGetMyReferralsQuery
+  useLazyGetMyReferralsQuery,
+  useApproveReferralMutation
 } = referralApi;

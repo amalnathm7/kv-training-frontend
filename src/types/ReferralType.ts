@@ -19,4 +19,5 @@ export type ReferralType = {
   opening?: OpeningType;
   openingId: string;
   candidateCode: string;
+  bonusStatus?: string;
 };

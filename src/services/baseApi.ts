@@ -6,6 +6,7 @@ import {
   GET_MY_REFERRAL_LIST,
   GET_OPENING_LIST,
   GET_PUBLIC_OPENING_LIST,
+  GET_REFERRAL_BY_ID,
   GET_REFERRAL_LIST
 } from '../constants/apiConstants';
 
@@ -32,6 +33,7 @@ export const baseApi = createApi({
     GET_PUBLIC_OPENING_LIST,
     GET_REFERRAL_LIST,
     GET_MY_REFERRAL_LIST,
-    GET_APPLICATION_LIST
+    GET_APPLICATION_LIST,
+    GET_REFERRAL_BY_ID
   ]
 });
