@@ -89,8 +89,22 @@ const EmployeeListItem: React.FC<EmployeeListItemPropsType> = (props) => {
       </td>
       {isSuperAuthorized && (
         <td>
-          <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
-          <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+          <>
+            <a
+              data-tooltip-content='Delete Employee'
+              data-tooltip-id='tooltip id'
+              data-tooltip-place='bottom'
+            >
+              <ActionButton icon='delete.png' onClick={handleDelete}></ActionButton>
+            </a>
+            <a
+              data-tooltip-content='Edit Employee'
+              data-tooltip-id='tooltip id'
+              data-tooltip-place='bottom'
+            >
+              <ActionButton icon='edit.png' onClick={handleEdit}></ActionButton>
+            </a>
+          </>
         </td>
       )}
       {showDeletePopup && (
