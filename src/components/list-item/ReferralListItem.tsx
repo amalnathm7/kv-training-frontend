@@ -174,7 +174,8 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
             >
               {props.referral.status === 'Hired' &&
                 (props.referral.bonusStatus === 'Eligible' ||
-                  props.referral.bonusStatus === 'Processing') && (
+                  props.referral.bonusStatus === 'Processing') &&
+                isSuperAuthorized && (
                   <ActionButton icon='tick-green.svg' onClick={handleApprove}></ActionButton>
                 )}
             </a>
