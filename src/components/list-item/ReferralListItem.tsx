@@ -123,7 +123,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.referral.opening?.title ? props.referral.opening?.title : 'nil'}</td>
+      <td>{props.referral.opening?.title ? props.referral.opening?.title : 'NIL'}</td>
       <td>{props.referral.role.role}</td>
       <td
         onClick={(event) => {
@@ -135,7 +135,9 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       >
         <u>View Resume</u>
       </td>
-      {props.selection === 'all' && <td>{props.referral.referredBy.name}</td>}
+      {props.selection === 'all' && (
+        <td>{props.referral.referredBy?.name ? props.referral.referredBy?.name : 'NIL'}</td>
+      )}
       <td>
         <StatusIcon status={bonusStatus}></StatusIcon>
       </td>
@@ -160,7 +162,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
               data-tooltip-place='bottom'
             >
               <ActionButton
-                isDisabled={props.referral.status === 'Hired'}
+                isDisabled={props.referral.status === 'Hired' || props.referral.opening === null}
                 icon='edit.png'
                 onClick={handleEdit}
               ></ActionButton>
