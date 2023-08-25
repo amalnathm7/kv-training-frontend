@@ -4,7 +4,7 @@ import { useGetRoleListQuery } from '../../services/roleApi';
 import ApplicationListing from '../../components/listing/ApplicationListing';
 import { useParams } from 'react-router-dom';
 import { AuthorizationContext, SelectedContext } from '../../app';
-import { bonusStatuses, candidateStatuses } from '../../constants/statusConstants';
+import { candidateStatuses } from '../../constants/statusConstants';
 import { FilterType } from '../../components/sub-header/SubHeader';
 
 const ApplicationListingPage: React.FC = () => {
@@ -14,7 +14,6 @@ const ApplicationListingPage: React.FC = () => {
   const [emailValue, setEmailValue] = useState('');
   const [roleValue, setRoleValue] = useState('');
   const [statusValue, setStatusValue] = useState('');
-  const [bonusStatusValue, setBonusStatusValue] = useState('');
   const [roles, setRoles] = useState([]);
 
   const { data: rolesData, isSuccess: isRoleFetchSuccess } = useGetRoleListQuery();
@@ -78,16 +77,7 @@ const ApplicationListingPage: React.FC = () => {
     setStatusValue(event.target.value);
   };
 
-  const onChangeBonusStatus = (event) => {
-    setBonusStatusValue(event.target.value);
-  };
-
   let filters: FilterType[] = [
-    {
-      options: ['All', ...bonusStatuses],
-      action: onChangeBonusStatus,
-      placeholder: 'Filter by bonus status'
-    },
     {
       options: ['All', ...candidateStatuses],
       action: onChangeStatus,
@@ -114,7 +104,6 @@ const ApplicationListingPage: React.FC = () => {
         emailValue={emailValue}
         roleValue={roleValue}
         statusValue={statusValue}
-        bonusStatusValue={bonusStatusValue}
         labels={labels}
         searchLabel='Search'
         openingId={id}
