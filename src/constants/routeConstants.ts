@@ -3,7 +3,6 @@ export class RouteConstants {
   static login = '/login';
   static employee = '/employee';
   static opening = '/opening';
-  static publicOpening = '/opening/public';
   static referral = '/referral';
   static application = '/application';
   static myReferral = '/referral/me';
