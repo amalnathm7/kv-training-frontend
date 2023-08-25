@@ -123,7 +123,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.referral.opening?.title}</td>
+      <td>{props.referral.opening?.title ? props.referral.opening?.title : 'nil'}</td>
       <td>{props.referral.role.role}</td>
       <td
         onClick={(event) => {

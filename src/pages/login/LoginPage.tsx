@@ -86,14 +86,14 @@ const LoginPage: React.FC = () => {
             label='Log in'
             onClick={validateAndLogin}
           />
-          <h4 className='guest-login' onClick={onCareersClicked}>
-            Apply for a job at KeyValue
-          </h4>
           {isError && (
             <div className='login-error'>
               <p>{error['data'].errors.error}</p>
             </div>
           )}
+          <h4 className='guest-login' onClick={onCareersClicked}>
+            Apply for a job at KeyValue
+          </h4>
         </div>
       </div>
     </div>
