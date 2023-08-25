@@ -96,7 +96,6 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       </td>
       {isSuperAuthorized && (
         <td>
-
           <>
             <a
               data-tooltip-content='Delete Application'
@@ -115,7 +114,9 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
               data-tooltip-place='bottom'
             >
               <ActionButton
-                isDisabled={props.application.status === 'Hired' || props.application.opening === null}
+                isDisabled={
+                  props.application.status === 'Hired' || props.application.opening === null
+                }
                 icon='edit.png'
                 onClick={props.application.status === 'Hired' ? () => {} : handleEdit}
               ></ActionButton>
