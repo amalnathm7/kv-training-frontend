@@ -29,3 +29,5 @@ export const candidateStatuses = [
   'Rejected',
   'Hired'
 ];
+
+export const bonusStatuses = ['Inactive', 'Processing', 'Eligible', 'Approved'];

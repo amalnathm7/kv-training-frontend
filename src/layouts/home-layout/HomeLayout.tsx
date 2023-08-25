@@ -1,6 +1,6 @@
 import Sidebar from '../../components/sidebar/Sidebar';
 import Header from '../../components/header/Header';
-import SubHeader from '../../components/sub-header/SubHeader';
+import SubHeader, { FilterType } from '../../components/sub-header/SubHeader';
 import React, { useContext, useEffect } from 'react';
 import './HomeLayout.css';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
@@ -23,12 +23,7 @@ type HomeLayoutPropsType = {
   subHeaderSecondaryAction?: (e) => void;
   subHeaderRouteOptions?: string[];
   subHeaderOnRouteChanged?: (event) => void;
-  subHeaderPrimaryFilterOptions?: string[];
-  subHeaderSecondaryFilterOptions?: string[];
-  subHeaderPrimaryFilterPlaceholder?: string;
-  subHeaderSecondaryFilterPlaceholder?: string;
-  subHeaderPrimaryFilterAction?: (event) => void;
-  subHeaderSecondaryFilterAction?: (event) => void;
+  subHeaderFilters?: FilterType[];
 };
 
 const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
@@ -130,12 +125,7 @@ const HomeLayout: React.FC<HomeLayoutPropsType> = (props) => {
         secondaryAction={props.subHeaderSecondaryAction}
         secondaryActionLabel={props.subHeaderSecondaryActionLabel}
         secondaryActionIcon={props.subHeaderSecondaryActionIcon}
-        primaryFilterAction={props.subHeaderPrimaryFilterAction}
-        primaryFilterOptions={props.subHeaderPrimaryFilterOptions}
-        primaryFilterPlaceholder={props.subHeaderPrimaryFilterPlaceholder}
-        secondaryFilterAction={props.subHeaderSecondaryFilterAction}
-        secondaryFilterOptions={props.subHeaderSecondaryFilterOptions}
-        secondaryFilterPlaceholder={props.subHeaderSecondaryFilterPlaceholder}
+        filters={props.subHeaderFilters ?? []}
       />
       <Sidebar />
       <Header />
