@@ -37,7 +37,7 @@ const ReferralEditPage: React.FC = () => {
       subHeaderPrimaryActionIcon=''
     >
       <ReferralForm
-        referredBy={myProfile}
+        referredBy={referral?.referredBy}
         opening={referral?.opening}
         referral={referral}
         isEdit={true}
