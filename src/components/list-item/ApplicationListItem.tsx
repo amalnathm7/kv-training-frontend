@@ -82,7 +82,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.application.opening?.title ? props.application.opening?.title : 'nil'}</td>
+      <td>{props.application.opening?.title ? props.application.opening?.title : 'NIL'}</td>
       <td>{props.application.role.role}</td>
       <td
         onClick={(event) => {
