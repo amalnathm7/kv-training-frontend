@@ -142,21 +142,41 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
 
       {(props.selection === 'my' || isSuperAuthorized) && (
         <td>
-          <ActionButton
-            isDisabled={props.referral.status === 'Hired'}
-            icon='delete.png'
-            onClick={handleDelete}
-          ></ActionButton>
-          <ActionButton
-            isDisabled={props.referral.status === 'Hired'}
-            icon='edit.png'
-            onClick={handleEdit}
-          ></ActionButton>
-          {props.referral.status === 'Hired' &&
-            (props.referral.bonusStatus === 'Eligible' ||
-              props.referral.bonusStatus === 'Processing') && (
-              <ActionButton icon='tick-green.svg' onClick={handleApprove}></ActionButton>
-            )}
+          <>
+            <a
+              data-tooltip-content='Delete Referral'
+              data-tooltip-id='tooltip id'
+              data-tooltip-place='bottom'
+            >
+              <ActionButton
+                isDisabled={props.referral.status === 'Hired'}
+                icon='delete.png'
+                onClick={handleDelete}
+              ></ActionButton>
+            </a>
+            <a
+              data-tooltip-content='Edit Referral'
+              data-tooltip-id='tooltip id'
+              data-tooltip-place='bottom'
+            >
+              <ActionButton
+                isDisabled={props.referral.status === 'Hired'}
+                icon='edit.png'
+                onClick={handleEdit}
+              ></ActionButton>
+            </a>
+            <a
+              data-tooltip-content='Approve Bonus'
+              data-tooltip-id='tooltip id'
+              data-tooltip-place='bottom'
+            >
+              {props.referral.status === 'Hired' &&
+                (props.referral.bonusStatus === 'Eligible' ||
+                  props.referral.bonusStatus === 'Processing') && (
+                  <ActionButton icon='tick-green.svg' onClick={handleApprove}></ActionButton>
+                )}
+            </a>
+          </>
         </td>
       )}
       {showDeletePopup && (
