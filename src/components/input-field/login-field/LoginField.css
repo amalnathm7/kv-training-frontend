@@ -5,7 +5,7 @@
     height: 50px;
     width: 100%;
     border-radius: 5px;
-    caret-color: #03AEEE;
+    caret-color: var(--primary-color);
     border: 2px solid lightgray;
     text-indent: 10px;
     outline: 0;
@@ -19,7 +19,7 @@
 
 .login-floating-label {
     font-size: 14px;
-    color: #555555;
+    color: var(--hint-color);
     font-weight: bold;
     position: absolute;
     pointer-events: none;
@@ -35,7 +35,7 @@
     left: 0px;
     font-size: 11px;
     opacity: 1;
-    color: #03AEEE;
+    color: var(--primary-color);
 }
 
 .login-error {

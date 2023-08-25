@@ -1,49 +1,47 @@
-import CardItem, { CardItemPropsType } from "./CardItem";
-import { render } from "@testing-library/react";
+import CardItem, { CardItemPropsType } from './CardItem';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-describe("Card Props Test", () => {
-    test("If card rendered correctly", () => {
-        const props: CardItemPropsType = {
-            label: "card-item",
-            value: "card-value",
-            isStatus: true,
-        }
+describe('Card Props Test', () => {
+  test('If card rendered correctly', () => {
+    const props: CardItemPropsType = {
+      label: 'card-item',
+      value: 'card-value',
+      isStatus: false,
+      filePath: ''
+    };
 
-        const element = render(<CardItem {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+    const element = render(<CardItem {...props} />);
 
-    test("If card status active rendered correctly", () => {
-        const props: CardItemPropsType = {
-            label: "card-item",
-            value: "Active",
-            isStatus: true,
-        }
+    expect(element).toMatchSnapshot();
+  });
 
-        const element = render(<CardItem {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+  test('If card status rendered correctly', () => {
+    const props: CardItemPropsType = {
+      label: 'card-item',
+      value: 'card-value',
+      isStatus: true,
+      filePath: ''
+    };
 
-    test("If card status inactive rendered correctly", () => {
-        const props: CardItemPropsType = {
-            label: "card-item",
-            value: "Inactive",
-            isStatus: true,
-        }
+    const element = render(<CardItem {...props} />);
 
-        const element = render(<CardItem {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+    expect(element).toMatchSnapshot();
+  });
 
-    test("If card status probation rendered correctly", () => {
-        const props: CardItemPropsType = {
-            label: "card-item",
-            value: "Inactive",
-            isStatus: true,
-        }
+  test('If card file rendered correctly and file click works', () => {
+    const props: CardItemPropsType = {
+      label: 'card-item',
+      value: 'card-value',
+      isStatus: false,
+      filePath: 'file'
+    };
 
-        const element = render(<CardItem {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+    const element = render(<CardItem {...props} />);
+    const ClickElement = screen.getByTestId('card-file-test');
+
+    window.open = jest.fn();
+    ClickElement.click();
+    expect(element).toMatchSnapshot();
+  });
 });

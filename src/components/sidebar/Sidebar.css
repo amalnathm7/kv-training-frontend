@@ -1,6 +1,7 @@
 .sidebar {
+    z-index: 4;
     position: fixed;
-    top: 0;
+    top: 100px;
     left: 0;
     height: 100%;
     width: 300px;
@@ -8,30 +9,9 @@
     box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
 }
 
-.item.container {
-    font-size: 14px;
-    color: white;
-    position: absolute;
-    display: flex;
-    justify-content: start;
-    align-items: center;
-    right: 0px;
-    top: 120px;
+.sidebar-items {
     width: 95%;
-    height: 60px;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    background-color: #03AEEE;
+    align-items: end;
+    position: absolute;
+    right: 0;
 }
-
-.icon.container {
-    margin-left: 15px;
-    margin-right: 15px;
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    border-radius: 100%;
-}
-

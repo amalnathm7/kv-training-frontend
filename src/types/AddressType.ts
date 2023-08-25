@@ -1,8 +1,8 @@
 export type AddressType = {
-    addressLine1: string,
-    addressLine2: string,
-    city: string,
-    state: string,
-    country: string,
-    pincode: string
+  line1: string;
+  line2: string;
+  city: string;
+  state: string;
+  country: string;
+  pincode: string;
 };

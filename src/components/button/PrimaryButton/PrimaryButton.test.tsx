@@ -1,56 +1,61 @@
-import PrimaryButton, { PrimaryButtonPropsType } from "./PrimaryButton";
-import { render, screen, fireEvent } from "@testing-library/react";
+import PrimaryButton, { PrimaryButtonPropsType } from './PrimaryButton';
+import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
 
-describe("Primary Button Props Test", () => {
-    test("If button rendered correctly", () => {
-        const props: PrimaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick: () => { }
-        }
+describe('Primary Button Props Test', () => {
+  test('If button rendered correctly', () => {
+    const props: PrimaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick: () => {},
+      style: {}
+    };
 
-        const element = render(<PrimaryButton {...props} />);
-        expect(element).toMatchSnapshot();
-    });
+    const element = render(<PrimaryButton {...props} />);
 
-    test("If label rendered correctly", () => {
-        const props: PrimaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick: () => { }
-        }
+    expect(element).toMatchSnapshot();
+  });
 
-        render(<PrimaryButton {...props} />);
-        const element = screen.getByTestId("primary-button-test");
-        expect(element).toHaveValue("Button");
-    });
+  test('If label rendered correctly', () => {
+    const props: PrimaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick: () => {}
+    };
 
-    test("If type rendered correctly", () => {
-        const props: PrimaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick: () => { }
-        }
+    render(<PrimaryButton {...props} />);
+    const element = screen.getByTestId('primary-button-test');
 
-        render(<PrimaryButton {...props} />);
-        const element = screen.getByTestId("primary-button-test");
-        // expect(element.getAttribute("type")).not.toBe("submit");
-        expect(element).toHaveAttribute("type", "button");
-    });
+    expect(element).toHaveValue('Button');
+  });
 
-    test("If onClick called", () => {
-        const onClick = jest.fn();
-        const props: PrimaryButtonPropsType = {
-            type: "button",
-            label: "Button",
-            onClick
-        }
+  test('If type rendered correctly', () => {
+    const props: PrimaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick: () => {}
+    };
 
-        render(<PrimaryButton {...props} />);
-        const element = screen.getByTestId("primary-button-test");
-        fireEvent.click(element);
-        element.click();
-        expect(onClick).toBeCalledTimes(2);
-    });
+    render(<PrimaryButton {...props} />);
+    const element = screen.getByTestId('primary-button-test');
+
+    // expect(element.getAttribute("type")).not.toBe("submit");
+    expect(element).toHaveAttribute('type', 'button');
+  });
+
+  test('If onClick called', () => {
+    const onClick = jest.fn();
+    const props: PrimaryButtonPropsType = {
+      type: 'button',
+      label: 'Button',
+      onClick
+    };
+
+    render(<PrimaryButton {...props} />);
+    const element = screen.getByTestId('primary-button-test');
+
+    fireEvent.click(element);
+    element.click();
+    expect(onClick).toBeCalledTimes(2);
+  });
 });

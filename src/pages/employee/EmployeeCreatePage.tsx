@@ -1,23 +1,28 @@
-import Form from "../../components/form/Form";
-import HomeLayout from "../../layouts/home-layout/HomeLayout";
-import React, { useEffect } from "react";
-import { useGetMyProfileQuery } from "../../services/employeeApi";
-import { PermissionLevel } from "../../utils/PermissionLevel";
-import { useNavigate } from "react-router-dom";
-import { RouteConstants } from "../../constants/routeConstants";
+import EmployeeForm from '../../components/form/EmployeeForm';
+import HomeLayout from '../../layouts/home-layout/HomeLayout';
+import React, { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { RouteConstants } from '../../constants/routeConstants';
+import { AuthorizationContext } from '../../app';
 
 const EmployeeCreatePage: React.FC = () => {
-    const { data: myProfile, isSuccess } = useGetMyProfileQuery();
-    const navigate = useNavigate();
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        if (isSuccess && !myProfile.data.role || isSuccess && myProfile.data.role.permissionLevel !== PermissionLevel.SUPER)
-            navigate(`${RouteConstants.employee}`);
-    }, [isSuccess]);
+  useEffect(() => {
+    if (!isSuperAuthorized) navigate(`${RouteConstants.employee}`);
+  });
 
-    return <HomeLayout subHeaderAction={() => { }} subHeaderLabel="Create Employee" subHeaderActionLabel="" subHeaderActionIcon="">
-        <Form employee={null} isEdit={false} />
-    </HomeLayout>;
+  return (
+    <HomeLayout
+      subHeaderPrimaryAction={() => {}}
+      subHeaderLabel='Create Employee'
+      subHeaderPrimaryActionLabel=''
+      subHeaderPrimaryActionIcon=''
+    >
+      <EmployeeForm employee={null} isEdit={false} />
+    </HomeLayout>
+  );
 };
 
 export default EmployeeCreatePage;

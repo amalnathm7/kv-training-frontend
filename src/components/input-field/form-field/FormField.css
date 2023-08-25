@@ -10,11 +10,11 @@
     height: 55px;
     width: 100%;
     border-radius: 5px;
-    caret-color: #03AEEE;
+    caret-color: var(--primary-color);
     border: 2px solid lightgray;
     padding: 10px;
     outline: 0;
-    background: #FAFAFA 0% 0% no-repeat padding-box;
+    background: var(--background-color) 0% 0% no-repeat padding-box;
     border: 1px solid #D9D9D9;
 }
 
@@ -27,7 +27,7 @@
 .form-label {
     margin-top: 20px;
     font-size: 14px;
-    color: #555555;
+    color: var(--hint-color);
     font-weight: bold;
 }
 

@@ -1,0 +1,38 @@
+.item.container {
+    font-size: 14px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 60px;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    color: var(--primary-color);
+    background-color: var(--accent-color);
+    margin-top: 20px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+
+.item.container.selected {
+    color: white;
+    background-color: var(--primary-color);
+}
+
+.icon.container {
+    margin-left: 15px;
+    margin-right: 15px;
+    background-color: var(--accent-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    border-radius: 100%;
+}
+
+.icon.container.selected {
+    background-color: white;
+}
+
+img.filtered {
+    filter: sepia(100%) hue-rotate(160deg) saturate(300%);
+}

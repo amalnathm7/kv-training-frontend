@@ -1,78 +1,93 @@
-import Card from "../../components/card/Card";
-import HomeLayout from "../../layouts/home-layout/HomeLayout";
-import React, { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useGetEmployeeByIdQuery, useGetMyProfileQuery } from "../../services/employeeApi";
-import { RouteConstants } from "../../constants/routeConstants";
-import { PermissionLevel } from "../../utils/PermissionLevel";
-
+import Card from '../../components/card/Card';
+import HomeLayout from '../../layouts/home-layout/HomeLayout';
+import React, { useContext } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useGetEmployeeByIdQuery } from '../../services/employeeApi';
+import { RouteConstants } from '../../constants/routeConstants';
+import { AuthorizationContext } from '../../app';
 const EmployeeDetailsPage: React.FC = () => {
-    const { data: myProfile, isSuccess: isProfileSuccess } = useGetMyProfileQuery();
-    const [isSuperAuthorized, setIsSuperAuthorized] = useState(false);
+  const { isSuperAuthorized } = useContext(AuthorizationContext);
 
-    useEffect(() => {
-        if (isProfileSuccess && myProfile.data.role && myProfile.data.role.permissionLevel === PermissionLevel.SUPER)
-            setIsSuperAuthorized(true);
-    }, [isProfileSuccess]);
+  const { id } = useParams();
+  const navigate = useNavigate();
 
-    const { id } = useParams();
-    const navigate = useNavigate();
+  const { data: employeeData, isSuccess } = useGetEmployeeByIdQuery(id);
 
-    const { data: employeesData, isSuccess } = useGetEmployeeByIdQuery(id);
+  let items = [];
 
-    let items = [];
+  if (isSuccess) {
+    const employee = employeeData.data;
 
-    if (isSuccess) {
-        const employee = employeesData.data;
+    items = [
+      {
+        label: 'Employee Code',
+        value: employee.employeeCode
+      },
+      {
+        label: 'Name',
+        value: employee.name
+      },
+      {
+        label: 'Email',
+        value: employee.email
+      },
+      {
+        label: 'Phone',
+        value: employee.phone
+      },
+      {
+        label: 'Joining Date',
+        value: new Date(employee.joiningDate).toISOString().split('T')[0]
+      },
+      {
+        label: 'Role',
+        value: employee.role ? employee.role.role : 'NIL'
+      },
+      {
+        label: 'Department',
+        value: employee.department ? employee.department.name : 'NIL'
+      },
+      {
+        label: 'Status',
+        value: employee.status,
+        isStatus: true
+      },
+      {
+        label: 'Experience',
+        value: employee.experience + ' Years'
+      },
+      {
+        label: 'Address',
+        value:
+          employee.address.line1 +
+          ', ' +
+          employee.address.line2 +
+          ', ' +
+          employee.address.city +
+          ', ' +
+          employee.address.state +
+          ', ' +
+          employee.address.country +
+          ', ' +
+          employee.address.pincode
+      }
+    ];
+  }
 
-        items = [
-            {
-                label: "Employee ID",
-                value: employee.id
-            },
-            {
-                label: "Employee Name",
-                value: employee.name
-            },
-            {
-                label: "Username",
-                value: employee.username
-            },
-            {
-                label: "Joining Date",
-                value: new Date(employee.joiningDate).toISOString().split('T')[0]
-            },
-            {
-                label: "Role",
-                value: employee.role ? employee.role.role : "NIL"
-            },
-            {
-                label: "Department",
-                value: employee.department ? employee.department.name : "NIL"
-            },
-            {
-                label: "Status",
-                value: employee.status,
-                isStatus: true
-            },
-            {
-                label: "Experience",
-                value: employee.experience + " Years"
-            },
-            {
-                label: "Address",
-                value: employee.address.addressLine1 + ", " + employee.address.addressLine2 + ", " + employee.address.city + ", " + employee.address.state + ", " + employee.address.country + ", " + employee.address.pincode
-            }
-        ];
-    }
+  const onEditClicked = () => {
+    navigate(`${RouteConstants.employee}/${id}/edit`);
+  };
 
-    const onEditClicked = () => {
-        navigate(`${RouteConstants.employee}/${id}/edit`);
-    };
-
-    return <HomeLayout subHeaderAction={isSuperAuthorized ? onEditClicked : null} subHeaderLabel="Employee Details" subHeaderActionLabel={isSuperAuthorized ? "Edit" : ""} subHeaderActionIcon={isSuperAuthorized ? "edit.svg" : ""}>
-        <Card items={items}></Card>
-    </HomeLayout>;
+  return (
+    <HomeLayout
+      subHeaderPrimaryAction={isSuperAuthorized ? onEditClicked : null}
+      subHeaderLabel='Employee Details'
+      subHeaderPrimaryActionLabel={isSuperAuthorized ? 'Edit' : ''}
+      subHeaderPrimaryActionIcon={isSuperAuthorized ? 'edit.svg' : ''}
+    >
+      <Card items={items}></Card>
+    </HomeLayout>
+  );
 };
 
 export default EmployeeDetailsPage;
