@@ -19,7 +19,7 @@ jobs:
           node-version: '18'  # Use the Node.js version your app requires
 
       - name: Install Dependencies
-        run: npm ci
+        run: npm i
 
       - name: Build
         run: npm run build
@@ -29,4 +29,4 @@ jobs:
         with:
           branch: gh-pages
           github_token: ${{ secrets.ACCESS_TOKEN }}
-          folder: ../../build  # The folder containing your built React app
+          folder: build  # The folder containing your built React app
