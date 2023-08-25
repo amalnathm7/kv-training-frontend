@@ -148,7 +148,7 @@ const ReferralListItem: React.FC<ReferralListItemPropsType> = (props) => {
             onClick={handleDelete}
           ></ActionButton>
           <ActionButton
-            isDisabled={props.referral.status === 'Hired'}
+            isDisabled={props.referral.status === 'Hired' || props.referral.opening === null}
             icon='edit.png'
             onClick={handleEdit}
           ></ActionButton>

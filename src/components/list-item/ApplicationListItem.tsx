@@ -82,7 +82,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
       <td>
         <StatusIcon status={status}></StatusIcon>
       </td>
-      <td>{props.application.opening?.title}</td>
+      <td>{props.application.opening?.title ? props.application.opening?.title : 'nil'}</td>
       <td>{props.application.role.role}</td>
       <td
         onClick={(event) => {
@@ -102,7 +102,7 @@ const ApplicationListItem: React.FC<ApplicationListItemPropsType> = (props) => {
             onClick={props.application.status === 'Hired' ? () => {} : handleDelete}
           ></ActionButton>
           <ActionButton
-            isDisabled={props.application.status === 'Hired'}
+            isDisabled={props.application.status === 'Hired' || props.application.opening === null}
             icon='edit.png'
             onClick={props.application.status === 'Hired' ? () => {} : handleEdit}
           ></ActionButton>
