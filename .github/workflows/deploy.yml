@@ -29,4 +29,4 @@ jobs:
         with:
           branch: gh-pages
           github_token: ${{ secrets.ACCESS_TOKEN }}
-          folder: builddd  # The folder containing your built React app
+          publish_dir: build  # The folder containing your built React app
