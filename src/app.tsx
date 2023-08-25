@@ -22,6 +22,7 @@ import ApplicationDetailsPage from './pages/application/ApplicationDetailsPage';
 import ApplicationCreatePage from './pages/application/ApplicationCreatePage';
 import ApplicationEditPage from './pages/application/ApplicationEditPage';
 import { EmployeeType } from './types/EmployeeType';
+import { Tooltip } from 'react-tooltip';
 
 export type SelectedContextType = {
   selectedTabIndex: number;
@@ -123,6 +124,7 @@ const App: FC = () => {
           </BrowserRouter>
         </AuthorizationContext.Provider>
       </SelectedContext.Provider>
+      <Tooltip id='tooltip id' />
     </div>
   );
 };

@@ -11,7 +11,6 @@ type ApplicationsListingPropsType = {
   emailValue?: string;
   roleValue?: string;
   statusValue: string;
-  bonusStatusValue: string;
   openingId: string;
 };
 
@@ -44,7 +43,6 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
           email: null,
           role: null,
           status: null,
-          bonusStatus: null,
           offset: page <= 0 ? 0 : page - 1
         };
 
@@ -52,8 +50,6 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
         if (props.roleValue) whereProps.role = props.roleValue === 'All' ? '' : props.roleValue;
         if (props.statusValue)
           whereProps.status = props.statusValue === 'All' ? '' : props.statusValue;
-        if (props.bonusStatusValue)
-          whereProps.bonusStatus = props.bonusStatusValue === 'All' ? '' : props.bonusStatusValue;
 
         if (props.emailValue) debouncedGetApplications(whereProps);
         else getApplications(whereProps);
@@ -64,7 +60,6 @@ const ApplicationsListing: React.FC<ApplicationsListingPropsType> = (props) => {
     props.roleValue,
     props.statusValue,
     props.openingId,
-    props.bonusStatusValue,
     page
   ]);
 
