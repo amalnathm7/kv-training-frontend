@@ -28,4 +28,5 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           branch: gh-pages
+          github_token: ${{ secrets.ACCESS_TOKEN }}
           folder: build  # The folder containing your built React app
